@@ -9,5 +9,9 @@ linux:
 	mkdir -p build
 	$(DOCKER_RUN) -e GOOS=linux $(GOLANG_CONTAINER) go build -o build/nginx-inject-linux cmd/inject/*.go
 
+update-install:
+	./updateVersion.sh
+
+
 clean:
 	rm -rf build
