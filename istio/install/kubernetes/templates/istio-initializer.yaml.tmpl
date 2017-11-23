@@ -12,10 +12,10 @@ data:
     namespaces: [""] # everything, aka v1.NamepsaceAll, aka cluster-wide
     initializerName: "sidecar.initializer.istio.io"
     params:
-      initImage: {PROXY_HUB}/proxy_init:{PILOT_TAG}
-      proxyImage: {PROXY_HUB}/proxy_debug:{PILOT_TAG}
+      initImage: {PROXY_HUB}/proxy_init:{PROXY_TAG}
+      proxyImage: {PROXY_HUB}/proxy_debug:{PROXY_TAG}
       verbosity: 2
-      version: {PILOT_TAG}
+      version: {PROXY_TAG}
       meshConfigMapName: istio
       imagePullPolicy: Always
       debugMode: true

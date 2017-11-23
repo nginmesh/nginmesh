@@ -132,6 +132,7 @@ function update_istio_install() {
   sed -i .bak "s|{PILOT_HUB}|${PILOT_HUB}|" $ISTIO_INITIALIZER
   sed -i .bak "s|{PILOT_TAG}|${PILOT_TAG}|" $ISTIO_INITIALIZER
   sed -i .bak "s|{PROXY_HUB}|${PROXY_HUB}|" $ISTIO_INITIALIZER
+  sed -i .bak "s|{PROXY_TAG}|${PROXY_TAG}|" $ISTIO_INITIALIZER
 
 }
 
