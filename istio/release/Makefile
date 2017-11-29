@@ -6,7 +6,15 @@ USER=nginmesh
 update-install:
 	./updateVersion.sh
 
+
 release:	create_release
+
+clean_release:  rm -rf target
+
+release_tar:    clean_release
+	mkdir -p target
+	cp -r samples target
+            
 
 create_release:
 	github-release release \

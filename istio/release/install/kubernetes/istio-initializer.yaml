@@ -14,8 +14,8 @@ data:
     namespaces: [""] # everything, aka v1.NamepsaceAll, aka cluster-wide
     initializerName: "sidecar.initializer.istio.io"
     params:
-      initImage: gcr.io/nginmesh/proxy_init:0.2.12-RC2
-      proxyImage: gcr.io/nginmesh/proxy_debug:0.2.12-RC2
+      initImage: nginmesh/proxy_init:0.2.12-RC2
+      proxyImage: nginmesh/proxy_debug:0.2.12-RC2
       verbosity: 2
       version: 0.2.12-RC2
       meshConfigMapName: istio
