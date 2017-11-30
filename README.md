@@ -23,9 +23,14 @@ The sidecar run NGINX open source version with custom module to interface to Ist
 
 ![Alt text](/images/nginx_sidecar.png?raw=true "Nginx Sidecar")
 
-## The Demo
+## Quick start
 
 Please see README.md in samples/kubernetes directory.  
 
 The sample app is copied from Istio project without modification.  
 We only support deployment using Kubernetes initializer.  
+
+[Istio Install]()
+[In-Depth Telemetry]()
+[Deploy Bookinfo Reference app]()
+[Intelligent Routing]()
