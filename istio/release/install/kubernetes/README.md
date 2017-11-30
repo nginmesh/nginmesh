@@ -69,7 +69,7 @@ Then open in browser: http://localhost:9090/graph 
 kubectl apply -f install/kubernetes/addons/servicegraph.yaml
 kubectl -n istio-system port-forward $(kubectl -n istio-system get pod -l app=servicegraph -o jsonpath='{.items[0].metadata.name}') 8088:8088 &
 ```
-
+Then open in browser:  http://localhost:8088/dotviz
 # Verify Install
 ```
 kubectl get pods -n istio-system    #-- Istio pods status
