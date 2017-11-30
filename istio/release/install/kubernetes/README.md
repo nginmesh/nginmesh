@@ -20,7 +20,7 @@ Files required for [installing Istio on a Kubernetes cluster](https://github.com
 
 # Install
 
-1. Make sure alpha enabled kubernetes cluster up and running in [Google Container Engine](https://cloud.google.com/kubernetes-engine/)
+1. Make sure alpha enabled kubernetes cluster up and running in Please see requisites for [quick installation](https://istio.io/docs/setup/kubernetes/quick-start.html#prerequisites)
 
 2.  Download Istio release 0.2.12:
 
