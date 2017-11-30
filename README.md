@@ -34,6 +34,7 @@ The sample app is copied from Istio project without modification.  We only suppo
 [Deploy Bookinfo Reference application]()
 
 Optional: 
+
 [In-Depth Telemetry]()
 
 [Intelligent Routing]()
