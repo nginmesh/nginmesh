@@ -29,8 +29,13 @@ Please see README.md in samples/kubernetes directory.
 
 The sample app is copied from Istio project without modification.  
 We only support deployment using Kubernetes initializer.  
+[Prerequisities](https://istio.io/docs/setup/kubernetes/quick-start.html#prerequisites)
 
-[Istio Install]()
-[In-Depth Telemetry]()
+[Installation steps]()
+
 [Deploy Bookinfo Reference app]()
+
+Optional: 
+[In-Depth Telemetry]()
+
 [Intelligent Routing]()
