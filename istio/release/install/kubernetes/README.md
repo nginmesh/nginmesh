@@ -7,10 +7,14 @@ Please follow the installation instructions from [istio.io](https://istio.io/doc
 This directory contains files needed for installing Istio on a Kubernetes cluster.
 
 * [istio.yaml](https://github.com/istio/istio/blob/master/install/kubernetes/istio.yaml) - use this file for installation without authentication enabled
-* istio-auth.yaml - use this file for installation with authentication enabled
+* [istio-auth.yaml](https://github.com/istio/istio/blob/master/install/kubernetes/istio-auth.yaml) - use this file for installation with authentication enabled
 * istio-initializer.yaml - use this file for installation of istio initializer for transparent injection.
-* istio-one-namespace.yaml - use this file for installation without authentication enabled. Istio control plane and applications will be in one single namespace, mainly used for testing.
+* [istio-one-namespace.yaml](https://github.com/istio/istio/blob/master/install/kubernetes/istio-one-namespace.yaml) - use this file for installation without authentication enabled. Istio control plane and applications will be in one single namespace, mainly used for testing.
 * istio-one-namespace-auth.yaml - use this file for installation with authentication enabled. Istio control plane and applications will be in one single namespace, mainly used for testing.
 * templates - directory contains the templates used to generate istio.yaml and istio-auth.yaml
-* addons - directory contains optional components (Prometheus, Grafana, Service Graph, Zipkin, Zipkin to Stackdriver)
+* [addons](https://github.com/istio/istio/blob/master/install/kubernetes/addons) - directory contains optional components (Prometheus, Grafana, Service Graph, Zipkin, Zipkin to Stackdriver)
 * updateVersion.sh in the parent directory can be run to regenerate installation files
+
+# Installation Steps
+
+# 
