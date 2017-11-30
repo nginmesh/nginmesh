@@ -4,7 +4,7 @@
 Please follow the installation instructions from [istio.io](https://istio.io/docs/setup/kubernetes/quick-start.html).
 
 ## Directory structure
-This directory contains additional files needed for [installing Istio on a Kubernetes cluster](https://github.com/istio/istio/tree/master/install/kubernetes).
+This directory contains additional files required for [installing Istio on a Kubernetes cluster](https://github.com/istio/istio/tree/master/install/kubernetes).
 
 * [istio.yaml](https://github.com/istio/istio/blob/master/install/kubernetes/istio.yaml) - use this file for installation without authentication enabled
 * [istio-auth.yaml](https://github.com/istio/istio/blob/master/install/kubernetes/istio-auth.yaml) - use this file for installation with authentication enabled
