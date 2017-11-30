@@ -18,10 +18,9 @@ Files required for [installing Istio on a Kubernetes cluster](https://github.com
 
 
 
-# Installation Steps
+# Install
 
-# 
-Deploy script:
+```
 1.Create alpha enabled kube cluster:
 gcloud container clusters create nginmesh \
 --enable-kubernetes-alpha \
@@ -67,8 +66,8 @@ kubectl -n istio-system port-forward $(kubectl -n istio-system get pod -l app=se
 Then open in browser: http://localhost:8088/dotviz
 
 kubectl create f samples/bookinfo/kube/bookinfo.yaml #-- Deploy Bookinfo Reference application
-===================================================================
-Verifying deployment status:
+```
+# Verify Install
 
 kubectl get pods -n kube-system   #-- Kube cluster pods status
 kubectl get svc -n kube-system     #-- Kube cluster services status
@@ -85,7 +84,7 @@ Open in browser Bookinfo application, make sure successfully run :
 http://${GATEWAY_URL}/productpage
 
 
-# Uninstalling
+# Uninstall
 ```
 ./samples/bookinfo/kube/cleanup.sh #-- Delete the routing rules and terminate the application pods
 kubectl delete -f install/kubernetes/addons/zipkin.yaml #-- Delete Zipkin
