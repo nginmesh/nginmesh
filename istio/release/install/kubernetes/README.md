@@ -14,7 +14,7 @@ Files required for [installing Istio on a Kubernetes cluster](https://github.com
  
  * [updateVersion.sh](https://github.com/nginmesh/nginmesh/blob/release-doc-0.2.12/istio/release/updateVersion.sh) Use this file to regenerate Initializer file.
 * [istio-initializer.yaml](https://github.com/nginmesh/nginmesh/blob/release-doc-0.2.12/istio/release/install/kubernetes/istio-initializer.yaml) - Use this file for installation of istio initializer for transparent injection.
-* [templates](https://github.com/nginmesh/nginmesh/blob/release-doc-0.2.12/istio/release/install/kubernetes/templates) - Directory contains the templates used to generate istio.yaml and istio-auth.yaml.
+* [templates](https://github.com/nginmesh/nginmesh/blob/release-doc-0.2.12/istio/release/install/kubernetes/templates) - Directory contains the templates used to generate Initializer file.
 
 
 
