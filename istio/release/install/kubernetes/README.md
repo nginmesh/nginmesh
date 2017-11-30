@@ -20,9 +20,8 @@ Files required for [installing Istio on a Kubernetes cluster](https://github.com
 
 # Install
 
-1. Make sure alpha enabled kubernetes cluster up and running:
+1. Make sure alpha enabled kubernetes cluster up and running in [Google Container Engine](https://cloud.google.com/kubernetes-engine/)
 
-[Google Container Engine](https://cloud.google.com/kubernetes-engine/)
 
 ```
 gcloud container clusters create nginmesh \
@@ -33,11 +32,14 @@ gcloud container clusters create nginmesh \
 --zone=us-central1-a
 ```
 2 Downloand latest nginmesh repo:
+```
 git clone https://github.com/nginmesh/nginmesh.git
+```
 3. Add the istioctl client to your PATH:
+```
 cd nginmesh
 export PATH=$PWD/bin:$PATH
-
+```
 4. In Nginmesh repo update version:
 ./nginmesh/istio/updateVersion.sh
 
