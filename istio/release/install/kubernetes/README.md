@@ -50,6 +50,7 @@ kubectl create -f install/kubernetes/istio.yaml
 ```
 kubectl apply -f install/kubernetes/istio-initializer.yaml
 ```
+
 7. Enable [Zipkin](https://istio.io/docs/tasks/telemetry/distributed-tracing.html#accessing-the-dashboard):
 ```
 kubectl apply -f install/kubernetes/addons/zipkin.yaml
