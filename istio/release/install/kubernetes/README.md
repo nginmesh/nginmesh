@@ -22,10 +22,17 @@ Files required for [installing Istio on a Kubernetes cluster](https://github.com
 
 1. Make sure alpha enabled kubernetes cluster up and running in [Google Container Engine](https://cloud.google.com/kubernetes-engine/)
 
-2 Downloand latest nginmesh repo:
+2.  Download Istio release 0.2.12:
+
+```
+curl -L https://git.io/getLatestIstio | ISTIO_VERSION=0.2.12 sh -
+```
+
+3. Download latest nginmesh repo:
 ```
 git clone https://github.com/nginmesh/nginmesh.git
 ```
+
 3. Add the istioctl client to your PATH:
 ```
 cd nginmesh
@@ -70,10 +77,11 @@ kubectl apply -f install/kubernetes/addons/servicegraph.yaml
 kubectl -n istio-system port-forward $(kubectl -n istio-system get pod -l app=servicegraph -o jsonpath='{.items[0].metadata.name}') 8088:8088 &
 ```
 Then open in browser:  http://localhost:8088/dotviz
+
 # Verify Install
 ```
 kubectl get pods -n istio-system    #-- Istio pods status
-kubectl get svc -n istio-system      #-- Istio services status
+kubectl get svc  -n istio-system      #-- Istio services status
 ```
 
 # Uninstall
@@ -82,8 +90,8 @@ kubectl delete -f install/kubernetes/istio.yaml #-- Delete Istio without auth en
 kubectl delete -f install/kubernetes/istio-auth.yaml #-- Delete Istio without auth enabled
 kubectl delete -f install/kubernetes/istio-initializer.yaml #Delete Initializer
 kubectl delete -f install/kubernetes/addons/zipkin.yaml #-- Delete Zipkin
-kubectl apply -f install/kubernetes/addons/grafana.yaml #-- Delete Graphana
-kubectl apply -f install/kubernetes/addons/prometheus.yaml #-- Delete Prometheus
+kubectl delete -f install/kubernetes/addons/grafana.yaml #-- Delete Graphana
+kubectl delete -f install/kubernetes/addons/prometheus.yaml #-- Delete Prometheus
 kubectl delete -f install/kubernetes/addons/servicegraph.yaml #Delete ServiceGraph
 killall kubectl #-- Remove any kubectl port-forward processes that may be running
 ```
@@ -91,4 +99,5 @@ killall kubectl #-- Remove any kubectl port-forward processes that may be runn
 #  Verify uninstall
 ```
 kubectl get pods -n istio-system #-- Istio pods should be deleted
+kubectl get svc  -n istio-system      #-- Istio services should be deleted
 ```
