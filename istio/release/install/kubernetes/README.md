@@ -20,15 +20,17 @@ Files required for [installing Istio on a Kubernetes cluster](https://github.com
 
 # Install
 
+1. Make sure alpha enabled kubernetes cluster up and running:
+[Google Container Engine](https://cloud.google.com/kubernetes-engine/)
+
 ```
-1.Create alpha enabled kube cluster:
 gcloud container clusters create nginmesh \
 --enable-kubernetes-alpha \
 --machine-type=n1-standard-2 \
 --num-nodes=4 \
 --no-enable-legacy-authorization \
 --zone=us-central1-a
-
+```
 2 Downloand latest nginmesh repo:
 git clone https://github.com/nginmesh/nginmesh.git
 3. Add the istioctl client to your PATH:
@@ -63,9 +65,6 @@ Then open in browser: http://localhost:9090/graph 
 kubectl apply -f install/kubernetes/addons/servicegraph.yaml
 kubectl -n istio-system port-forward $(kubectl -n istio-system get pod -l app=servicegraph -o jsonpath='{.items[0].metadata.name}') 8088:8088 &
 
-Then open in browser: http://localhost:8088/dotviz
-
-kubectl create f samples/bookinfo/kube/bookinfo.yaml #-- Deploy Bookinfo Reference application
 ```
 # Verify Install
 ```
@@ -100,8 +99,6 @@ kubectl config delete-cluster nginmesh #Delete cluster in kubeconfig
 
 #  Verify uninstall
 ```
-istioctl get routerules #-- There should be no more routing rules
-kubectl get pods #-- BookInfo pods should be deleted
 kubectl get pods -n istio-system #-- Istio pods should be deleted
 kubectl get pods -n kube-system #-- Kube pods should be deleted
 gcloud container clusters list #-- Kube cluster should be deleted
