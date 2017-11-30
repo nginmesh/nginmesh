@@ -22,15 +22,6 @@ Files required for [installing Istio on a Kubernetes cluster](https://github.com
 
 1. Make sure alpha enabled kubernetes cluster up and running in [Google Container Engine](https://cloud.google.com/kubernetes-engine/)
 
-
-```
-gcloud container clusters create nginmesh \
---enable-kubernetes-alpha \
---machine-type=n1-standard-2 \
---num-nodes=4 \
---no-enable-legacy-authorization \
---zone=us-central1-a
-```
 2 Downloand latest nginmesh repo:
 ```
 git clone https://github.com/nginmesh/nginmesh.git
@@ -71,39 +62,23 @@ kubectl -n istio-system port-forward $(kubectl -n istio-system get pod -l app=se
 ```
 # Verify Install
 ```
-kubectl get pods -n kube-system   #-- Kube cluster pods status
-kubectl get svc -n kube-system     #-- Kube cluster services status
 kubectl get pods -n istio-system    #-- Istio pods status
 kubectl get svc -n istio-system      #-- Istio services status
-kubectl get pods                           #-- Bookinfo pods status check
-kubectl get svc -n istio-system     #-- Bookinfo service status check
-kubectl get ingress -o wide          #-- Ingress IP and Port
-export GATEWAY_URL=104.196.5.186:80 #-- Set Variable to Ingress address
-curl -o /dev/null -s w "%{http_code}\n" http://${GATEWAY_URL}/productpage  #-- Check Bookinfo application status
-istioctl get routerules                   #-- Check Istio rules list
-
-Open in browser Bookinfo application, make sure successfully run :
-http://${GATEWAY_URL}/productpage
 ```
 
 # Uninstall
 ```
-./samples/bookinfo/kube/cleanup.sh #-- Delete the routing rules and terminate the application pods
+kubectl delete -f install/kubernetes/istio.yaml #-- Delete Istio without auth enabled
+kubectl delete -f install/kubernetes/istio-auth.yaml #-- Delete Istio without auth enabled
+kubectl delete -f install/kubernetes/istio-initializer.yaml #Delete Initializer
 kubectl delete -f install/kubernetes/addons/zipkin.yaml #-- Delete Zipkin
 kubectl apply -f install/kubernetes/addons/grafana.yaml #-- Delete Graphana
 kubectl apply -f install/kubernetes/addons/prometheus.yaml #-- Delete Prometheus
 kubectl delete -f install/kubernetes/addons/servicegraph.yaml #Delete ServiceGraph
 killall kubectl #-- Remove any kubectl port-forward processes that may be running
-kubectl delete -f install/kubernetes/istio-initializer.yaml #Delete Initializer
-kubectl delete -f install/kubernetes/istio.yaml #-- Delete Istio
-gcloud container clusters delete nginmesh --zone=us-central1-a #-- Delete Kube cluster in GCP
-kubectl config delete-cluster nginmesh #Delete cluster in kubeconfig 
 ```
 
 #  Verify uninstall
 ```
 kubectl get pods -n istio-system #-- Istio pods should be deleted
-kubectl get pods -n kube-system #-- Kube pods should be deleted
-gcloud container clusters list #-- Kube cluster should be deleted
-kubectl config get-contexts #-- Kube cluster config be deleted
 ```
