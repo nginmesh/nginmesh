@@ -25,15 +25,13 @@ The sidecar run NGINX open source version with custom module to interface to Ist
 
 ## Quick start
 
-Please see README.md in samples/kubernetes directory.  
+The sample app is copied from Istio project without modification.  We only support deployment using Kubernetes initializer.  
 
-The sample app is copied from Istio project without modification.  
-We only support deployment using Kubernetes initializer.  
 [Prerequisities](https://istio.io/docs/setup/kubernetes/quick-start.html#prerequisites)
 
 [Installation steps]()
 
-[Deploy Bookinfo Reference app]()
+[Deploy Bookinfo Reference application]()
 
 Optional: 
 [In-Depth Telemetry]()
