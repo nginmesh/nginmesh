@@ -68,7 +68,7 @@ Then open in browser: http://localhost:8088/dotviz
 kubectl create f samples/bookinfo/kube/bookinfo.yaml #-- Deploy Bookinfo Reference application
 ```
 # Verify Install
-
+```
 kubectl get pods -n kube-system   #-- Kube cluster pods status
 kubectl get svc -n kube-system     #-- Kube cluster services status
 kubectl get pods -n istio-system    #-- Istio pods status
@@ -82,7 +82,7 @@ istioctl get routerules                   #-- Check Istio rules list
 
 Open in browser Bookinfo application, make sure successfully run :
 http://${GATEWAY_URL}/productpage
-
+```
 
 # Uninstall
 ```
