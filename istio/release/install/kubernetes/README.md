@@ -6,12 +6,10 @@ Please follow the installation instructions from [istio.io](https://istio.io/doc
 ## Directory structure
 This directory contains additional files required for [installing Istio on a Kubernetes cluster](https://github.com/istio/istio/tree/master/install/kubernetes).
 
-* [istio.yaml](https://github.com/istio/istio/blob/master/install/kubernetes/istio.yaml) - use this file for installation without authentication enabled
-* [istio-auth.yaml](https://github.com/istio/istio/blob/master/install/kubernetes/istio-auth.yaml) - use this file for installation with authentication enabled
-* istio-initializer.yaml - use this file for installation of istio initializer for transparent injection.
-* [istio-one-namespace.yaml](https://github.com/istio/istio/blob/master/install/kubernetes/istio-one-namespace.yaml) - use this file for installation without authentication enabled. Istio control plane and applications will be in one single namespace, mainly used for testing.
-* istio-one-namespace-auth.yaml - use this file for installation with authentication enabled. Istio control plane and applications will be in one single namespace, mainly used for testing.
-* templates - directory contains the templates used to generate istio.yaml and istio-auth.yaml
+* [istio.yaml](https://github.com/istio/istio/blob/master/install/kubernetes/istio.yaml) - Use this file for installation without authentication enabled
+* [istio-auth.yaml](https://github.com/istio/istio/blob/master/install/kubernetes/istio-auth.yaml) - Use this file for installation with authentication enabled
+* [istio-initializer.yaml](https://github.com/nginmesh/nginmesh/blob/release-doc-0.2.12/istio/release/install/kubernetes/istio-initializer.yaml) - use this file for installation of istio initializer for transparent injection.
+* [templates](https://github.com/nginmesh/nginmesh/blob/release-doc-0.2.12/istio/release/install/kubernetes/templates) - directory contains the templates used to generate istio.yaml and istio-auth.yaml
 * [addons](https://github.com/istio/istio/blob/master/install/kubernetes/addons) - directory contains optional components (Prometheus, Grafana, Service Graph, Zipkin, Zipkin to Stackdriver)
 * updateVersion.sh in the parent directory can be run to regenerate installation files
 
