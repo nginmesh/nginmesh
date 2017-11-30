@@ -32,34 +32,43 @@ cd nginmesh
 export PATH=$PWD/bin:$PATH
 ```
 4. In Nginmesh repo update version:
+```
 ./nginmesh/istio/updateVersion.sh
-
+```
 5. Create Istio deployment without authentication:
+```
 kubectl create -f install/kubernetes/istio.yaml
-
+```
 6. Deploy automatic sidecar injection initializer:
+```
 kubectl apply -f install/kubernetes/istio-initializer.yaml
-
+```
 7. Enable Zipkin:
+```
 kubectl apply -f install/kubernetes/addons/zipkin.yaml
 kubectl port-forward -n istio-system $(kubectl get pod -n istio-system -l app=zipkin -o jsonpath='{.items[0].metadata.name}') 9411:9411 &
+```
 Then open in browser: http://localhost:9411
 
 8. Enable Graphana:
+```
 kubectl apply -f install/kubernetes/addons/grafana.yaml
 kubectl -n istio-system port-forward $(kubectl -n istio-system get pod -l app=grafana -o jsonpath='{.items[0].metadata.name}') 3000:3000 &
+```
 Then open in browser: http://localhost:3000/dashboard/db/istio-dashboard 
 
 9. Enable Prometheus:
+```
 kubectl apply -f install/kubernetes/addons/prometheus.yaml
 kubectl -n istio-system port-forward $(kubectl -n istio-system get pod -l app=prometheus -o jsonpath='{.items[0].metadata.name}') 9090:9090 &
 Then open in browser: http://localhost:9090/graph 
-
+```
 10. Enable ServiceGraph:
+```
 kubectl apply -f install/kubernetes/addons/servicegraph.yaml
 kubectl -n istio-system port-forward $(kubectl -n istio-system get pod -l app=servicegraph -o jsonpath='{.items[0].metadata.name}') 8088:8088 &
-
 ```
+
 # Verify Install
 ```
 kubectl get pods -n istio-system    #-- Istio pods status
