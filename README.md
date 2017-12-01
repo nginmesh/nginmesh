@@ -98,7 +98,7 @@ Note: We only support deployment using Kubernetes initializer.
 kubectl apply -f samples/kubernetes/bookinfo.yaml
 ```
 
-2. Confirm all services are correctly defined and running: productpage, details, reviews,ratings.
+2. Confirm all application services are correctly defined and running: productpage, details, reviews,ratings.
 ```
 kubectl get services
 ```
