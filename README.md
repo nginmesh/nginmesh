@@ -29,9 +29,9 @@ Below are instructions to setup the Istio service mesh in a Kubernetes cluster u
 
 ### Prerequisities 
 
-Make sure you have  kubernetes cluster with alpha fearture enabled. Please, refer [Prerequisites](https://istio.io/docs/setup/kubernetes/quick-start.html#prerequisites) to Istio project for setting up cluster for your environment.
+Make sure you have  kubernetes cluster with alpha fearture enabled. Please, refer to [Prerequisites](https://istio.io/docs/setup/kubernetes/quick-start.html#prerequisites) in Istio project for setting up cluster for your environment.
 
-#### Installation Istio and Nginmesh
+### Installation Istio and Nginmesh
 Below are instructions for installing Istio with NGiNX as a sidecar in application pods.
 
 1.  Download Istio release 0.2.12:
@@ -61,7 +61,7 @@ kubectl get pods -n istio-system   
 kubectl get svc  -n istio-system   
 ```
 
-#### Deploy Application
+### Deploy Application
 The sample app is copied from Istio project without modification. Please, refer to [Bookinfo](https://istio.io/docs/guides/bookinfo.html) for more details.  
 
 Note: We only support deployment using Kubernetes initializer. 
@@ -103,7 +103,7 @@ b) Open in browser Bookinfo application and make sure successfully running:
 ```
 http://${GATEWAY_URL}/productpage
 ```
-#### Cleanup Bookinfo application
+### Cleanup Application
 
 1.  Uninstall application, run the following shell script from Nginmesh root folder:
 ```
@@ -116,7 +116,7 @@ kubectl get pods
 kubectl get svc
 ```
 
-#### Cleanup Istio
+### Cleanup Istio
 
 1. Uninstall Istio from Kubernetes environment, run the following commands from Istio root folder:
 
@@ -142,7 +142,7 @@ kubectl get pods -n istio-system
 kubectl get svc  -n istio-system 
 ```
 
-#### Optional: 
+### Optional: 
 
 [In-Depth Telemetry](https://istio.io/docs/guides/telemetry.html) This sample demonstrates how to obtain uniform metrics, logs, traces across different services using NGiNX sidecar.
 
