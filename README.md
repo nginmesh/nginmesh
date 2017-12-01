@@ -34,30 +34,25 @@ Make sure you have  kubernetes cluster with alpha feature enabled. Please, refer
 ### Installation Istio and Nginmesh
 Below are instructions for installing Istio with NGINX as a sidecar in application pods.
 
-1. Create new folder named nginmesh:
-```
-mkdir nginmesh
-```
-
-2.  Download Istio release 0.2.12, by running below command inside nginmesh folder:
+1.  Download Istio release 0.2.12, by running below command inside nginmesh folder:
 
 ```
 curl -L https://git.io/getLatestIstio | ISTIO_VERSION=0.2.12 sh -
 ```
 
-2. Download Nginmesh release 0.2.12 to nginmesh folder:
+2. Download Nginmesh release 0.2.12:
 ```
-curl -L https://github.com/nginmesh/nginmesh/releases/download/0.2.12-RC2/nginmesh.tar.gz | tar zx
+curl -L https://github.com/nginmesh/nginmesh/releases/download/0.2.12-RC2/nginmesh-0.2.12.tar.gz | tar zx
 ```
 
-3. Create Istio deployment without authentication from nginmesh folder:
+3. Create Istio deployment without authentication:
 ```
 kubectl create -f istio-0.2.12/install/kubernetes/istio.yaml
 ```
 
-4. Deploy automatic sidecar injection initializer from nginmesh folder:
+4. Deploy automatic sidecar injection initializer:
 ```
-kubectl apply -f install/kubernetes/istio-initializer.yaml
+kubectl apply -f nginmesh-0.2.12/install/kubernetes/istio-initializer.yaml
 ```
 
 5. Ensure the following Kubernetes services are deployed: istio-pilot, istio-mixer, istio-ingress, istio-egress:
@@ -65,6 +60,7 @@ kubectl apply -f install/kubernetes/istio-initializer.yaml
 ```
 kubectl get svc  -n istio-system  
 ```
+which produces the following output:
 ```
   NAME            CLUSTER-IP      EXTERNAL-IP       PORT(S)                       AGE
   istio-egress    10.83.247.89    <none>            80/TCP                        5h
@@ -78,6 +74,7 @@ kubectl get svc  -n istio-system 
 ```
 kubectl get pods -n istio-system    
 ```
+which produces the following output:
 ```
   istio-ca-3657790228-j21b9           1/1       Running   0          5h
   istio-egress-1684034556-fhw89       1/1       Running   0          5h
@@ -92,16 +89,17 @@ The sample app is copied from Istio project without modification. Please, refer 
 
 Note: We only support deployment using Kubernetes initializer. 
 
-1. Deploy the application containers from nginmesh folder:
+1. Deploy the application containers:
 
 ```
-kubectl apply -f samples/kubernetes/bookinfo.yaml
+kubectl apply -f nginmesh-0.2.12/samples/kubernetes/bookinfo.yaml
 ```
 
 2. Confirm all application services are correctly defined and running: productpage, details, reviews,ratings.
 ```
 kubectl get services
 ```
+which produces the following output:
 ```
 NAME                       CLUSTER-IP   EXTERNAL-IP   PORT(S)              AGE
 details                    10.0.0.31    <none>        9080/TCP             6m
@@ -115,6 +113,7 @@ reviews                    10.0.0.170   <none>        9080/TCP             6m
 ```
 kubectl get pods
 ```
+which produces the following output:
 ```
 NAME                                        READY     STATUS    RESTARTS   AGE
 details-v1-1520924117-48z17                 2/2       Running   0          6m
@@ -152,7 +151,7 @@ http://${GATEWAY_URL}/productpage
 ```
 ### Cleanup Application
 
-1.  Uninstall application, run the following shell script from nginmesh folder:
+1.  Uninstall application, run the following shell script:
 ```
 ./samples/kubernetes/cleanup.sh 
 ```
@@ -165,7 +164,7 @@ kubectl get svc
 
 ### Cleanup Istio
 
-1. Uninstall Istio from Kubernetes environment, run the following commands from nginmesh folder:
+1. Uninstall Istio from Kubernetes environment, run the following commands:
 
 a) If no authentication enabled:
 ```
@@ -178,9 +177,9 @@ b) If authentication enabled:
 ```
 kubectl delete -f istio-0.2.12/install/kubernetes/istio-auth.yaml
 ```
-2. Uninstall Initializor, run the following commands from nginmesh folder:
+2. Uninstall Initializor, run the following commands:
 ```
-kubectl delete -f install/kubernetes/istio-initializer.yaml
+kubectl delete -f nginmesh-0.2.12/install/kubernetes/istio-initializer.yaml
 ```
 
 3. Make sure Istio pods and services lists are empty:
