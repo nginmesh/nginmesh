@@ -45,19 +45,19 @@ curl -L https://git.io/getLatestIstio | ISTIO_VERSION=0.2.12 sh -
 curl -L https://github.com/nginmesh/nginmesh/releases/tag/0.2.12-RC2
 ```
 
-3. Create Istio deployment without authentication:
+3. Create Istio deployment without authentication from Istio root folder:
 ```
 kubectl create -f install/kubernetes/istio.yaml
 ```
-4. Deploy automatic sidecar injection initializer:
+4. Deploy automatic sidecar injection initializer from Nginmesh root folder:
 ```
 kubectl apply -f install/kubernetes/istio-initializer.yaml
 ```
 
-5. Ensure the corresponding Kubernetes pods are deployed and all containers are up and running: istio-pilot-*, istio-mixer-*, istio-ingress-*, istio-egress-* and istio-initializer-*.
+5. Ensure the corresponding Kubernetes pods are deployed and all containers are up and running: istio-pilot-* , istio-mixer-* , istio-ingress-* , istio-egress-* and istio-initializer-*.
 ```
 kubectl get pods -n istio-system    #-- Istio pods status
-kubectl get svc  -n istio-system      #-- Istio services status
+kubectl get svc  -n istio-system    #-- Istio services status
 ```
 
 #### Deploy Application
@@ -65,7 +65,7 @@ The sample app is copied from Istio project without modification. Please, refer 
 
 Note: We only support deployment using Kubernetes initializer. 
 
-1. Change directory to the root of the Nginmesh installation directory
+1. Change directory to Nginmesh root folder
 
 2. Deploy the application containers:
 
@@ -73,7 +73,7 @@ Note: We only support deployment using Kubernetes initializer.
 kubectl apply -f samples/bookinfo/kube/bookinfo.yaml
 ```
 
-3. Confirm all services and pods are correctly defined and running: details-v1-*, productpage-v1-*, ratings-v1-*, ratings-v1-*, reviews-v1-*, reviews-v2-*, reviews-v3-*.
+3. Confirm all services and pods are correctly defined and running: details-v1-* , productpage-v1-* , ratings-v1-* , ratings-v1-* , reviews-v1-* , reviews-v2-* and reviews-v3-*.
 
 ```
 kubectl get pods
@@ -88,9 +88,9 @@ kubectl get ingress -o wide          #-- Ingress IP and Port
 ```
 export GATEWAY_URL=104.196.5.186:80
 ```
-6. To confirm that the BookInfo application is running:
+6. To confirm that the BookInfo application is up and running:
 
-a) Run the following curl command and check received response code:
+a) Run the following curl command and check received response code is 200:
 
 ```
 curl -o /dev/null -s -w "%{http_code}\n" http://${GATEWAY_URL}/productpage
@@ -98,13 +98,13 @@ curl -o /dev/null -s -w "%{http_code}\n" http://${GATEWAY_URL}/productpage
 
 OR:
 
-b) Open in browser Bookinfo application, make sure successfully running :
+b) Open in browser Bookinfo application and make sure successfully running:
 ```
 http://${GATEWAY_URL}/productpage
 ```
-#### Cleanup Application
+#### Cleanup Bookinfo application
 
-1. Uninstall from Kubernetes environment:
+1.  Uninstall application, run the following shell script from Nginmesh root folder:
 ```
 ./samples/bookinfo/kube/cleanup.sh 
 ```
@@ -117,19 +117,28 @@ kubectl get svc  #-- Application services should be deleted
 
 #### Cleanup Istio
 
-1. Uninstall from Kubernetes environment:
+1. Uninstall Istio from Kubernetes environment, run the following commands from Istio root folder:
+
+a) If no authentication enabled:
 ```
 kubectl delete -f install/kubernetes/istio.yaml #-- Delete Istio without auth enabled
+```
+
+OR:
+
+b) If authentication enabled:
+```
 kubectl delete -f install/kubernetes/istio-auth.yaml #-- Delete Istio without auth enabled
+```
+2. Uninstall Initializor, run the following commands from Nginmesh root folder:
+```
 kubectl delete -f install/kubernetes/istio-initializer.yaml #-- Delete Initializer
 ```
 
-2. Verify cleanup:
+3. Verify cleanup:
 ```
 kubectl get pods -n istio-system #-- Istio pods should be deleted
 kubectl get svc  -n istio-system #-- Istio services should be deleted
-kubectl get pods #-- Application pods should be deleted
-kubectl get svc  #-- Application services should be deleted
 ```
 
 #### Optional: 
