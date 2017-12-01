@@ -71,7 +71,7 @@ The sample app is copied from Istio project without modification. Please, refer 
 
 Note: We only support deployment using Kubernetes initializer. 
 
-1. Deploy the application containers from Nginmesh root folder:
+1. Deploy the application containers from nginmesh folder:
 
 ```
 kubectl apply -f samples/kubernetes/bookinfo.yaml
@@ -112,7 +112,7 @@ http://${GATEWAY_URL}/productpage
 ```
 ### Cleanup Application
 
-1.  Uninstall application, run the following shell script from Nginmesh root folder:
+1.  Uninstall application, run the following shell script from nginmesh folder:
 ```
 ./samples/kubernetes/cleanup.sh 
 ```
@@ -125,7 +125,7 @@ kubectl get svc
 
 ### Cleanup Istio
 
-1. Uninstall Istio from Kubernetes environment, run the following commands from Istio root folder:
+1. Uninstall Istio from Kubernetes environment, run the following commands from nginmesh folder:
 
 a) If no authentication enabled:
 ```
@@ -138,7 +138,7 @@ b) If authentication enabled:
 ```
 kubectl delete -f istio-0.2.12/install/kubernetes/istio-auth.yaml
 ```
-2. Uninstall Initializor, run the following commands from Nginmesh root folder:
+2. Uninstall Initializor, run the following commands from nginmesh folder:
 ```
 kubectl delete -f install/kubernetes/istio-initializer.yaml
 ```
@@ -151,7 +151,7 @@ kubectl get svc  -n istio-system 
 
 ### Optional: 
 
-[In-Depth Telemetry](https://istio.io/docs/guides/telemetry.html) This sample demonstrates how to obtain uniform metrics, logs, traces across different services using NGiNX sidecar.
+[In-Depth Telemetry](https://istio.io/docs/guides/telemetry.html) This sample demonstrates how to obtain uniform metrics, logs, traces across different services using NGiNX sidecar. Additionally, for quick install of telemetry services, please check this [link](https://github.com/nginmesh/nginmesh/blob/release-doc-0.2.12/istio/tools/README.md)
 
 [Intelligent Routing](https://istio.io/docs/guides/intelligent-routing.html) Refer to Michael README.md ? Difference in delay with Istio.
 
