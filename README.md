@@ -29,7 +29,7 @@ Below are instructions to setup the Istio service mesh in a Kubernetes cluster u
 
 ### Prerequisities 
 
-Make sure alpha enabled kubernetes cluster up and running in Google Container Engine. Please, refer to [Prerequisites](https://istio.io/docs/setup/kubernetes/quick-start.html#prerequisites) of Istio project.
+Make sure you have  kubernetes cluster with alpha fearture enabled. Please, refer [Prerequisites](https://istio.io/docs/setup/kubernetes/quick-start.html#prerequisites) to Istio project for setting up cluster for your environment.
 
 #### Installation steps
 Below are instructions for installing Istio with NGiNX as a sidecar in application pods.
