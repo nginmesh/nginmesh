@@ -27,10 +27,13 @@ The sidecar run NGINX open source version with custom module to interface to Ist
 Below are instructions to setup the Istio service mesh in a Kubernetes cluster using NGiNX as a sidecar.
  
 
-### [Prerequisities](https://istio.io/docs/setup/kubernetes/quick-start.html#prerequisites) Make sure alpha enabled kubernetes cluster up and running in Google Container Engine.
+### [Prerequisities](https://istio.io/docs/setup/kubernetes/quick-start.html#prerequisites) 
+Make sure alpha enabled kubernetes cluster up and running in Google Container Engine.
 
-### [Installation steps](https://github.com/nginmesh/nginmesh/tree/release-doc-0.2.12/istio/release/install/kubernetes) Instructions for installing Istio with NGiNX as a sidecar in application pods.
+### [Installation steps](https://github.com/nginmesh/nginmesh/tree/release-doc-0.2.12/istio/release/install/kubernetes)
+Instructions for installing Istio with NGiNX as a sidecar in application pods.
 
+#### Install
 1.  Download Istio release 0.2.12:
 
 ```
@@ -74,8 +77,42 @@ kubectl get pods -n istio-system #-- Istio pods should be deleted
 kubectl get svc  -n istio-system      #-- Istio services should be deleted
 ```
 
-### [Deploy Bookinfo Reference application](https://istio.io/docs/guides/bookinfo.html) 
+#### [Deploy Bookinfo Reference application](https://istio.io/docs/guides/bookinfo.html) 
 The sample app is copied from Istio project without modification.  We only support deployment using Kubernetes initializer. 
+
+1. Change directory to the root of the Nginmesh installation directory
+
+2. Deploy the application containers:
+
+```
+kubectl apply -f samples/bookinfo/kube/bookinfo.yaml
+```
+
+3. Confirm all services and pods are correctly defined and running:
+
+```
+kubectl get pods
+kubectl get services
+```
+
+4. If cluster is running in an environment that supports external load balancers, the IP address of ingress can be obtained by the following command:
+kubectl get ingress -o wide          #-- Ingress IP and Port
+
+5. Set Variable to Ingress address obtained in Step 4:
+export GATEWAY_URL=104.196.5.186:80
+
+6. To confirm that the BookInfo application is running:
+
+Run the following curl command and check received response code:
+
+```
+curl -o /dev/null -s -w "%{http_code}\n" http://${GATEWAY_URL}/productpage
+```
+
+OR:
+
+Open in browser Bookinfo application, make sure successfully running :
+http://${GATEWAY_URL}/productpage
 
 
 
