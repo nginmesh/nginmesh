@@ -27,13 +27,12 @@ The sidecar run NGINX open source version with custom module to interface to Ist
 Below are instructions to setup the Istio service mesh in a Kubernetes cluster using NGiNX as a sidecar.
  
 
-### [Prerequisities](https://istio.io/docs/setup/kubernetes/quick-start.html#prerequisites) 
-Make sure alpha enabled kubernetes cluster up and running in Google Container Engine.
+### Prerequisities 
 
-### [Installation steps](https://github.com/nginmesh/nginmesh/tree/release-doc-0.2.12/istio/release/install/kubernetes)
-Instructions for installing Istio with NGiNX as a sidecar in application pods.
+Make sure alpha enabled kubernetes cluster up and running in Google Container Engine. Please, refer to [Prerequisites](https://istio.io/docs/setup/kubernetes/quick-start.html#prerequisites) of Istio project.
 
-#### Install Istio
+#### Installation steps
+Below are instructions for installing Istio with NGiNX as a sidecar in application pods.
 
 1.  Download Istio release 0.2.12:
 
@@ -66,7 +65,9 @@ kubectl get svc  -n istio-system      #-- Istio services status
 ```
 
 #### Deploy Application
-The sample app is copied from Istio project without modification.Please, refer to [Deploy Bookinfo Reference application](https://istio.io/docs/guides/bookinfo.html)   We only support deployment using Kubernetes initializer. 
+The sample app is copied from Istio project without modification. Please, refer to [Bookinfo](https://istio.io/docs/guides/bookinfo.html) for more details.  
+
+Note: We only support deployment using Kubernetes initializer. 
 
 1. Change directory to the root of the Nginmesh installation directory
 
@@ -84,14 +85,16 @@ kubectl get services
 ```
 
 4. If cluster is running in an environment that supports external load balancers, the IP address of ingress can be obtained by the following command:
+```
 kubectl get ingress -o wide          #-- Ingress IP and Port
-
+```
 5. Set Variable to Ingress address obtained in Step 4:
+```
 export GATEWAY_URL=104.196.5.186:80
-
+```
 6. To confirm that the BookInfo application is running:
 
-Run the following curl command and check received response code:
+a) Run the following curl command and check received response code:
 
 ```
 curl -o /dev/null -s -w "%{http_code}\n" http://${GATEWAY_URL}/productpage
@@ -99,18 +102,20 @@ curl -o /dev/null -s -w "%{http_code}\n" http://${GATEWAY_URL}/productpage
 
 OR:
 
-Open in browser Bookinfo application, make sure successfully running :
-
+b) Open in browser Bookinfo application, make sure successfully running :
+```
 http://${GATEWAY_URL}/productpage
+```
 
-
-Optional: 
+#### Optional: 
 
 [In-Depth Telemetry](https://istio.io/docs/guides/telemetry.html) This sample demonstrates how to obtain uniform metrics, logs, traces across different services using NGiNX sidecar.
 
 [Intelligent Routing](https://istio.io/docs/guides/intelligent-routing.html) Refer to Michael README.md ? Difference in delay with Istio.
 
-#### Uninstall
+#### Cleanup
+
+##### Uninstall from Kubernetes environment
 ```
 kubectl delete -f install/kubernetes/istio.yaml #-- Delete Istio without auth enabled
 kubectl delete -f install/kubernetes/istio-auth.yaml #-- Delete Istio without auth enabled
@@ -118,7 +123,7 @@ kubectl delete -f install/kubernetes/istio-initializer.yaml #-- Delete Initializ
 ./samples/bookinfo/kube/cleanup.sh #Delete Bookinfo Application
 ```
 
-####  Verify uninstall
+####  Confirm cleanup
 ```
 kubectl get pods -n istio-system #-- Istio pods should be deleted
 kubectl get svc  -n istio-system #-- Istio services should be deleted
