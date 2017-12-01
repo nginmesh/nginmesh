@@ -24,7 +24,7 @@ The sidecar run NGINX open source version with custom module to interface to Ist
 ![Alt text](/images/nginx_sidecar.png?raw=true "Nginx Sidecar")
 
 ## Quick start
-Below are instructions to setup the Istio service mesh in a Kubernetes cluster using NGiNX as a sidecar.
+Below are instructions to setup the Istio service mesh in a Kubernetes cluster using NGINX as a sidecar.
  
 
 ### Prerequisities 
@@ -42,7 +42,7 @@ curl -L https://git.io/getLatestIstio | ISTIO_VERSION=0.2.12 sh -
 
 2. Download Nginmesh release 0.2.12:
 ```
-curl -L https://github.com/nginmesh/nginmesh/releases/tag/0.2.12-RC2
+curl -O https://github.com/nginmesh/nginmesh/releases/download/0.2.12-RC2/nginmesh.tar.gz
 ```
 
 3. Create Istio deployment without authentication from Istio root folder:
