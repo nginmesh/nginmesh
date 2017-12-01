@@ -114,7 +114,7 @@ http://${GATEWAY_URL}/productpage
 
 1.  Uninstall application, run the following shell script from Nginmesh root folder:
 ```
-./samples/bookinfo/kube/cleanup.sh 
+./samples/kubernetes/cleanup.sh 
 ```
 
 2.  Make sure Application pods and services lists are empty:
@@ -129,14 +129,14 @@ kubectl get svc
 
 a) If no authentication enabled:
 ```
-kubectl delete -f install/kubernetes/istio.yaml 
+kubectl delete -f istio-0.2.12/install/kubernetes/istio.yaml
 ```
 
 OR:
 
 b) If authentication enabled:
 ```
-kubectl delete -f install/kubernetes/istio-auth.yaml
+kubectl delete -f istio-0.2.12/install/kubernetes/istio-auth.yaml
 ```
 2. Uninstall Initializor, run the following commands from Nginmesh root folder:
 ```
