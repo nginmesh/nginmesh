@@ -54,7 +54,7 @@ kubectl create -f install/kubernetes/istio.yaml
 kubectl apply -f install/kubernetes/istio-initializer.yaml
 ```
 
-5. Verify Install -- ###ad detail
+5. Ensure the corresponding Kubernetes pods are deployed and all containers are up and running: istio-pilot-*, istio-mixer-*, istio-ingress-*, istio-egress-* and istio-initializer-*.
 ```
 kubectl get pods -n istio-system    #-- Istio pods status
 kubectl get svc  -n istio-system      #-- Istio services status
@@ -73,7 +73,7 @@ Note: We only support deployment using Kubernetes initializer.
 kubectl apply -f samples/bookinfo/kube/bookinfo.yaml
 ```
 
-3. Confirm all services and pods are correctly defined and running: ### How to confirm ???
+3. Confirm all services and pods are correctly defined and running: details-v1-*, productpage-v1-*, ratings-v1-*, ratings-v1-*, reviews-v1-*, reviews-v2-*, reviews-v3-*.
 
 ```
 kubectl get pods
@@ -102,21 +102,26 @@ b) Open in browser Bookinfo application, make sure successfully running :
 ```
 http://${GATEWAY_URL}/productpage
 ```
+#### Cleanup Application
 
-#### Optional: 
+1. Uninstall from Kubernetes environment:
+```
+./samples/bookinfo/kube/cleanup.sh 
+```
 
-[In-Depth Telemetry](https://istio.io/docs/guides/telemetry.html) This sample demonstrates how to obtain uniform metrics, logs, traces across different services using NGiNX sidecar.
+2. Verify cleanup:
+```
+kubectl get pods #-- Application pods should be deleted
+kubectl get svc  #-- Application services should be deleted
+```
 
-[Intelligent Routing](https://istio.io/docs/guides/intelligent-routing.html) Refer to Michael README.md ? Difference in delay with Istio.
-
-#### Cleanup
+#### Cleanup Istio
 
 1. Uninstall from Kubernetes environment:
 ```
 kubectl delete -f install/kubernetes/istio.yaml #-- Delete Istio without auth enabled
 kubectl delete -f install/kubernetes/istio-auth.yaml #-- Delete Istio without auth enabled
 kubectl delete -f install/kubernetes/istio-initializer.yaml #-- Delete Initializer
-./samples/bookinfo/kube/cleanup.sh #Delete Bookinfo Application
 ```
 
 2. Verify cleanup:
@@ -125,7 +130,12 @@ kubectl get pods -n istio-system #-- Istio pods should be deleted
 kubectl get svc  -n istio-system #-- Istio services should be deleted
 kubectl get pods #-- Application pods should be deleted
 kubectl get svc  #-- Application services should be deleted
-
 ```
+
+#### Optional: 
+
+[In-Depth Telemetry](https://istio.io/docs/guides/telemetry.html) This sample demonstrates how to obtain uniform metrics, logs, traces across different services using NGiNX sidecar.
+
+[Intelligent Routing](https://istio.io/docs/guides/intelligent-routing.html) Refer to Michael README.md ? Difference in delay with Istio.
 
 
