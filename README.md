@@ -77,8 +77,8 @@ kubectl get pods -n istio-system #-- Istio pods should be deleted
 kubectl get svc  -n istio-system      #-- Istio services should be deleted
 ```
 
-#### [Deploy Bookinfo Reference application](https://istio.io/docs/guides/bookinfo.html) 
-The sample app is copied from Istio project without modification.  We only support deployment using Kubernetes initializer. 
+#### Deploy Application
+The sample app is copied from Istio project without modification.Please, refer to [Deploy Bookinfo Reference application](https://istio.io/docs/guides/bookinfo.html)   We only support deployment using Kubernetes initializer. 
 
 1. Change directory to the root of the Nginmesh installation directory
 
@@ -112,6 +112,7 @@ curl -o /dev/null -s -w "%{http_code}\n" http://${GATEWAY_URL}/productpage
 OR:
 
 Open in browser Bookinfo application, make sure successfully running :
+
 http://${GATEWAY_URL}/productpage
 
 
