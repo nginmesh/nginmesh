@@ -34,23 +34,28 @@ Make sure you have  kubernetes cluster with alpha feature enabled. Please, refer
 ### Installation Istio and Nginmesh
 Below are instructions for installing Istio with NGiNX as a sidecar in application pods.
 
-1.  Download Istio release 0.2.12:
+1. Create new folder named nginmesh:
+```
+mkdir nginmesh
+```
+
+2.  Download Istio release 0.2.12, by running below command inside nginmesh folder:
 
 ```
 curl -L https://git.io/getLatestIstio | ISTIO_VERSION=0.2.12 sh -
 ```
 
-2. Download Nginmesh release 0.2.12:
+2. Download Nginmesh release 0.2.12 to nginmesh folder:
 ```
-curl -O https://github.com/nginmesh/nginmesh/releases/download/0.2.12-RC2/nginmesh.tar.gz
-```
-
-3. Create Istio deployment without authentication from Istio root folder:
-```
-kubectl create -f install/kubernetes/istio.yaml
+curl -L https://github.com/nginmesh/nginmesh/releases/download/0.2.12-RC2/nginmesh.tar.gz | tar zx
 ```
 
-4. Deploy automatic sidecar injection initializer from Nginmesh root folder:
+3. Create Istio deployment without authentication from nginmesh folder:
+```
+kubectl create -f istio-0.2.12/install/kubernetes/istio.yaml
+```
+
+4. Deploy automatic sidecar injection initializer from nginmesh folder:
 ```
 kubectl apply -f install/kubernetes/istio-initializer.yaml
 ```
@@ -69,7 +74,7 @@ Note: We only support deployment using Kubernetes initializer.
 1. Deploy the application containers from Nginmesh root folder:
 
 ```
-kubectl apply -f samples/bookinfo/kube/bookinfo.yaml
+kubectl apply -f samples/kubernetes/bookinfo.yaml
 ```
 
 2. Confirm all services and pods are correctly defined and running: details-v1-* , productpage-v1-* , ratings-v1-* , ratings-v1-* , reviews-v1-* , reviews-v2-* and reviews-v3-* :
@@ -80,6 +85,10 @@ kubectl get services
 ```
 
 3. If cluster is running in an environment that supports external load balancers, the IP address of ingress can be obtained by the following command:
+```
+kubectl get svc -n istio-system | grep -E 'EXTERNAL-IP|istio-ingress'
+```
+OR
 ```
 kubectl get ingress -o wide       
 ```
