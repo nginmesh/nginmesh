@@ -30,10 +30,10 @@ Then open in browser:  http://localhost:8088/dotviz
 
 # Uninstall
 ```
-kubectl delete -f install/kubernetes/addons/zipkin.yaml #-- Delete Zipkin
-kubectl delete -f install/kubernetes/addons/grafana.yaml #-- Delete Graphana
-kubectl delete -f install/kubernetes/addons/prometheus.yaml #-- Delete Prometheus
-kubectl delete -f install/kubernetes/addons/servicegraph.yaml #Delete ServiceGraph
+kubectl delete -f istio-0.2.12/install/kubernetes/addons/zipkin.yaml #-- Delete Zipkin
+kubectl delete -f istio-0.2.12/install/kubernetes/addons/grafana.yaml #-- Delete Graphana
+kubectl delete -f istio-0.2.12/install/kubernetes/addons/prometheus.yaml #-- Delete Prometheus
+kubectl delete -f istio-0.2.12/install/kubernetes/addons/servicegraph.yaml #Delete ServiceGraph
 killall kubectl #-- Remove any kubectl port-forward processes that may be running
 ```
 
