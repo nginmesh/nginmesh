@@ -31,7 +31,7 @@ Below are instructions to setup the Istio service mesh in a Kubernetes cluster u
 
 Make sure you have  kubernetes cluster with alpha fearture enabled. Please, refer [Prerequisites](https://istio.io/docs/setup/kubernetes/quick-start.html#prerequisites) to Istio project for setting up cluster for your environment.
 
-#### Installation steps
+#### Installation Istio and Nginmesh
 Below are instructions for installing Istio with NGiNX as a sidecar in application pods.
 
 1.  Download Istio release 0.2.12:
@@ -45,20 +45,16 @@ curl -L https://git.io/getLatestIstio | ISTIO_VERSION=0.2.12 sh -
 curl -L https://github.com/nginmesh/nginmesh/releases/tag/0.2.12-RC2
 ```
 
-3. In nginmesh folder update version:
-```
-./nginmesh/istio/updateVersion.sh
-```
-4. Create Istio deployment without authentication:
+3. Create Istio deployment without authentication:
 ```
 kubectl create -f install/kubernetes/istio.yaml
 ```
-5. Deploy automatic sidecar injection initializer:
+4. Deploy automatic sidecar injection initializer:
 ```
 kubectl apply -f install/kubernetes/istio-initializer.yaml
 ```
 
-#### Verify Install
+5. Verify Install -- ###ad detail
 ```
 kubectl get pods -n istio-system    #-- Istio pods status
 kubectl get svc  -n istio-system      #-- Istio services status
@@ -77,7 +73,7 @@ Note: We only support deployment using Kubernetes initializer.
 kubectl apply -f samples/bookinfo/kube/bookinfo.yaml
 ```
 
-3. Confirm all services and pods are correctly defined and running:
+3. Confirm all services and pods are correctly defined and running: ### How to confirm ???
 
 ```
 kubectl get pods
@@ -115,7 +111,7 @@ http://${GATEWAY_URL}/productpage
 
 #### Cleanup
 
-##### Uninstall from Kubernetes environment
+1. Uninstall from Kubernetes environment:
 ```
 kubectl delete -f install/kubernetes/istio.yaml #-- Delete Istio without auth enabled
 kubectl delete -f install/kubernetes/istio-auth.yaml #-- Delete Istio without auth enabled
@@ -123,7 +119,7 @@ kubectl delete -f install/kubernetes/istio-initializer.yaml #-- Delete Initializ
 ./samples/bookinfo/kube/cleanup.sh #Delete Bookinfo Application
 ```
 
-####  Confirm cleanup
+2. Verify cleanup:
 ```
 kubectl get pods -n istio-system #-- Istio pods should be deleted
 kubectl get svc  -n istio-system #-- Istio services should be deleted
