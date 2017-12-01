@@ -34,13 +34,14 @@ Make sure you have  kubernetes cluster with alpha feature enabled. Please, refer
 ### Installation Istio and Nginmesh
 Below are instructions for installing Istio with NGINX as a sidecar in application pods.
 
-1.  Download Istio release 0.2.12, by running below command inside nginmesh folder:
+1.  Download Istio release 0.2.12, by running below command:
 
 ```
 curl -L https://git.io/getLatestIstio | ISTIO_VERSION=0.2.12 sh -
 ```
 
-2. Download Nginmesh release 0.2.12:
+2. Download Nginmesh release 0.2.12, by running below command:
+
 ```
 curl -L https://github.com/nginmesh/nginmesh/releases/download/0.2.12-RC2/nginmesh-0.2.12.tar.gz | tar zx
 ```
