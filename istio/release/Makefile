@@ -1,7 +1,7 @@
-VERSION=0.2.12-RC2
+VERSION=0.2.12-RC3
 REPO=nginmesh
 USER=nginmesh
-RELEASE_FILE=nginmesh.tar.gz
+RELEASE_FILE=nginmesh-${VERSION}.tar.gz
 
 
 update-install:
