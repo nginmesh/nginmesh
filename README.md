@@ -27,9 +27,9 @@ The sidecar run NGINX open source version with custom module to interface to Ist
 Below are instructions to setup the Istio service mesh in a Kubernetes cluster using NGiNX as a sidecar.
  
 
-[Prerequisities](https://istio.io/docs/setup/kubernetes/quick-start.html#prerequisites) Make sure alpha enabled kubernetes cluster up and running
+[Prerequisities](https://istio.io/docs/setup/kubernetes/quick-start.html#prerequisites) Make sure alpha enabled kubernetes cluster up and running in Google Container Engine.
 
-[Installation steps]() Instructions for installing the NGiNX sidecar in application pods automatically using the initializer
+[Installation steps](https://github.com/nginmesh/nginmesh/tree/release-doc-0.2.12/istio/release/install/kubernetes) Instructions for installing the NGiNX sidecar in application pods automatically using the initializer.
 
 [Deploy Bookinfo Reference application](https://istio.io/docs/guides/bookinfo.html) The sample app is copied from Istio project without modification.  We only support deployment using Kubernetes initializer. 
 
@@ -37,5 +37,5 @@ Optional:
 
 [In-Depth Telemetry](https://istio.io/docs/guides/telemetry.html) This sample demonstrates how to obtain uniform metrics, logs, traces across different services using NGiNX sidecar
 
-[Intelligent Routing]() Refer to Michael README.md
+[Intelligent Routing](https://istio.io/docs/guides/intelligent-routing.html) Refer to Michael README.md ? Difference in delay with Istio
 
