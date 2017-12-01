@@ -35,7 +35,7 @@ Below are instructions to setup the Istio service mesh in a Kubernetes cluster u
 
 Optional: 
 
-[In-Depth Telemetry]()
+[In-Depth Telemetry](https://istio.io/docs/guides/telemetry.html) This sample demonstrates how to obtain uniform metrics, logs, traces across different services using NGiNX sidecar
 
 [Intelligent Routing]() Refer to Michael README.md
 
