@@ -29,7 +29,7 @@ Below are instructions to setup the Istio service mesh in a Kubernetes cluster u
 
 [Prerequisities](https://istio.io/docs/setup/kubernetes/quick-start.html#prerequisites) Make sure alpha enabled kubernetes cluster up and running in Google Container Engine.
 
-[Installation steps](https://github.com/nginmesh/nginmesh/tree/release-doc-0.2.12/istio/release/install/kubernetes) Instructions for installing the NGiNX sidecar in application pods automatically using the initializer.
+[Installation steps](https://github.com/nginmesh/nginmesh/tree/release-doc-0.2.12/istio/release/install/kubernetes) Instructions for installing Istio with NGiNX as a sidecar automatically in application pods.
 
 [Deploy Bookinfo Reference application](https://istio.io/docs/guides/bookinfo.html) The sample app is copied from Istio project without modification.  We only support deployment using Kubernetes initializer. 
 
