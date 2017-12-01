@@ -49,15 +49,16 @@ curl -L https://github.com/nginmesh/nginmesh/releases/tag/0.2.12-RC2
 ```
 kubectl create -f install/kubernetes/istio.yaml
 ```
+
 4. Deploy automatic sidecar injection initializer from Nginmesh root folder:
 ```
 kubectl apply -f install/kubernetes/istio-initializer.yaml
 ```
 
-5. Ensure the corresponding Kubernetes pods are deployed and all containers are up and running: istio-pilot-* , istio-mixer-* , istio-ingress-* , istio-egress-* and istio-initializer-*.
+5. Ensure the corresponding Kubernetes pods are deployed and all containers are up and running: istio-pilot-* , istio-mixer-* , istio-ingress-* , istio-egress-* and istio-initializer-* :
 ```
-kubectl get pods -n istio-system    #-- Istio pods status
-kubectl get svc  -n istio-system    #-- Istio services status
+kubectl get pods -n istio-system   
+kubectl get svc  -n istio-system   
 ```
 
 #### Deploy Application
@@ -73,7 +74,7 @@ Note: We only support deployment using Kubernetes initializer.
 kubectl apply -f samples/bookinfo/kube/bookinfo.yaml
 ```
 
-3. Confirm all services and pods are correctly defined and running: details-v1-* , productpage-v1-* , ratings-v1-* , ratings-v1-* , reviews-v1-* , reviews-v2-* and reviews-v3-*.
+3. Confirm all services and pods are correctly defined and running: details-v1-* , productpage-v1-* , ratings-v1-* , ratings-v1-* , reviews-v1-* , reviews-v2-* and reviews-v3-* :
 
 ```
 kubectl get pods
@@ -82,7 +83,7 @@ kubectl get services
 
 4. If cluster is running in an environment that supports external load balancers, the IP address of ingress can be obtained by the following command:
 ```
-kubectl get ingress -o wide          #-- Ingress IP and Port
+kubectl get ingress -o wide       
 ```
 5. Set Variable to Ingress address obtained in Step 4:
 ```
@@ -109,10 +110,10 @@ http://${GATEWAY_URL}/productpage
 ./samples/bookinfo/kube/cleanup.sh 
 ```
 
-2. Verify cleanup:
+2.  Make sure Application pods and services lists are empty:
 ```
-kubectl get pods #-- Application pods should be deleted
-kubectl get svc  #-- Application services should be deleted
+kubectl get pods
+kubectl get svc
 ```
 
 #### Cleanup Istio
@@ -121,24 +122,24 @@ kubectl get svc  #-- Application services should be deleted
 
 a) If no authentication enabled:
 ```
-kubectl delete -f install/kubernetes/istio.yaml #-- Delete Istio without auth enabled
+kubectl delete -f install/kubernetes/istio.yaml 
 ```
 
 OR:
 
 b) If authentication enabled:
 ```
-kubectl delete -f install/kubernetes/istio-auth.yaml #-- Delete Istio without auth enabled
+kubectl delete -f install/kubernetes/istio-auth.yaml
 ```
 2. Uninstall Initializor, run the following commands from Nginmesh root folder:
 ```
-kubectl delete -f install/kubernetes/istio-initializer.yaml #-- Delete Initializer
+kubectl delete -f install/kubernetes/istio-initializer.yaml
 ```
 
-3. Verify cleanup:
+3. Make sure Istio pods and services lists are empty:
 ```
-kubectl get pods -n istio-system #-- Istio pods should be deleted
-kubectl get svc  -n istio-system #-- Istio services should be deleted
+kubectl get pods -n istio-system
+kubectl get svc  -n istio-system 
 ```
 
 #### Optional: 
