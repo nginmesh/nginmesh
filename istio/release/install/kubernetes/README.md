@@ -28,19 +28,21 @@ Files required for [installing Istio on a Kubernetes cluster](https://github.com
 curl -L https://git.io/getLatestIstio | ISTIO_VERSION=0.2.12 sh -
 ```
 
-3. Download latest nginmesh repo:
+3. Download Nginmesh release 0.2.12:
 ```
-git clone https://github.com/nginmesh/nginmesh.git
+curl -L https://github.com/nginmesh/nginmesh/releases/tag/0.2.12-RC2
 ```
+
+4. In nginmesh folder update version:
+```
+./nginmesh/istio/updateVersion.sh
 
 3. Add the istioctl client to your PATH:
 ```
 cd nginmesh
 export PATH=$PWD/bin:$PATH
 ```
-4. In Nginmesh repo update version:
-```
-./nginmesh/istio/updateVersion.sh
+
 ```
 5. Create Istio deployment without authentication:
 ```
