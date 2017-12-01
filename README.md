@@ -66,30 +66,28 @@ The sample app is copied from Istio project without modification. Please, refer 
 
 Note: We only support deployment using Kubernetes initializer. 
 
-1. Change directory to Nginmesh root folder
-
-2. Deploy the application containers:
+1. Deploy the application containers from Nginmesh root folder:
 
 ```
 kubectl apply -f samples/bookinfo/kube/bookinfo.yaml
 ```
 
-3. Confirm all services and pods are correctly defined and running: details-v1-* , productpage-v1-* , ratings-v1-* , ratings-v1-* , reviews-v1-* , reviews-v2-* and reviews-v3-* :
+2. Confirm all services and pods are correctly defined and running: details-v1-* , productpage-v1-* , ratings-v1-* , ratings-v1-* , reviews-v1-* , reviews-v2-* and reviews-v3-* :
 
 ```
 kubectl get pods
 kubectl get services
 ```
 
-4. If cluster is running in an environment that supports external load balancers, the IP address of ingress can be obtained by the following command:
+3. If cluster is running in an environment that supports external load balancers, the IP address of ingress can be obtained by the following command:
 ```
 kubectl get ingress -o wide       
 ```
-5. Set Variable to Ingress address obtained in Step 4:
+4. Set Variable to Ingress address obtained in Step 4:
 ```
 export GATEWAY_URL=104.196.5.186:80
 ```
-6. To confirm that the BookInfo application is up and running:
+5. To confirm that the BookInfo application is up and running:
 
 a) Run the following curl command and check received response code is 200:
 
