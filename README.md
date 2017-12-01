@@ -60,10 +60,31 @@ kubectl create -f istio-0.2.12/install/kubernetes/istio.yaml
 kubectl apply -f install/kubernetes/istio-initializer.yaml
 ```
 
-5. Ensure the corresponding Kubernetes pods are deployed and all containers are up and running: istio-pilot-* , istio-mixer-* , istio-ingress-* , istio-egress-* and istio-initializer-* :
+5. Ensure the following Kubernetes services are deployed: istio-pilot, istio-mixer, istio-ingress, istio-egress:
+
 ```
-kubectl get pods -n istio-system   
-kubectl get svc  -n istio-system   
+kubectl get svc  -n istio-system  
+```
+```
+  NAME            CLUSTER-IP      EXTERNAL-IP       PORT(S)                       AGE
+  istio-egress    10.83.247.89    <none>            80/TCP                        5h
+  istio-ingress   10.83.245.171   35.184.245.62     80:32730/TCP,443:30574/TCP    5h
+  istio-pilot     10.83.251.173   <none>            8080/TCP,8081/TCP             5h
+  istio-mixer     10.83.244.253   <none>            9091/TCP,9094/TCP,42422/TCP   5h
+```
+
+
+6. Ensure the corresponding Kubernetes pods are up and running: istio-pilot-* , istio-mixer-* , istio-ingress-* , istio-egress-* and istio-initializer-* :
+```
+kubectl get pods -n istio-system    
+```
+```
+  istio-ca-3657790228-j21b9           1/1       Running   0          5h
+  istio-egress-1684034556-fhw89       1/1       Running   0          5h
+  istio-ingress-1842462111-j3vcs      1/1       Running   0          5h
+  istio-initializer-184129454-zdgf5   1/1       Running   0          5h
+  istio-pilot-2275554717-93c43        1/1       Running   0          5h
+  istio-mixer-2104784889-20rm8        2/2       Running   0          5h
 ```
 
 ### Deploy Application
@@ -77,14 +98,33 @@ Note: We only support deployment using Kubernetes initializer.
 kubectl apply -f samples/kubernetes/bookinfo.yaml
 ```
 
-2. Confirm all services and pods are correctly defined and running: details-v1-* , productpage-v1-* , ratings-v1-* , ratings-v1-* , reviews-v1-* , reviews-v2-* and reviews-v3-* :
+2. Confirm all services are correctly defined and running: productpage, details, reviews,ratings.
+```
+kubectl get services
+```
+```
+NAME                       CLUSTER-IP   EXTERNAL-IP   PORT(S)              AGE
+details                    10.0.0.31    <none>        9080/TCP             6m
+kubernetes                 10.0.0.1     <none>        443/TCP              7d
+productpage                10.0.0.120   <none>        9080/TCP             6m
+ratings                    10.0.0.15    <none>        9080/TCP             6m
+reviews                    10.0.0.170   <none>        9080/TCP             6m
+```
+3. Confirm all application pods are correctly defined and running: details-v1-* , productpage-v1-* , ratings-v1-* , ratings-v1-* , reviews-v1-* , reviews-v2-* and reviews-v3-* :
 
 ```
 kubectl get pods
-kubectl get services
 ```
-
-3. If cluster is running in an environment that supports external load balancers, the IP address of ingress can be obtained by the following command:
+```
+NAME                                        READY     STATUS    RESTARTS   AGE
+details-v1-1520924117-48z17                 2/2       Running   0          6m
+productpage-v1-560495357-jk1lz              2/2       Running   0          6m
+ratings-v1-734492171-rnr5l                  2/2       Running   0          6m
+reviews-v1-874083890-f0qf0                  2/2       Running   0          6m
+reviews-v2-1343845940-b34q5                 2/2       Running   0          6m
+reviews-v3-1813607990-8ch52                 2/2       Running   0          6m
+```
+4. If cluster is running in an environment that supports external load balancers, the IP address of ingress can be obtained by the following command:
 ```
 kubectl get svc -n istio-system | grep -E 'EXTERNAL-IP|istio-ingress'
 ```
@@ -92,11 +132,11 @@ OR
 ```
 kubectl get ingress -o wide       
 ```
-4. Set Variable to Ingress address obtained in Step 4:
+5. Set Variable to Ingress address obtained in Step 4:
 ```
 export GATEWAY_URL=104.196.5.186:80
 ```
-5. To confirm that the BookInfo application is up and running:
+6. To confirm that the BookInfo application is up and running:
 
 a) Run the following curl command and check received response code is 200:
 
@@ -151,7 +191,7 @@ kubectl get svc  -n istio-system 
 
 ### Optional: 
 
-[In-Depth Telemetry](https://istio.io/docs/guides/telemetry.html) This sample demonstrates how to obtain uniform metrics, logs, traces across different services using NGiNX sidecar. Additionally, for quick install of telemetry services, please check this [link](https://github.com/nginmesh/nginmesh/blob/release-doc-0.2.12/istio/tools/README.md)
+[In-Depth Telemetry](https://istio.io/docs/guides/telemetry.html) This sample demonstrates how to obtain uniform metrics, logs, traces across different services using NGiNX sidecar. Additionally, for quick install of telemetry services, please check this [link](https://github.com/nginmesh/nginmesh/blob/release-doc-0.2.12/istio//README.md).
 
 [Intelligent Routing](https://istio.io/docs/guides/intelligent-routing.html) Refer to Michael README.md ? Difference in delay with Istio.
 
