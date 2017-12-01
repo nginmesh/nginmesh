@@ -29,7 +29,7 @@ Below are instructions to setup the Istio service mesh in a Kubernetes cluster u
 
 ### Prerequisities 
 
-Make sure you have  kubernetes cluster with alpha fearture enabled. Please, refer to [Prerequisites](https://istio.io/docs/setup/kubernetes/quick-start.html#prerequisites) in Istio project for setting up cluster for your environment.
+Make sure you have  kubernetes cluster with alpha feature enabled. Please, refer to [Prerequisites](https://istio.io/docs/setup/kubernetes/quick-start.html#prerequisites) in Istio project for setting up cluster for your environment.
 
 ### Installation Istio and Nginmesh
 Below are instructions for installing Istio with NGiNX as a sidecar in application pods.
