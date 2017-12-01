@@ -18,7 +18,7 @@ Please see below for Istio features we support.  Nginmesh is not production read
 
 ## Architecture
 
-Please see diagram below to see how Nginx Sidecar Proxy is implemented as of 0.16 version.
+Please see diagram below to see how Nginx Sidecar Proxy is implemented as of 0.2.12 version.
 The sidecar run NGINX open source version with custom module to interface to Istio Mixer.
 
 ![Alt text](/images/nginx_sidecar.png?raw=true "Nginx Sidecar")
