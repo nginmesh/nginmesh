@@ -33,7 +33,8 @@ Make sure alpha enabled kubernetes cluster up and running in Google Container En
 ### [Installation steps](https://github.com/nginmesh/nginmesh/tree/release-doc-0.2.12/istio/release/install/kubernetes)
 Instructions for installing Istio with NGiNX as a sidecar in application pods.
 
-#### Install
+#### Install Istio
+
 1.  Download Istio release 0.2.12:
 
 ```
@@ -62,19 +63,6 @@ kubectl apply -f install/kubernetes/istio-initializer.yaml
 ```
 kubectl get pods -n istio-system    #-- Istio pods status
 kubectl get svc  -n istio-system      #-- Istio services status
-```
-
-#### Uninstall
-```
-kubectl delete -f install/kubernetes/istio.yaml #-- Delete Istio without auth enabled
-kubectl delete -f install/kubernetes/istio-auth.yaml #-- Delete Istio without auth enabled
-kubectl delete -f install/kubernetes/istio-initializer.yaml #Delete Initializer
-```
-
-####  Verify uninstall
-```
-kubectl get pods -n istio-system #-- Istio pods should be deleted
-kubectl get svc  -n istio-system      #-- Istio services should be deleted
 ```
 
 #### Deploy Application
@@ -116,10 +104,27 @@ Open in browser Bookinfo application, make sure successfully running :
 http://${GATEWAY_URL}/productpage
 
 
-
 Optional: 
 
 [In-Depth Telemetry](https://istio.io/docs/guides/telemetry.html) This sample demonstrates how to obtain uniform metrics, logs, traces across different services using NGiNX sidecar.
 
 [Intelligent Routing](https://istio.io/docs/guides/intelligent-routing.html) Refer to Michael README.md ? Difference in delay with Istio.
+
+#### Uninstall
+```
+kubectl delete -f install/kubernetes/istio.yaml #-- Delete Istio without auth enabled
+kubectl delete -f install/kubernetes/istio-auth.yaml #-- Delete Istio without auth enabled
+kubectl delete -f install/kubernetes/istio-initializer.yaml #-- Delete Initializer
+./samples/bookinfo/kube/cleanup.sh #Delete Bookinfo Application
+```
+
+####  Verify uninstall
+```
+kubectl get pods -n istio-system #-- Istio pods should be deleted
+kubectl get svc  -n istio-system #-- Istio services should be deleted
+kubectl get pods #-- Application pods should be deleted
+kubectl get svc  #-- Application services should be deleted
+
+```
+
 
