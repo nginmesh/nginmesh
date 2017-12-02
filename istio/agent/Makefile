@@ -28,6 +28,8 @@ all: helpers dirs modules agent-oss push push-init-container
 
 release: helpers dirs modules agent-oss push push-init-container
 
+debug:	helpers dirs modules agent-oss push push-init-container
+
 dirs: modules-dirs
 	mkdir -p $(BUILD_DIR) 
 
