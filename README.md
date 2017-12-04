@@ -2,7 +2,7 @@
 This repository provides an implementation of a sidecar proxy based on NGINX for Istio.
 
 # What is Service Mesh and Istio?
-Please check [Istio](https://istio.io) for a detailed explanation of the service mesh provided by Istio.
+Please check https://istio.io for a detailed explanation of the service mesh provided by Istio.
 
 # Production Status
 The current version of nginmesh works with Istio release 0.2.12. It is not suited for production deployments.
