@@ -26,7 +26,7 @@ curl -L https://git.io/getLatestIstio | ISTIO_VERSION=0.2.12 sh -
 ```
 2. Download nginmesh release 0.2.12:
 ```
-curl -L https://github.com/nginmesh/nginmesh/releases/download/0.2.12/nginmesh-0.2.12.tar.gz | tar zx
+curl -L https://github.com/nginmesh/nginmesh/releases/download/0.2.12-RC3/nginmesh-0.2.12-RC3.tar.gz | tar zx
 ```
 
 3. Deploy Istio either with or without enabled mutual TLS (mTLS) authentication between sidecars:
