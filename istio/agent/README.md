@@ -6,7 +6,7 @@ The NGINX sidecar is implemented using the agent application, which runs alongsi
 
 The agent is an application written in Go. It is deployed within the same container as NGINX. The agent has the following responsibilities:
 1. *Controlling NGINX*, which includes starting/stopping NGINX and applying new configuration (reloading). If NGINX suddenly terminates (crashes), the agent terminates as well.
-1. *Monitoring Pilot for configuration changes.* The agent constantly monitors Pilot for changes in load balancing configuration for the service instance which NGINX belongs too.
+1. *Monitoring Pilot for configuration changes.* The agent constantly monitors Pilot for changes in load balancing configuration for the service instance which NGINX belongs to.
 1. *Converting Pilot (Envoy) configuration to NGINX configuration.* When configuration is updated in Pilot, the agent converts the updated configuration and applies it to NGINX.
 1. *Monitoring the Istio Auth certificates and keys on the file system.* The agent monitors the folder where Istio Auth deploys the certificates and keys which are used for mutual TLS authentication between NGINX proxies. When those files are updated by Istio Auth, the agent reloads NGINX to apply the updates.
 
