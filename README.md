@@ -119,7 +119,7 @@ http://<Public-IP-of-the-Ingress-Controller>/productpage
 ### Uninstalling Application
 1. To uninstall application, run:
 ```
-./nginmesh-0.2.12/samples/kubernetes/cleanup.sh 
+./nginmesh-0.2.12-RC3/samples/kubernetes/cleanup.sh 
 ```
 
 
