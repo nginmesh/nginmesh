@@ -16,7 +16,7 @@ The diagram below depicts how an NGINX sidecar proxy is implemented. The sidecar
 Below are instructions to setup the Istio service mesh in a Kubernetes cluster using NGINX as a sidecar.
 
 ### Prerequisites
-Make sure you have a Kubernetes cluster with alpha feature enabled. Please see Prerequisites for setting up a cluster.
+Make sure you have a Kubernetes cluster with alpha feature enabled. Please see [Prerequisites](https://istio.io/docs/setup/kubernetes/quick-start.html#prerequisites) for setting up a cluster.
 
 ### Installing Istio and nginmesh
 Below are instructions for installing Istio with NGINX as a sidecar:
@@ -146,6 +146,7 @@ kubectl delete -f nginmesh-0.2.12/install/kubernetes/istio-initializer.yaml
 
 ### Limitations
 nginmesh has the following limitations:
+
 TCP and gRCP traffics are not supported.
 
 Quota Check is not supported.
@@ -153,7 +154,7 @@ Quota Check is not supported.
 ### Optional:
 [In-Depth Telemetry](https://istio.io/docs/guides/telemetry.html) This example demonstrates how to obtain uniform metrics, logs, traces across different services. For quick install of telemetry services, please check this [link](istio/release/install/kubernetes/README.md).
 
-Agent To learn more about the NGINX sidecar implementation see  [link](istio/release/install/kubernetes/README.md).
+Agent. To learn more about the NGINX sidecar implementation see  [link](istio/release/install/kubernetes/README.md).
 
 
 
