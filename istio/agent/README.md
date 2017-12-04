@@ -44,7 +44,7 @@ The NGINX sidecar has the following limitations:
 
 ## Building the Sidecar 
 
-To build the NGINX sidecar, you need to have the following software installed on your machine:
+To build the NGINX sidecar, you need to have the following softwares installed on your machine:
 * Docker
 * Make
 
@@ -52,7 +52,7 @@ Also, you need to have access to a docker registry for uploading docker images.
 
 During the build, the following images are built and uploaded to your docker registry:
 * *proxy_debug*, which comes with the agent and NGINX.
-* *proxy_init*, which is used for configuring IPtables rules for transparently injecting an NGINX proxy from the `proxy_debug` image into an application pod.  
+* *proxy_init*, which is used for configuring iptables rules for transparently injecting an NGINX proxy from the `proxy_debug` image into an application pod.  
 
 Additionally, the `tracing_builder` image is built. It is used during the build for compiling NGINX third-party modules required for tracing. The image is not uploaded to the docker registry. 
 
@@ -62,5 +62,5 @@ $ make clean
 $ make release REPO=<your-docker-repo>
 ```
 
-The `<your-docker-repo>/proxy_debug:<release-tag>` and `<your-docker-repo>/proxy_init:<release-tag>` images will be uploaded to your docker registry. Not that the `<release-tag>` is set in the `Makefile`.
+The `<your-docker-repo>/proxy_debug:<release-tag>` and `<your-docker-repo>/proxy_init:<release-tag>` images will be uploaded to your docker registry. Note that the `<release-tag>` is set in the `Makefile`.
 
