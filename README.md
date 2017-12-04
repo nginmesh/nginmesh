@@ -2,7 +2,7 @@
 This repository provides an implementation of a sidecar proxy based on NGINX for Istio.
 
 # What is Service Mesh and Istio?
-Please check https://istio.io for a detailed explanation of the service mesh provided by Istio.
+Please check [Istio](https://istio.io) for a detailed explanation of the service mesh provided by Istio.
 
 # Production Status
 The current version of nginmesh works with Istio release 0.2.12. It is not suited for production deployments.
@@ -30,6 +30,7 @@ curl -L https://github.com/nginmesh/nginmesh/releases/download/0.2.12/nginmesh-0
 ```
 
 3. Deploy Istio either with or without enabled mutual TLS (mTLS) authentication between sidecars:
+
 a)Install Istio without enabling mTLS:
 ```
 kubectl create -f istio-0.2.12/install/kubernetes/istio.yaml
@@ -60,7 +61,7 @@ kubectl get svc  -n istio-system
 kubectl get pods -n istio-system    
 ```
 ```
- istio-ca-3657790228-j21b9           1/1       Running   0          5h
+  istio-ca-3657790228-j21b9           1/1       Running   0          5h
   istio-egress-1684034556-fhw89       1/1       Running   0          5h
   istio-ingress-1842462111-j3vcs      1/1       Running   0          5h
   istio-initializer-184129454-zdgf5   1/1       Running   0          5h
