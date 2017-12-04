@@ -41,7 +41,7 @@ kubectl create -f istio-0.2.12/install/kubernetes/istio-auth.yaml
 ```
 4. Deploy an initializer for automatic sidecar injection:
 ```
-kubectl apply -f nginmesh-0.2.12/install/kubernetes/istio-initializer.yaml
+kubectl apply -f nginmesh-0.2.12-RC3/install/kubernetes/istio-initializer.yaml
 ```
 
 5. Ensure the following Kubernetes services are deployed: istio-pilot, istio-mixer, istio-ingress, istio-egress:
@@ -73,7 +73,7 @@ In this section we deploy the Bookinfo application, which is taken from the Isti
 
 1. Deploy the application:
 ```
-kubectl apply -f nginmesh-0.2.12/samples/kubernetes/bookinfo.yaml
+kubectl apply -f nginmesh-0.2.12-RC3/samples/kubernetes/bookinfo.yaml
 ```
 
 2. Confirm that all application services are deployed: productpage, details, reviews, ratings.
@@ -140,7 +140,7 @@ kubectl delete -f istio-0.2.12/install/kubernetes/istio-auth.yaml
 
 2. To uninstall the initializer, run:
 ```
-kubectl delete -f nginmesh-0.2.12/install/kubernetes/istio-initializer.yaml
+kubectl delete -f nginmesh-0.2.12-RC3/install/kubernetes/istio-initializer.yaml
 ```
 
 
