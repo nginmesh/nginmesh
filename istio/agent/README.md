@@ -44,7 +44,7 @@ The NGINX sidecar has the following limitations:
 
 ## Building the Sidecar 
 
-To build the NGINX sidecar, you need to have the following softwares installed on your machine:
+To build the NGINX sidecar, you need to have the following software installed on your machine:
 * Docker
 * Make
 
