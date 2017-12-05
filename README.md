@@ -154,6 +154,6 @@ kubectl delete -f nginmesh-0.2.12-RC3/install/kubernetes/istio-initializer.yaml
 nginmesh has the following limitations:
 * TCP and gRCP traffic is not supported.
 * Quota Check is not supported.
-* Only Kubernetes environment is supported.
+* Only Kubernetes is supported.
 
 All sidecar-related limitations as well as supported traffic management rules are described [here](istio/agent).
