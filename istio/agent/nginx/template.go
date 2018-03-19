@@ -44,13 +44,13 @@ server {
     server_name {{range $name := $server.Names}} {{$name}}{{end}};
 
     {{if $.Mixer}}
-    mixer_destination_ip  {{$.Mixer.DestinationIP}};
-    mixer_destination_uid {{$.Mixer.DestinationUID}};
+#    mixer_destination_ip  {{$.Mixer.DestinationIP}};
+#   mixer_destination_uid {{$.Mixer.DestinationUID}};
     {{if $.Mixer.DestinationService}}
-    mixer_destination_service {{$.Mixer.DestinationService}};
+#   mixer_destination_service {{$.Mixer.DestinationService}};
     {{end}}
-    mixer_source_ip {{$.Mixer.SourceIP}};
-    mixer_source_uid {{$.Mixer.SourceUID}};
+#    mixer_source_ip {{$.Mixer.SourceIP}};
+#    mixer_source_uid {{$.Mixer.SourceUID}};
     {{end}}
 
     {{range $location := $server.Locations}}
@@ -61,8 +61,10 @@ server {
 
         {{if $location.Internal}}internal;{{end}}
 
-        mixer_report {{if $location.MixerReport}}on{{else}}off{{end}};
-        mixer_check {{if $location.MixerCheck}}on{{else}}off{{end}};
+ #       mixer_report {{if $location.MixerReport}}on{{else}}off{{end}};
+ #       mixer_check {{if $location.MixerCheck}}on{{else}}off{{end}};
+        mixer_report off;
+        mixer_check off;
        
         {{if $location.Tracing}}
         opentracing_operation_name $host:$server_port;

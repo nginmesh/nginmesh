@@ -37,6 +37,7 @@ func NewClient(endpoint string, httpClient *http.Client, serviceNode string, ser
 
 func (c *Client) getListeners() (Listeners, error) {
 	url := fmt.Sprintf("%v/v1/listeners/%v/%v", c.endpoint, c.serviceCluster, c.serviceNode)
+	glog.Infof("listener url: %v", url)
 	resp, err := c.httpClient.Get(url)
 	if err != nil {
 		return nil, fmt.Errorf("couldn't get listeners: %v", err)
@@ -49,6 +50,7 @@ func (c *Client) getListeners() (Listeners, error) {
 	if glog.V(3) {
 		glog.Infof("Response from %v: %v", url, string(body))
 	}
+	glog.Infof("Response from %v: %v", url, string(body))
 
 	var res ldsResponse
 
