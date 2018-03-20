@@ -42,6 +42,10 @@ else
 	GOOS=linux go build -o $(BUILD_DIR)/agent cmd/agent/*.go
 endif
 
+agent-test:
+	go test pilot/*.go -v
+	go test nginx/*.go -v
+
 container-oss:
 	cp -r $(BUILD_DIR) docker-oss
 	make PREFIX=$(REPO)/$(SIDECAR_IMAGE_NAME) TAG=$(TAG) DEV_TAG_LATEST=$(DEV_TAG_LATEST) -C docker-oss

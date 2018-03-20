@@ -9,6 +9,7 @@ import (
 	"strings"
 
 	"github.com/nginmesh/nginmesh/istio/agent/pilot"
+	"github.com/golang/glog"
 )
 
 // ConfigVariables holds global variables used in NGINX configuration.
@@ -225,13 +226,57 @@ func (conv *Converter) convertHTTPListener(listener pilot.Listener, proxyConfig 
 
 	var mixer HTTPMixer
 	for _, cf := range f.HTTPFilterConfig.Filters {
+		glog.Info("processing listner: %s",listener.Address)
 		if cf.FilterMixerConfig != nil {
+
+			filterMixerConfig := cf.FilterMixerConfig
+
+			sourceIp := ""
+			sourceUid := ""
+			destinationIp := ""
+			destinationUid := ""
+			destinationService := ""
+
+			if filterMixerConfig.ForwardAttributes != nil {
+				glog.Info("has forward attributes")
+				forwardAttributes := cf.FilterMixerConfig.ForwardAttributes.Attributes
+
+				if forwardAttributes.SourceIp != nil {
+					sourceIp = forwardAttributes.SourceIp.BytesValue
+				}
+	
+				if forwardAttributes.SourceUid != nil {
+					sourceUid = forwardAttributes.SourceUid.StringValue
+				}
+			}
+
+			if filterMixerConfig.MixerAttributes != nil {
+				glog.Info("has mixer attributes")
+				mixerAttributes := cf.FilterMixerConfig.MixerAttributes.Attributes
+				
+				if mixerAttributes.DestinationIp != nil {
+					sourceIp = mixerAttributes.DestinationIp.BytesValue
+				}
+				
+				if mixerAttributes.DestinationUid != nil {
+					destinationUid = mixerAttributes.DestinationUid.StringValue
+				}
+
+				
+				if mixerAttributes.DestinationService != nil {
+					destinationService = mixerAttributes.DestinationService.StringValue
+				}
+			}
+			
+
+			
+
 			mixer = HTTPMixer{
-				SourceIP:           cf.FilterMixerConfig.ForwardAttributes["source.ip"],
-				SourceUID:          cf.FilterMixerConfig.ForwardAttributes["source.uid"],
-				DestinationIP:      cf.FilterMixerConfig.MixerAttributes["destination.ip"],
-				DestinationUID:     cf.FilterMixerConfig.MixerAttributes["destination.uid"],
-				DestinationService: cf.FilterMixerConfig.MixerAttributes["destination.service"],
+				SourceIP:          sourceIp,
+				SourceUID:         sourceUid,
+				DestinationIP:     destinationIp,
+				DestinationUID:    destinationUid,
+				DestinationService: destinationService,
 				QuotaName:          cf.FilterMixerConfig.QuotaName,
 			}
 			break
