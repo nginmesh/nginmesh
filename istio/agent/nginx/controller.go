@@ -24,7 +24,6 @@ func NewController() *Controller {
 }
 
 func (c *Controller) start() error {
-	/*
 	cmd := exec.Command("nginx", "-g", "daemon off;", "-c", "/etc/istio/proxy/nginx.conf")
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
@@ -35,7 +34,6 @@ func (c *Controller) start() error {
 		c.doneCh <- cmd.Wait()
 		close(c.doneCh)
 	}()
-	*/
 	return nil
 }
 
@@ -152,14 +150,12 @@ func writeTCPConfig(cfg TCPConfig) error {
 
 // Reload reloads NGINX.
 func (c *Controller) Reload() error {
-	/*
 	if err := shellOut("nginx -t -c /etc/istio/proxy/nginx.conf"); err != nil {
 		return fmt.Errorf("invalid NGINX configuration detected, not reloading: %s", err)
 	}
 	if err := shellOut("nginx -s reload -c /etc/istio/proxy/nginx.conf"); err != nil {
 		return fmt.Errorf("reloading NGINX failed: %s", err)
 	}
-	*/
 
 	return nil
 }

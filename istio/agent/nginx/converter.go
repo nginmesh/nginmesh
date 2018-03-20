@@ -231,11 +231,11 @@ func (conv *Converter) convertHTTPListener(listener pilot.Listener, proxyConfig 
 
 			filterMixerConfig := cf.FilterMixerConfig
 
-			sourceIp := ""
-			sourceUid := ""
-			destinationIp := ""
-			destinationUid := ""
-			destinationService := ""
+			var sourceIp string
+			var sourceUid string
+			var destinationIp string
+			var destinationUid string
+			var destinationService string
 
 			if filterMixerConfig.ForwardAttributes != nil {
 				glog.Info("has forward attributes")
@@ -243,10 +243,12 @@ func (conv *Converter) convertHTTPListener(listener pilot.Listener, proxyConfig 
 
 				if forwardAttributes.SourceIp != nil {
 					sourceIp = forwardAttributes.SourceIp.BytesValue
+					glog.Info("detected sourceIp: %s",sourceIp)
 				}
 	
 				if forwardAttributes.SourceUid != nil {
 					sourceUid = forwardAttributes.SourceUid.StringValue
+					glog.Info("detected source Uid: %s",sourceUid)
 				}
 			}
 

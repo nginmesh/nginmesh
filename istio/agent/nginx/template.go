@@ -84,8 +84,15 @@ server {
         {{if $location.Upstream}}
         proxy_set_header Host {{if $location.Host}}{{$location.Host}}{{else}}$host{{end}};
         {{if $.Mixer}}
+        
+        {{if $.Mixer.SourceIP}}
         proxy_set_header X-ISTIO-SRC-IP {{$.Mixer.SourceIP}};
+        {{end}}
+
+        {{if $.Mixer.SourceUID}}
         proxy_set_header X-ISTIO-SRC-UID {{$.Mixer.SourceUID}};
+        {{end}}
+
         {{end}}
 
         # WebSocket and KeepAlives
