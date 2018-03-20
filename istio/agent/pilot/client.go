@@ -18,6 +18,8 @@ type Client struct {
 	serviceCluster string
 	serviceNode    string
 	podIP          string
+	collectorAddress	string
+	collectorTopic string
 }
 
 // ProxyConfig represents full load balancing configuration for a sidecar proxy.
@@ -31,8 +33,9 @@ type ProxyConfig struct {
 }
 
 // NewClient creates a new Client.
-func NewClient(endpoint string, httpClient *http.Client, serviceNode string, serviceCluster string, podIP string) *Client {
-	return &Client{fmt.Sprintf("http://%v", endpoint), httpClient, serviceNode, serviceCluster, podIP}
+func NewClient(endpoint string, httpClient *http.Client, serviceNode string, serviceCluster string, podIP string,
+	collectorAddress string,collectorTopic string) *Client {
+	return &Client{fmt.Sprintf("http://%v", endpoint), httpClient, serviceNode, serviceCluster, podIP,collectorAddress,collectorTopic}
 }
 
 func (c *Client) getListeners() (Listeners, error) {

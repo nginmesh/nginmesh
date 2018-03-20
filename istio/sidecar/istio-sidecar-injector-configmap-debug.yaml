@@ -69,6 +69,10 @@ data:
         - {{ .ProxyConfig.StatsdUdpAddress }}
         - --proxyAdminPort
         - {{ .ProxyConfig.ProxyAdminPort }}
+        - --collectorAddress
+        - broker.kafka:9092
+        - --collectorTopic
+        - serviceMesh
         env:
         - name: POD_NAME
           valueFrom:
