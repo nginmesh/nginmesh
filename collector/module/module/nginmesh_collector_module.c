@@ -55,10 +55,14 @@ static char *ngx_http_collector_merge_loc_conf(ngx_conf_t *cf, void *parent,void
 static void *ngx_http_collector_create_srv_conf(ngx_conf_t *cf);
 static char *ngx_http_collector_merge_srv_conf(ngx_conf_t *cf, void *parent, void *child);
 
-static void *ngx_http_collector_create_main_conf(ngx_conf_t *cf);    
+static void *ngx_http_collector_create_main_conf(ngx_conf_t *cf);
+static char *nginmesh_http_collector_server_post(ngx_conf_t *cf, void *data, void *conf);    
+
+static ngx_conf_post_handler_pt  ngx_http_collector_server_p =
+    nginmesh_http_collector_server_post;
 
 // handlers in rust
-
+void  nginmesh_set_collector_server_config(ngx_str_t *server);
 void  nginmesh_collector_report_handler(ngx_http_request_t *r, ngx_http_collector_main_conf_t *main_conf,ngx_http_collector_srv_conf_t *srv_conf);
 
 ngx_int_t  nginmesh_collector_init(ngx_cycle_t *cycle);
@@ -143,15 +147,7 @@ static ngx_command_t ngx_http_collector_commands[] = {
       ngx_conf_set_str_slot, /* configuration setup function */
       NGX_HTTP_MAIN_CONF_OFFSET, 
       offsetof(ngx_http_collector_main_conf_t,collector_server),
-      NULL
-    },  
-     { 
-      ngx_string("collector_port"), /* directive */
-      NGX_HTTP_MAIN_CONF|NGX_CONF_TAKE1, // server port takes 1 //
-      ngx_conf_set_num_slot, /* configuration setup function */
-      NGX_HTTP_MAIN_CONF_OFFSET, 
-      offsetof(ngx_http_collector_main_conf_t,collector_port),
-      NULL
+      &ngx_http_collector_server_p
     },
     ngx_null_command /* command termination */
 };
@@ -322,4 +318,21 @@ static void *ngx_http_collector_create_main_conf(ngx_conf_t *cf)
   conf->collector_port = NGX_CONF_UNSET_UINT;
 
   return conf;
+}
+
+// set collector server
+static char *nginmesh_http_collector_server_post(ngx_conf_t *cf, void *post, void *data)
+{
+    ngx_str_t  *server = data;
+
+
+    ngx_log_debug(NGX_LOG_DEBUG_HTTP,  cf->log, 0, "start invoking main collector post");
+
+
+    nginmesh_set_collector_server_config(server);
+
+    ngx_log_debug(NGX_LOG_DEBUG_HTTP, cf->log, 0, "finish calling main collector report handler");
+
+
+   return NGX_OK;
 }

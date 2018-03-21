@@ -1,11 +1,11 @@
 
 use std::sync::mpsc::{channel};
 use std::sync::Mutex;
+use std::collections::HashMap;
 
 
 
-
-use ngx_rust::bindings:: { ngx_array_t };
+use ngx_rust::bindings:: { ngx_array_t,ngx_str_t };
 use ngx_rust::bindings::ngx_http_request_s;
 use ngx_rust::bindings::ngx_http_upstream_state_t;
 
@@ -25,6 +25,7 @@ use std::time::Duration;
 
 
 // initialize channel that can be shared
+/*
 lazy_static! {
     static ref CHANNELS: Channels<MixerInfo> = {
         let (tx, rx) = channel();
@@ -35,28 +36,53 @@ lazy_static! {
         }
     };
 }
+*/
 
-fn send_stat(message: &str) {
-    
-    lazy_static!  {
-         static ref MSG_PRODUCER: Mutex<Producer> = Mutex::new(Producer::from_hosts(vec!("broker.kafka:9092".to_owned()))
+lazy_static!  {
+    static ref PRODUCER_CACHE: Mutex<HashMap<String,Producer>> = Mutex::new(HashMap::new());
+}
+
+// send to background thread using channels
+#[no_mangle]
+pub extern fn nginmesh_set_collector_server_config(server: &ngx_str_t)  {
+
+    let server_name = server.to_str();
+    ngx_event_debug!("set collector server config: {}",server_name);
+
+    let new_producer = Producer::from_hosts(vec!(server_name.to_owned()))
                 .with_ack_timeout(Duration::from_secs(1))
                 .with_required_acks(RequiredAcks::One)
-                .create()
-                .unwrap());
+                .create();
 
+    if new_producer.is_err() {
+        ngx_event_debug!("server not founded: {}",server_name);
+        return
+    } 
+             
+    PRODUCER_CACHE.lock().unwrap().insert(server_name.to_owned(),new_producer.unwrap());
+    
+    ngx_event_debug!("add to server cache")
+
+}
+
+fn send_stat(message: &str,server_name: &str) {
+    
+    let mut cache = PRODUCER_CACHE.lock().unwrap();
+    let producer_result = cache.get_mut(server_name);
+    if producer_result.is_none()  {
+         ngx_event_debug!("server: {} is not founded",server_name);
+         return 
     }
-   
     let mut buf = String::with_capacity(2);
     let _ = write!(&mut buf, "{}", message); 
-    MSG_PRODUCER.lock().unwrap().send(&Record::from_value("test", buf.as_bytes())).unwrap();
+    let producer = producer_result.unwrap();
+    producer.send(&Record::from_value("test", buf.as_bytes())).unwrap();
     ngx_event_debug!("send event to kafka topic test");
 
 }
 
 
-// background activy for report.
-// receives report attributes and send out to mixer
+/*
 pub fn collector_report_background()  {
 
     let rx = CHANNELS.rx.lock().unwrap();
@@ -78,22 +104,10 @@ pub fn collector_report_background()  {
         producer.send(&Record::from_value("test", buf.as_bytes())).unwrap();
         ngx_event_debug!("send event to kafka topic test");
 
-        /*
-        let client = MixerClient::new_plain( &info.server_name, info.server_port , Default::default()).expect("init");
-
-        let mut req = ReportRequest::new();
-        let mut rf = RepeatedField::default();
-        rf.push(info.attributes);
-        req.set_attributes(rf);
-
-        let resp = client.report(RequestOptions::new(), req);
-
-        let result = resp.wait();
-        */
-
         ngx_event_debug!("mixer report thread: finished sending to kafka");
     }
 }
+*/
 
 
 // send to background thread using channels
@@ -101,14 +115,8 @@ pub fn collector_report_background()  {
 fn send_dispatcher(request: &ngx_http_request_s,main_config: &ngx_http_collector_main_conf_t, attr: AttributeWrapper)  {
 
     let server_name = main_config.collector_server.to_str();
-    let server_port = main_config.collector_port as u16;
 
-    /*
-    let tx = CHANNELS.tx.lock().unwrap().clone();
-    let info = MixerInfo { server_name: String::from(server_name), server_port: server_port, attributes: attr.to_string()};
-    tx.send(info.clone());
-    */
-    send_stat(&attr.to_string());
+    send_stat(&attr.to_string(),&server_name);
 
     ngx_http_debug!(request,"finish sending to kafer");
 
