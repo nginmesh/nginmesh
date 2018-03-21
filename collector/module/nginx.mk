@@ -93,7 +93,9 @@ build-module-docker:
 	cp -r collector-tests $(DOCKER_BUILD)/context
 	cp -r module $(DOCKER_BUILD)/context
 	cp -r test $(DOCKER_BUILD)/context
-	docker build -f $(DOCKER_BUILD)/context/Dockerfile.module -t ${DOCKER_MODULE_IMAGE}:${TAG} $(DOCKER_BUILD)/context
+	docker build -f $(DOCKER_BUILD)/context/Dockerfile.module -t ${DOCKER_MODULE_IMAGE}:${GIT_COMMIT} $(DOCKER_BUILD)/context
+	docker tag ${DOCKER_MODULE_IMAGE}:${GIT_COMMIT} ${DOCKER_MODULE_IMAGE}:${TAG}
+	
 
 # build module and deposit in the module directory
 build-module: build-module-docker
