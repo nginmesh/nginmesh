@@ -9,16 +9,16 @@ use ngx_rust::bindings:: { ngx_array_t };
 use ngx_rust::bindings::ngx_http_request_s;
 use ngx_rust::bindings::ngx_http_upstream_state_t;
 
-use ngx_mixer_transport::attribute::attr_wrapper::AttributeWrapper;
-use ngx_mixer_transport::attribute::global_dict::{ RESPONSE_DURATION };
+use nginmesh_collector_transport::attribute::attr_wrapper::AttributeWrapper;
+use nginmesh_collector_transport::attribute::global_dict::{ RESPONSE_DURATION };
 
 
 use super::message::Channels;
 use super::message::MixerInfo;
 
-use ngx::main_config::ngx_http_mixer_main_conf_t;
-use ngx::server_config::ngx_http_mixer_srv_conf_t;
-use ngx::config::MixerConfig;
+use ngx::main_config::ngx_http_collector_main_conf_t;
+use ngx::server_config::ngx_http_collector_srv_conf_t;
+use ngx::config::CollectorConfig;
 use kafka::producer::{Producer, Record, RequiredAcks};
 use std::fmt::Write;
 use std::time::Duration;
@@ -57,7 +57,7 @@ fn send_stat(message: &str) {
 
 // background activy for report.
 // receives report attributes and send out to mixer
-pub fn mixer_report_background()  {
+pub fn collector_report_background()  {
 
     let rx = CHANNELS.rx.lock().unwrap();
     let mut producer: Producer  = Producer::from_hosts(vec!("broker.kafka:9092".to_owned()))
@@ -98,10 +98,10 @@ pub fn mixer_report_background()  {
 
 // send to background thread using channels
 #[allow(unused_must_use)]
-fn send_dispatcher(request: &ngx_http_request_s,main_config: &ngx_http_mixer_main_conf_t, attr: AttributeWrapper)  {
+fn send_dispatcher(request: &ngx_http_request_s,main_config: &ngx_http_collector_main_conf_t, attr: AttributeWrapper)  {
 
-    let server_name = main_config.mixer_server.to_str();
-    let server_port = main_config.mixer_port as u16;
+    let server_name = main_config.collector_server.to_str();
+    let server_port = main_config.collector_port as u16;
 
     /*
     let tx = CHANNELS.tx.lock().unwrap().clone();
@@ -140,8 +140,8 @@ fn upstream_response_time_calculation( upstream_states: *const ngx_array_t ) -> 
 
 
 #[no_mangle]
-pub extern fn nginmesh_mixer_report_handler(request: &ngx_http_request_s,main_config: &ngx_http_mixer_main_conf_t,
-    srv_conf: &ngx_http_mixer_srv_conf_t)  {
+pub extern fn nginmesh_collector_report_handler(request: &ngx_http_request_s,main_config: &ngx_http_collector_main_conf_t,
+    srv_conf: &ngx_http_collector_srv_conf_t)  {
 
 
     let mut attr = AttributeWrapper::new();

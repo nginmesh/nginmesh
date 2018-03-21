@@ -2,17 +2,17 @@
 use serde_json::{Map,Value};
 use chrono::{Utc,TimeZone};
 use ngx_rust::bindings:: { ngx_http_request_s, ngx_http_headers_out_t} ;
-use ngx_mixer_transport::attribute::attr_wrapper::AttributeWrapper;
-use ngx_mixer_transport::attribute::global_dict::{ REQUEST_HEADER, REQUEST_HOST, REQUEST_METHOD, REQUEST_PATH,
+use nginmesh_collector_transport::attribute::attr_wrapper::AttributeWrapper;
+use nginmesh_collector_transport::attribute::global_dict::{ REQUEST_HEADER, REQUEST_HOST, REQUEST_METHOD, REQUEST_PATH,
                                                    REQUEST_REFER, REQUEST_SCHEME, REQUEST_SIZE, REQUEST_TIME, REQUEST_USERAGENT,
                                                    SOURCE_IP, SOURCE_UID, SRC_IP_HEADER, SRC_UID_HEADER,
                                                     RESPONSE_CODE, RESPONSE_SIZE, RESPONSE_HEADERS
 };
 
-use super::config::MixerConfig;
+use super::config::CollectorConfig;
 
 
-impl MixerConfig for ngx_http_request_s  {
+impl CollectorConfig for ngx_http_request_s  {
 
 
 
@@ -79,7 +79,7 @@ impl MixerConfig for ngx_http_request_s  {
 
 
 
-impl MixerConfig for ngx_http_headers_out_t {
+impl CollectorConfig for ngx_http_headers_out_t {
 
     fn process_istio_attr(&self, attr: &mut AttributeWrapper, )  {
 

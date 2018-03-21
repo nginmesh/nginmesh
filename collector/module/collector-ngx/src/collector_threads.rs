@@ -5,18 +5,18 @@ use std::thread ;
 use ngx_rust::bindings::ngx_int_t;
 use ngx_rust::bindings::NGX_OK;
 
-use collector_report::mixer_report_background;
+use collector_report::collector_report_background;
 
 
 
 // start background activities
 #[no_mangle]
-pub extern fn nginmesh_mixer_init() -> ngx_int_t {
+pub extern fn nginmesh_collector_init() -> ngx_int_t {
 
     ngx_event_debug!("init mixer start ");
     thread::spawn(|| {
         ngx_event_debug!("starting mixer report background task");
-        mixer_report_background();
+        collector_report_background();
     });
 
 
@@ -25,7 +25,7 @@ pub extern fn nginmesh_mixer_init() -> ngx_int_t {
 }
 
 #[no_mangle]
-pub extern fn nginmesh_mixer_exit() {
+pub extern fn nginmesh_collector_exit() {
 
     ngx_event_debug!("mixer exit ");
 }

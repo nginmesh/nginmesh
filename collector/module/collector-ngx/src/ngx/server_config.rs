@@ -2,15 +2,15 @@ extern crate ngx_rust;
 
 use ngx_rust::bindings:: { ngx_uint_t, ngx_str_t } ;
 
-use ngx_mixer_transport::attribute::attr_wrapper::AttributeWrapper;
-use ngx_mixer_transport::attribute::global_dict::{ SOURCE_IP, SOURCE_UID, SOURCE_SERVICE, SOURCE_PORT,
+use nginmesh_collector_transport::attribute::attr_wrapper::AttributeWrapper;
+use nginmesh_collector_transport::attribute::global_dict::{ SOURCE_IP, SOURCE_UID, SOURCE_SERVICE, SOURCE_PORT,
                     DESTINATION_SERVICE,DESTINATION_IP,DESTINATION_UID
 };
 
-use super::config::MixerConfig;
+use super::config::CollectorConfig;
 
 #[repr(C)]
-pub struct ngx_http_mixer_srv_conf_t {
+pub struct ngx_http_collector_srv_conf_t {
 
     pub destination_service:    ngx_str_t,
     pub destination_uid:        ngx_str_t,
@@ -21,7 +21,7 @@ pub struct ngx_http_mixer_srv_conf_t {
     pub source_port:            ngx_uint_t
 }
 
-impl MixerConfig for  ngx_http_mixer_srv_conf_t  {
+impl CollectorConfig for  ngx_http_collector_srv_conf_t  {
 
     fn process_istio_attr(&self, attr: &mut AttributeWrapper) {
 
