@@ -2,6 +2,6 @@
 cat << END                                                    >> $NGX_MAKEFILE
 
 cargo:
-	cargo build --manifest-path $ngx_addon_dir/../Cargo.toml --lib --all
+	cargo build --release --manifest-path $ngx_addon_dir/../Cargo.toml --lib --all
 
 END

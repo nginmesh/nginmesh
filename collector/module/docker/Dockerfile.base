@@ -9,16 +9,15 @@ ADD ./Makefile /src
 ADD ./nginx.mk /src
 RUN mkdir /src/build
 RUN mkdir /src/protobuf
-ADD ./protobuf /src/protobuf
 ADD ./module /src/module
 RUN cd /src;make nginx-setup;
 
 # add source for initial build to download dependency
 ADD ./Cargo.toml /src
 ADD ./Cargo.lock /src
-ADD ./mixer-ngx /src/mixer-ngx
-ADD ./mixer-transport /src/mixer-transport
-ADD ./mixer-tests /src/mixer-tests
+ADD ./collector-ngx /src/collector-ngx
+ADD ./collector-transport /src/collector-transport
+ADD ./collector-tests /src/collector-tests
 RUN cd /src;cargo build --all
 
 

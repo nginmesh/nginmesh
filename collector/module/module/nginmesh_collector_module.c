@@ -22,11 +22,11 @@ typedef struct {
 
 
 /**
- * @brief element mixer configuration
+ * @brief element collector configuration
  */
 typedef struct {
-    ngx_str_t collector_server;              /**< mixer server */
-    ngx_int_t collector_port;                /**  mixer port */
+    ngx_str_t collector_server;              /**< collector server */
+    ngx_int_t collector_port;                /**  collector port */
 
 } ngx_http_collector_main_conf_t;
 
@@ -49,7 +49,7 @@ static ngx_int_t ngx_http_collector_report_handler(ngx_http_request_t *r);
 static ngx_int_t ngx_http_collector_filter_init(ngx_conf_t *cf);
 
 // create configuration
-static void *ngx_http_colllector_create_loc_conf(ngx_conf_t *cf);
+static void *ngx_http_collector_create_loc_conf(ngx_conf_t *cf);
 static char *ngx_http_collector_merge_loc_conf(ngx_conf_t *cf, void *parent,void *child);
 
 static void *ngx_http_collector_create_srv_conf(ngx_conf_t *cf);
@@ -187,7 +187,7 @@ ngx_module_t ngx_http_collector_module = {
     NGX_MODULE_V1_PADDING
 };
 
-// install log phase handler for mixer
+// install log phase handler for collector
 static ngx_int_t ngx_http_collector_filter_init(ngx_conf_t *cf) {
 
 
@@ -314,7 +314,7 @@ static void *ngx_http_collector_create_main_conf(ngx_conf_t *cf)
 
   ngx_log_debug(NGX_LOG_DEBUG_EVENT, ngx_cycle->log, 0, "setting up main config");
 
-  conf = ngx_pcalloc(cf->pool, sizeof(ngx_http_mixer_main_conf_t));
+  conf = ngx_pcalloc(cf->pool, sizeof(ngx_http_collector_main_conf_t));
   if (conf == NULL) {
     return NULL;
   }

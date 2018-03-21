@@ -88,9 +88,9 @@ build-module-docker:
 	rm -rf $(DOCKER_BUILD)/context
 	mkdir $(DOCKER_BUILD)/context
 	cp $(DOCKER_BUILD)/Dockerfile.module $(DOCKER_BUILD)/context
-	cp -r mixer-ngx $(DOCKER_BUILD)/context
-	cp -r mixer-transport $(DOCKER_BUILD)/context
-	cp -r mixer-tests $(DOCKER_BUILD)/context
+	cp -r collector-ngx $(DOCKER_BUILD)/context
+	cp -r collector-transport $(DOCKER_BUILD)/context
+	cp -r collector-tests $(DOCKER_BUILD)/context
 	cp -r module $(DOCKER_BUILD)/context
 	cp -r test $(DOCKER_BUILD)/context
 	docker build -f $(DOCKER_BUILD)/context/Dockerfile.module -t ${DOCKER_MODULE_IMAGE}:${TAG} $(DOCKER_BUILD)/context
