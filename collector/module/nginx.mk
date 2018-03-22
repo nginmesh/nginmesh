@@ -78,8 +78,8 @@ nginx-module:
 
 copy-module:
 	docker rm -v ngx-copy || true
-	docker create --name ngx-copy ${DOCKER_MODULE_IMAGE}:latest
-	docker cp ngx-copy:/src/${MODULE_SO_BIN} ${MODULE_SO_HOST}
+	docker create --name ngx-copy ${DOCKER_MODULE_IMAGE}:${TAG}
+	docker cp ngx-copy:/etc/nginx/modules/${MODULE_NAME}.so ${MODULE_SO_HOST}
 	docker rm -v ngx-copy
 
 # build module using docker

@@ -63,8 +63,7 @@ server {
 
  #       mixer_report {{if $location.MixerReport}}on{{else}}off{{end}};
  #       mixer_check {{if $location.MixerCheck}}on{{else}}off{{end}};
-        mixer_report off;
-        mixer_check off;
+        collector_report on;
        
         {{if $location.Tracing}}
         opentracing_operation_name $host:$server_port;
@@ -127,7 +126,7 @@ server {
     }{{end}}
 }{{end}}`
 
-const mainTemplate = `load_module /etc/nginx/modules/ngx_http_istio_mixer_module.so;
+const mainTemplate = `load_module /etc/nginx/modules/ngx_http_collector_module.so;
 load_module /etc/nginx/modules/ngx_stream_nginmesh_dest_module.so;
 
 
@@ -137,7 +136,7 @@ load_module /etc/nginx/modules/ngx_http_zipkin_module.so;
 
 worker_processes  auto;
 
-error_log  /dev/stdout warn;
+error_log  /dev/stdout debug;
 pid        /etc/istio/proxy/nginx.pid;
 
 
@@ -198,6 +197,8 @@ http {
     mixer_server {{.Mixer.MixerServer}};
     mixer_port   {{.Mixer.MixerPort}};
     {{end}}
+
+    collector_server my-kafka-kafka.kafka:9092;
 
     # Support for Websocket
     map $http_upgrade $connection_upgrade {
