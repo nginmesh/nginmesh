@@ -26,8 +26,6 @@ typedef struct {
  */
 typedef struct {
     ngx_str_t collector_server;              /**< collector server */
-    ngx_int_t collector_port;                /**  collector port */
-
 } ngx_http_collector_main_conf_t;
 
 

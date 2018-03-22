@@ -167,9 +167,19 @@ test-k8-setup:
 show-k8-logs:
 	kubectl logs $(kubectl get pod -l app=nginmesh -o jsonpath='{.items[0].metadata.name}')
 
-kafka-get-message:
-	kubectl run temp-kafka --image solsson/kafka --rm -ti --command -- bash \
-	bin/kafka-console-consumer.sh --bootstrap-server broker.kafka:9092 --topic test --from-beginning	
+
+kafka-install:
+	kubectl create ns kafka
+	helm repo add incubator http://storage.googleapis.com/kubernetes-charts-incubator
+	helm install --name my-kafka --namespace kafka incubator/kafka
+	kubectl apply -f test/kafka-client.yml
+
+kafka-add-test-topic:
+	kubectl -n kafka exec testclient -- /usr/bin/kafka-topics --zookeeper my-kafka-zookeeper:2181 --topic test --create --partitions 1 --replication-factor 1	
+		
+
+kafka-list-message:
+	kubectl -n kafka exec -ti testclient -- /usr/bin/kafka-console-consumer --bootstrap-server my-kafka-kafka:9092 --topic test --from-beginning
 
 test-nginx-full:	build-module test-nginx-only
 
