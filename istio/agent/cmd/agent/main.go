@@ -30,7 +30,7 @@ func main() {
 	proxySidecarCmd.String("statsdUdpAddress", "", "Binary path")
 	proxySidecarCmd.String("proxyAdminPort", "", "Binary path")
 	collectorAddress := proxySidecarCmd.String("collectorAddress","","Collector address")
-	collectorTopic := proxySidecarCmd.String("collectorTopic","","Collector topic")
+	collectorTopic := proxySidecarCmd.String("collectorTopic","test","Collector topic")
 	verbosity := proxySidecarCmd.String("v", "", "Verbosity level")
 
 	if len(os.Args) < 3 {
@@ -67,6 +67,8 @@ func main() {
 		os.Exit(1)
 	}
 
+	
+
 	podIP := os.Getenv("INSTANCE_IP")
 	if podIP == "" {
 		podIP = os.Getenv("POD_IP")
@@ -81,6 +83,8 @@ func main() {
 		BindAddress:    podIP,
 		ServiceCluster: *serviceCluster,
 		ServiceNode:    serviceNode,
+		CollectorTopic:	*collectorTopic,
+		CollectorServer: *collectorAddress,
 	}
 
 	if os.Getenv("DISABLE_MIXER_REPORT") == "1" {

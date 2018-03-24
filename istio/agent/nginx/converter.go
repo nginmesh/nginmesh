@@ -17,6 +17,8 @@ type ConfigVariables struct {
 	BindAddress        string
 	ServiceNode        string
 	ServiceCluster     string
+	CollectorTopic	   string
+	CollectorServer	   string
 	DisableMixerReport bool
 	DisableMixerCheck  bool
 	DisableTracing     bool
@@ -51,6 +53,8 @@ func (conv *Converter) Convert(proxyConfig pilot.ProxyConfig) Config {
 			ServiceNode:     conv.configVars.ServiceNode,
 			ServiceCluster:  conv.configVars.ServiceCluster,
 			Tracing:         !conv.configVars.DisableTracing,
+			CollectorTopic:	 conv.configVars.CollectorTopic,
+			CollectorServer: conv.configVars.CollectorServer,
 		},
 	}
 }

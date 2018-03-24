@@ -61,9 +61,8 @@ server {
 
         {{if $location.Internal}}internal;{{end}}
 
- #       mixer_report {{if $location.MixerReport}}on{{else}}off{{end}};
- #       mixer_check {{if $location.MixerCheck}}on{{else}}off{{end}};
-        collector_report on;
+        collector_report {{if $location.MixerReport}}on{{else}}off{{end}};
+
        
         {{if $location.Tracing}}
         opentracing_operation_name $host:$server_port;
@@ -192,13 +191,10 @@ http {
     server_names_hash_bucket_size 128;
     variables_hash_bucket_size 128;
 
-    # mixer configuration
-    {{if .Mixer}}
-    mixer_server {{.Mixer.MixerServer}};
-    mixer_port   {{.Mixer.MixerPort}};
-    {{end}}
 
+    {{if .Mixer}}
     collector_server my-kafka-kafka.kafka:9092;
+    {{end}}
 
     # Support for Websocket
     map $http_upgrade $connection_upgrade {
