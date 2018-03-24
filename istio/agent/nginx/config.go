@@ -17,6 +17,7 @@ type Main struct {
 	Tracing         bool
 	CollectorServer string
 	CollectorTopic	string
+	LOGLEVEL		string
 }
 
 // DestinationMap is a map between remote destination and the corresponding local destination.

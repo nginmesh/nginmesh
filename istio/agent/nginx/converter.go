@@ -19,6 +19,7 @@ type ConfigVariables struct {
 	ServiceCluster     string
 	CollectorTopic	   string
 	CollectorServer	   string
+	LOGLEVEL		   string
 	DisableMixerReport bool
 	DisableMixerCheck  bool
 	DisableTracing     bool
@@ -55,6 +56,7 @@ func (conv *Converter) Convert(proxyConfig pilot.ProxyConfig) Config {
 			Tracing:         !conv.configVars.DisableTracing,
 			CollectorTopic:	 conv.configVars.CollectorTopic,
 			CollectorServer: conv.configVars.CollectorServer,
+			LOGLEVEL:		conv.configVars.LOGLEVEL,
 		},
 	}
 }

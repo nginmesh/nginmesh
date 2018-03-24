@@ -30,7 +30,8 @@ func main() {
 	proxySidecarCmd.String("statsdUdpAddress", "", "Binary path")
 	proxySidecarCmd.String("proxyAdminPort", "", "Binary path")
 	collectorAddress := proxySidecarCmd.String("collectorAddress","","Collector address")
-	collectorTopic := proxySidecarCmd.String("collectorTopic","test","Collector topic")
+	collectorTopic := proxySidecarCmd.String("collectorTopic","","Collector topic")
+	logLevel := proxySidecarCmd.String("ngxLogLevel","","NGINX Log Level")
 	verbosity := proxySidecarCmd.String("v", "", "Verbosity level")
 
 	if len(os.Args) < 3 {
@@ -85,6 +86,7 @@ func main() {
 		ServiceNode:    serviceNode,
 		CollectorTopic:	*collectorTopic,
 		CollectorServer: *collectorAddress,
+		LOGLEVEL: *logLevel,
 	}
 
 	if os.Getenv("DISABLE_MIXER_REPORT") == "1" {
@@ -101,6 +103,8 @@ func main() {
 		glog.V(2).Info("Tracing is disabled")
 		configVars.DisableTracing = true
 	}
+
+	glog.V(2).Info("NGINX level is set to %v",logLevel)
 
 	converter := nginx.NewConverter(&configVars)
 
