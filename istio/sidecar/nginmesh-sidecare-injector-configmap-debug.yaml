@@ -70,7 +70,7 @@ data:
         - --proxyAdminPort
         - {{ .ProxyConfig.ProxyAdminPort }}
         - --collectorAddress
-        - my-kafka-kafka-headless:9092
+        - my-kafka-kafka.kafka:9092
         - --collectorTopic
         - serviceMesh
         env:

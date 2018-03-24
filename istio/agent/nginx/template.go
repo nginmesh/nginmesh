@@ -191,10 +191,7 @@ http {
     server_names_hash_bucket_size 128;
     variables_hash_bucket_size 128;
 
-
-    {{if .Mixer}}
-    collector_server my-kafka-kafka.kafka:9092;
-    {{end}}
+    collector_server {{.CollectorServer}};
 
     # Support for Websocket
     map $http_upgrade $connection_upgrade {
