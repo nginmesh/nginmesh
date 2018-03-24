@@ -5,7 +5,7 @@ set -x
 mkdir -p generated
 KAFKA=${1:-my-kafka}
 KAFKA_TOPIC=${2:-nginmesh}
-NGX_LOG_LEVEL=${3:-debug}
+NGX_LOG_LEVEL=${3:-warn}
 echo "generating sidecar config using kafka: $KAFKA, topic: $KAFKA_TOPIC"
 KAFKA_SERVER=${KAFKA}-kafka.kafka:9092
 NGINMESH_CONFIG_NAME=nginmesh-sidecar-injector-configmap.yaml
