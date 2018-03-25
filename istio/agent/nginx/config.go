@@ -85,6 +85,7 @@ type Location struct {
 	MixerCheck        bool
 	MixerReport       bool
 	Tracing           bool
+	CollectorTopic	  string
 }
 
 // Rewrite is configuration for rewriting a URL.

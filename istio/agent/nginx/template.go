@@ -44,13 +44,13 @@ server {
     server_name {{range $name := $server.Names}} {{$name}}{{end}};
 
     {{if $.Mixer}}
-#    mixer_destination_ip  {{$.Mixer.DestinationIP}};
-#   mixer_destination_uid {{$.Mixer.DestinationUID}};
+#    collector_destination_ip  {{$.Mixer.DestinationIP}};
+#    collector_destination_uid {{$.Mixer.DestinationUID}};
     {{if $.Mixer.DestinationService}}
-#   mixer_destination_service {{$.Mixer.DestinationService}};
+#    collector_destination_service {{$.Mixer.DestinationService}};
     {{end}}
-#    mixer_source_ip {{$.Mixer.SourceIP}};
-#    mixer_source_uid {{$.Mixer.SourceUID}};
+#    collector_source_ip {{$.Mixer.SourceIP}};
+#    collector_source_uid {{$.Mixer.SourceUID}};
     {{end}}
 
     {{range $location := $server.Locations}}
@@ -61,7 +61,8 @@ server {
 
         {{if $location.Internal}}internal;{{end}}
 
-        collector_report {{if $location.MixerReport}}on{{else}}off{{end}};
+#        collector_report {{$location.CollectorTopic}};
+        collector_report nginmesh;
 
        
         {{if $location.Tracing}}

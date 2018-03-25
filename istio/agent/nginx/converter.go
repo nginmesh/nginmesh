@@ -396,6 +396,7 @@ routes:
 		MixerCheck:        !conv.configVars.DisableMixerCheck,
 		MixerReport:       !conv.configVars.DisableMixerReport,
 		Tracing:           !conv.configVars.DisableTracing,
+		CollectorTopic:	   conv.configVars.CollectorTopic,
 	}
 	upsServers := []Server{
 		{"127.0.0.1", strconv.Itoa(port), 0, 0, 0},
