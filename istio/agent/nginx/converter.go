@@ -54,7 +54,6 @@ func (conv *Converter) Convert(proxyConfig pilot.ProxyConfig) Config {
 			ServiceNode:     conv.configVars.ServiceNode,
 			ServiceCluster:  conv.configVars.ServiceCluster,
 			Tracing:         !conv.configVars.DisableTracing,
-			CollectorTopic:	 conv.configVars.CollectorTopic,
 			CollectorServer: conv.configVars.CollectorServer,
 			LOGLEVEL:		conv.configVars.LOGLEVEL,
 		},
@@ -387,6 +386,7 @@ routes:
 		}
 	}
 
+	glog.Info("Converting location using topic: %v",conv.configVars.CollectorTopic)
 	loc := Location{
 		Internal:          false,
 		Path:              "/",
@@ -398,6 +398,7 @@ routes:
 		Tracing:           !conv.configVars.DisableTracing,
 		CollectorTopic:	   conv.configVars.CollectorTopic,
 	}
+	glog.Info("finished location using topic: %s",loc.CollectorTopic)
 	upsServers := []Server{
 		{"127.0.0.1", strconv.Itoa(port), 0, 0, 0},
 	}
@@ -648,6 +649,7 @@ func (conv *Converter) createLocation(cluster *pilot.Cluster, locSuffix string) 
 		MixerCheck:     !conv.configVars.DisableMixerCheck,
 		MixerReport:    !conv.configVars.DisableMixerReport,
 		Tracing:        !conv.configVars.DisableTracing,
+		CollectorTopic:	conv.configVars.CollectorTopic,
 	}
 }
 

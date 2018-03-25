@@ -16,7 +16,6 @@ type Main struct {
 	ServiceCluster  string
 	Tracing         bool
 	CollectorServer string
-	CollectorTopic	string
 	LOGLEVEL		string
 }
 

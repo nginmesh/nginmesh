@@ -61,8 +61,11 @@ server {
 
         {{if $location.Internal}}internal;{{end}}
 
-#        collector_report {{$location.CollectorTopic}};
-        collector_report nginmesh;
+        {{if $location.MixerReport}}
+        {{if $location.CollectorTopic}}
+        collector_report {{$location.CollectorTopic}};
+        {{end}}
+        {{end}}
 
        
         {{if $location.Tracing}}
