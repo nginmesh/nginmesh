@@ -1,52 +1,50 @@
-# Service Mesh with Istio and NGINX
-This repository provides an implementation of a sidecar proxy based on NGINX for Istio.
+# NGINX Service Mesh with Istio compatibility
+This repository provides an implementation of a NGINX based service mesh (NGINMESH).  NGINMESH is compatible with Istio.  It leverages NGINX as sidecar proxy. 
 
 ## What is Service Mesh and Istio?
-Please check https://istio.io for a detailed explanation of the service mesh provided by Istio.
+Please check https://istio.io for a detailed explanation of the service mesh.  
 
 ## Production Status
-The current version of nginmesh works with Istio release 0.3.0. It is not suited for production deployments.
+The current version of nginmesh is design to work with Istio release 0.6.0. It should be not be used in the production environment.  
 
 ## Architecture
-The diagram below depicts how an NGINX sidecar proxy is implemented. The sidecar runs NGINX with custom modules to interface with Istio Mixer, as well as with third-party modules for tracing.
+The diagram below depicts how an NGINX sidecar proxy is implemented. The sidecar uses open source version of NGINX with first-party modules as well as third-party modules used for tracing.
+With this release, NGINMESH leverages Kafka for delivery of mesh metrics. 
 
-![Alt text](/images/nginx_sidecar.png?raw=true "Nginx Sidecar")
+![Alt text](/images/nginx_sidecar.png?raw=true "NGINX Sidecar")
 
 To learn more about the sidecar implementation, see [this document](istio/agent).
 
 ## Quick Start
-Below are instructions to setup the Istio service mesh in a Kubernetes cluster using NGINX as a sidecar.
+Below are instructions to quickly install and configure NGINMESH.  Currently only Kubernetes environment is supported.
 
 ### Prerequisites
-Make sure you have a Kubernetes cluster with alpha feature enabled. Please see [Prerequisites](https://istio.io/docs/setup/kubernetes/quick-start.html#prerequisites) for setting up a cluster.
+Make sure you have a Kubernetes cluster with at least 1.9 or greater due to fact only automatic sidecar injection is supported. Please see [Prerequisites](https://istio.io/docs/setup/kubernetes/quick-start.html) for setting up a kubernetes cluster.
 
 ### Installing Istio and nginmesh
-Below are instructions for installing Istio with NGINX as a sidecar:
-1. Download Istio release 0.3.0:
+NGINMESH requires installation of Istio first
+
+1. Download and install Istio 0.6.0:
 ```
-curl -L https://git.io/getLatestIstio | ISTIO_VERSION=0.3.0 sh -
+curl -L https://git.io/getLatestIstio | ISTIO_VERSION=0.6.0 sh -
 ```
-2. Download nginmesh release 0.3.0:
+2. Download nginmesh release 0.6.0:
 ```
-curl -L https://github.com/nginmesh/nginmesh/releases/download/0.3.0/nginmesh-0.3.0.tar.gz | tar zx
+curl -L https://github.com/nginmesh/nginmesh/releases/download/0.6.0/nginmesh-0.6.0.tar.gz | tar zx
 ```
 
 3. Deploy Istio either with or without enabled mutual TLS (mTLS) authentication between sidecars:
 
 a) Install Istio without enabling mTLS:
 ```
-kubectl create -f istio-0.3.0/install/kubernetes/istio.yaml
+kubectl create -f istio-0.6.0/install/kubernetes/istio.yaml
 ```
 b) Install Istio with mTLS:
 ```
-kubectl create -f istio-0.3.0/install/kubernetes/istio-auth.yaml
-```
-4. Deploy an initializer for automatic sidecar injection:
-```
-kubectl apply -f nginmesh-0.3.0/install/kubernetes/istio-initializer.yaml
+kubectl create -f istio-0.6.0/install/kubernetes/istio-auth.yaml
 ```
 
-5. Ensure the following Kubernetes services are deployed: istio-pilot, istio-mixer, istio-ingress, istio-egress:
+4. Ensure the following Kubernetes services are deployed: istio-pilot, istio-mixer, istio-ingress, istio-egress:
 ```
 kubectl get svc  -n istio-system  
 ```
@@ -58,7 +56,7 @@ kubectl get svc  -n istio-system
   istio-mixer     10.83.244.253   <none>            9091/TCP,9094/TCP,42422/TCP   5h
 ```
 
-6. Ensure the following Kubernetes pods are up and running: istio-pilot-* , istio-mixer-* , istio-ingress-* , istio-egress-* and istio-initializer-* :
+5. Ensure the following Kubernetes pods are up and running: istio-pilot-* , istio-mixer-* , istio-ingress-* , istio-egress-* and istio-initializer-* :
 ```
 kubectl get pods -n istio-system    
 ```
@@ -66,16 +64,45 @@ kubectl get pods -n istio-system
   istio-ca-3657790228-j21b9           1/1       Running   0          5h
   istio-egress-1684034556-fhw89       1/1       Running   0          5h
   istio-ingress-1842462111-j3vcs      1/1       Running   0          5h
-  istio-initializer-184129454-zdgf5   1/1       Running   0          5h
   istio-pilot-2275554717-93c43        1/1       Running   0          5h
   istio-mixer-2104784889-20rm8        2/2       Running   0          5h
 ```
+
+6. Automatic sidecar:
+To set up sidecar injection, please run following script which will install Istio webhook with NGINMESH customization.
+```
+nginmesh-0.6.0/install/kubernetes/generate-sidecar-config.sh
+```
+
+### Deploy Kafka
+
+Kafka deployment use Helm.  
+
+1. Set up Helm.  Please follow Helm setup guide:
+```
+https://docs.helm.sh/using_helm/#quickstart
+```
+2. Run following script to setup Kafka. It is installed in 'kafka' namespace.  It is possible to use your existing kafka installation.
+```
+nginmesh-0.6.0/install/kafka/install.sh
+```
+
+3. Set up nginmesh topic by running following script
+```
+nginmesh-0.6.0/tools/kafka-add-topic nginmesh
+```
+If successfull, you can watch message by
+```
+nginmesh-0.6.0/tools/kafka-list-message nginmesh
+```
+
+
 ### Deploy a Sample Application
 In this section we deploy the Bookinfo application, which is taken from the Istio samples. Please see [Bookinfo](https://istio.io/docs/guides/bookinfo.html)  for more details.
 
 1. Deploy the application:
 ```
-kubectl apply -f nginmesh-0.3.0/samples/kubernetes/bookinfo.yaml
+kubectl apply -f nginmesh-0.6.0/samples/kubernetes/bookinfo.yaml
 ```
 
 2. Confirm that all application services are deployed: productpage, details, reviews, ratings.
@@ -121,7 +148,7 @@ http://<Public-IP-of-the-Ingress-Controller>/productpage
 ### Uninstalling the Application
 1. To uninstall application, run:
 ```
-./nginmesh-0.3.0/samples/kubernetes/cleanup.sh 
+./nginmesh-0.6.0/samples/kubernetes/cleanup.sh 
 ```
 
 
@@ -130,25 +157,20 @@ http://<Public-IP-of-the-Ingress-Controller>/productpage
 
 a) If mTLS is disabled:
 ```
-kubectl delete -f istio-0.3.0/install/kubernetes/istio.yaml
+kubectl delete -f istio-0.6.0/install/kubernetes/istio.yaml
 ```
 
 OR:
 
 b) If mTLS is enabled:
 ```
-kubectl delete -f istio-0.3.0/install/kubernetes/istio-auth.yaml
+kubectl delete -f istio-0.6.0/install/kubernetes/istio-auth.yaml
 ```
 
 2. To uninstall the initializer, run:
 ```
-kubectl delete -f nginmesh-0.3.0/install/kubernetes/istio-initializer.yaml
+nginmesh-0.6.0/install/kubernetes/delete-sidecar.sh
 ```
-
-### Additional Examples
-
-* **In-Depth Telemetry** [This example](https://istio.io/docs/guides/telemetry.html) demonstrates how to obtain uniform metrics, logs, traces across different applications. To run the example, you must install the telemetry services. 
-
 
 ## Limitations
 nginmesh has the following limitations:
