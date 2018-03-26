@@ -30,7 +30,7 @@ curl -L https://git.io/getLatestIstio | ISTIO_VERSION=0.6.0 sh -
 ```
 2. Download nginmesh release 0.6.0:
 ```
-curl -L https://github.com/nginmesh/nginmesh/releases/download/0.6.0/nginmesh-0.6.0.tar.gz | tar zx
+curl -L https://github.com/nginmesh/nginmesh/releases/download/0.6.0-RC1/nginmesh-0.6.0-RC1.tar.gz | tar zx
 ```
 
 3. Deploy Istio either with or without enabled mutual TLS (mTLS) authentication between sidecars:
@@ -44,25 +44,25 @@ b) Install Istio with mTLS:
 kubectl create -f istio-0.6.0/install/kubernetes/istio-auth.yaml
 ```
 
-4. Ensure the following Kubernetes services are deployed: istio-pilot, istio-mixer, istio-ingress, istio-egress:
+4. Ensure the following Kubernetes services are deployed: istio-pilot, istio-mixer, istio-ingress, ## istio-egress ##:
 ```
 kubectl get svc  -n istio-system  
 ```
 ```
  NAME            CLUSTER-IP      EXTERNAL-IP       PORT(S)                       AGE
-  istio-egress    10.83.247.89    <none>            80/TCP                        5h
+  istio-egress    10.83.247.89    <none>            80/TCP                        5h //No Egress
   istio-ingress   10.83.245.171   35.184.245.62     80:32730/TCP,443:30574/TCP    5h
   istio-pilot     10.83.251.173   <none>            8080/TCP,8081/TCP             5h
   istio-mixer     10.83.244.253   <none>            9091/TCP,9094/TCP,42422/TCP   5h
 ```
 
-5. Ensure the following Kubernetes pods are up and running: istio-pilot-* , istio-mixer-* , istio-ingress-* , istio-egress-* and istio-initializer-* :
+5. Ensure the following Kubernetes pods are up and running: istio-pilot-* , istio-mixer-* , istio-ingress-* , ## istio-egress-* ## and istio-initializer-* :
 ```
 kubectl get pods -n istio-system    
 ```
 ```
   istio-ca-3657790228-j21b9           1/1       Running   0          5h
-  istio-egress-1684034556-fhw89       1/1       Running   0          5h
+  istio-egress-1684034556-fhw89       1/1       Running   0          5h //No Egress
   istio-ingress-1842462111-j3vcs      1/1       Running   0          5h
   istio-pilot-2275554717-93c43        1/1       Running   0          5h
   istio-mixer-2104784889-20rm8        2/2       Running   0          5h
@@ -80,19 +80,23 @@ Kafka deployment use Helm.
 
 1. Set up Helm.  Please follow Helm setup guide:
 ```
-https://docs.helm.sh/using_helm/#quickstart
+https://docs.helm.sh/using_helm/#quickstart 
 ```
 2. Run following script to setup Kafka. It is installed in 'kafka' namespace.  It is possible to use your existing kafka installation.
 ```
-nginmesh-0.6.0/install/kafka/install.sh
+nginmesh-0.6.0-RC1/install/kafka/install.sh
 ```
 
 3. Set up nginmesh topic by running following script
 ```
-nginmesh-0.6.0/tools/kafka-add-topic nginmesh
+### nginmesh-0.6.0-RC1/tools/kafka-add-topic nginmesh
+
+nginmesh-0.6.0-RC1/tools/kafka-add-topics.sh nginmesh
 ```
 If successfull, you can watch message by
 ```
+nginmesh-0.6.0/tools/kafka-list-message nginmesh
+
 nginmesh-0.6.0/tools/kafka-list-message nginmesh
 ```
 
