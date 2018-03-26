@@ -74,6 +74,18 @@ To set up sidecar injection, please run following script which will install Isti
 nginmesh-0.6.0/install/kubernetes/generate-sidecar-config.sh
 ```
 
+7. View namespaces showing istio-injection label and verify the default namespace is not labeled:
+```
+kubectl get namespace -L istio-injection
+```
+```
+NAME           STATUS        AGE       ISTIO-INJECTION
+default        Active        1h        
+istio-system   Active        1h        
+kube-public    Active        1h        
+kube-system    Active        1h
+```
+
 ### Deploy Kafka
 
 Kafka deployment use Helm.  
@@ -100,16 +112,21 @@ nginmesh-0.6.0/tools/kafka-list-message nginmesh
 nginmesh-0.6.0/tools/kafka-list-message nginmesh
 ```
 
-
 ### Deploy a Sample Application
 In this section we deploy the Bookinfo application, which is taken from the Istio samples. Please see [Bookinfo](https://istio.io/docs/guides/bookinfo.html)  for more details.
 
-1. Deploy the application:
+1. Label the default namespace with istio-injection=enabled:
+
+```
+kubectl label namespace default istio-injection=enabled
+```
+
+2. Deploy the application:
 ```
 kubectl apply -f nginmesh-0.6.0/samples/kubernetes/bookinfo.yaml
 ```
 
-2. Confirm that all application services are deployed: productpage, details, reviews, ratings.
+3. Confirm that all application services are deployed: productpage, details, reviews, ratings.
 ```
 kubectl get services
 ```
@@ -122,7 +139,7 @@ ratings                    10.0.0.15    <none>        9080/TCP             6m
 reviews                    10.0.0.170   <none>        9080/TCP             6m
 ```
 
-3. Confirm that all application pods are running --details-v1-* , productpage-v1-* , ratings-v1-* , ratings-v1-* , reviews-v1-* , reviews-v2-* and reviews-v3-* :
+4. Confirm that all application pods are running --details-v1-* , productpage-v1-* , ratings-v1-* , ratings-v1-* , reviews-v1-* , reviews-v2-* and reviews-v3-* :
 ```
 kubectl get pods
 ```
@@ -136,7 +153,7 @@ reviews-v2-1343845940-b34q5                 2/2       Running   0          6m
 reviews-v3-1813607990-8ch52                 2/2       Running   0          6m
 ```
 
-4. Get the public IP of the Istio Ingress controller. If the cluster is running in an environment that supports external load balancers, run:
+5. Get the public IP of the Istio Ingress controller. If the cluster is running in an environment that supports external load balancers, run:
 ```
 kubectl get svc -n istio-system | grep -E 'EXTERNAL-IP|istio-ingress'
 ```
@@ -145,7 +162,7 @@ OR
 kubectl get ingress -o wide       
 ```
 
-5. Open the Bookinfo application in a browser using the following link:
+6. Open the Bookinfo application in a browser using the following link:
 ```
 http://<Public-IP-of-the-Ingress-Controller>/productpage
 ```
