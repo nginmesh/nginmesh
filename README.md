@@ -1,34 +1,34 @@
 # NGINX Service Mesh with Istio compatibility
-This repository provides an implementation of a NGINX based service mesh (nginmesh).  Nginmesh is compatible with Istio.  It leverages NGINX as sidecar proxy. 
+This repository provides an implementation of a NGINX based service mesh (nginMesh).  nginMesh is compatible with Istio.  It leverages NGINX as a sidecar proxy. 
 
 ## What is Service Mesh and Istio?
 Please check https://istio.io for a detailed explanation of the service mesh.  
 
 ## Production Status
-The current version of nginmesh is designed to work with Istio release 0.6.0. It should not be used in the production environment.  
+The current version of nginMesh is designed to work with Istio release 0.6.0. It should not be used in the production environment.  
 
 ## Architecture
 The diagram below depicts how an NGINX sidecar proxy is implemented. The sidecar uses open source version of NGINX with first-party modules as well as third-party modules for tracing.
-With this release, NGINMESH leverages Kafka for delivery of mesh metrics. 
+With this release, nginMesh leverages Kafka for delivery of mesh metrics. 
 
 ![Alt text](/images/nginx_sidecar.png?raw=true "NGINX Sidecar")
 
 To learn more about the sidecar implementation, see [this document](istio/agent).
 
 ## Quick Start
-Below are instructions to quickly install and configure nginmesh.  Currently, only Kubernetes environment is supported.
+Below are instructions to quickly install and configure nginMesh.  Currently, only Kubernetes environment is supported.
 
 ### Prerequisites
 Make sure you have a Kubernetes cluster with at least 1.9 or greater due to fact only automatic sidecar injection is supported. Please see [Prerequisites](https://istio.io/docs/setup/kubernetes/quick-start.html) for setting up a kubernetes cluster.
 
-### Installing Istio and nginmesh
-Nginmesh requires installation of Istio first
+### Installing Istio and nginMesh
+nginMesh requires installation of Istio first.
 
 1. Download and install Istio 0.6.0:
 ```
 curl -L https://git.io/getLatestIstio | ISTIO_VERSION=0.6.0 sh -
 ```
-2. Download nginmesh release 0.6.0:
+2. Download nginMesh release 0.6.0:
 ```
 curl -L https://github.com/nginmesh/nginmesh/releases/download/0.6.0/nginmesh-0.6.0.tar.gz | tar zx
 ```
@@ -67,7 +67,7 @@ kubectl get pods -n istio-system
 ```
 
 6. Automatic sidecar:
-To set up sidecar injection, please run following script which will install Istio webhook with NGINMESH customization.
+To set up sidecar injection, please run following script which will install Istio webhook with nginMesh customization.
 ```
 nginmesh-0.6.0/install/kubernetes/install-sidecar.sh
 ```
@@ -102,7 +102,7 @@ kubectl create clusterrolebinding tiller-cluster-rule --clusterrole=cluster-admi
 kubectl patch deploy --namespace kube-system tiller-deploy -p '{"spec":{"template":{"spec":{"serviceAccount":"tiller"}}}}' 
 kubectl create clusterrolebinding add-on-cluster-admin --clusterrole=cluster-admin --serviceaccount=kube-system:default
 ```
-3. Set up nginmesh topic by running following script:
+3. Set up nginMesh topic by running following script:
 
 ```
 nginmesh-0.6.0/tools/kafka-add-topics.sh nginmesh
@@ -197,7 +197,7 @@ nginmesh-0.6.0/install/kubernetes/delete-sidecar.sh
 ```
 
 ## Limitations
-nginmesh has the following limitations:
+nginMesh has the following limitations:
 * TCP and gRPC traffic is not supported.
 * Quota Check is not supported.
 * Only Kubernetes is supported.
