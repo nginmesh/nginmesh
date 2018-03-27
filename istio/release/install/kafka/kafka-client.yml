@@ -6,7 +6,7 @@ metadata:
 spec:
   containers:
   - name: kafka
-    image: confluentinc/ksql-cli:0.5
+    image: confluentinc/cp-kafka:4.0.0
     command:
       - sh
       - -c

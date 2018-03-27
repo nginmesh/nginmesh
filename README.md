@@ -93,9 +93,13 @@ kube-system    Active        1h
 ```
 nginmesh-0.6.0/install/kafka/install.sh
 ```
+
 Note: In GKE environment you may need to grant permission to default serviceaccount for cluster-wide access:
 
 ```
+kubectl create serviceaccount --namespace kube-system tiller
+kubectl create clusterrolebinding tiller-cluster-rule --clusterrole=cluster-admin --serviceaccount=kube-system:tiller
+kubectl patch deploy --namespace kube-system tiller-deploy -p '{"spec":{"template":{"spec":{"serviceAccount":"tiller"}}}}' 
 kubectl create clusterrolebinding add-on-cluster-admin --clusterrole=cluster-admin --serviceaccount=kube-system:default
 ```
 3. Set up nginmesh topic by running following script:
@@ -108,6 +112,7 @@ nginmesh-0.6.0/tools/kafka-add-topics.sh nginmesh
 ```
 nginmesh-0.6.0/tools/kafka-list-message.sh nginmesh
 ```
+
 
 ### Deploy a Sample Application
 In this section we deploy the Bookinfo application, which is taken from the Istio samples. Please see [Bookinfo](https://istio.io/docs/guides/bookinfo.html)  for more details.
