@@ -96,6 +96,9 @@ https://docs.helm.sh/using_helm/#quickstart
 ```
 2. Run following script to setup Kafka. It is installed in 'kafka' namespace.  It is possible to use your existing kafka installation.
 ```
+kubectl create clusterrolebinding cluster-admin-binding  --clusterrole=cluster-admin  --user=$(gcloud config get-value core/account)
+kubectl create clusterrolebinding add-on-cluster-admin --clusterrole=cluster-admin --serviceaccount=kube-system:default
+
 nginmesh-0.6.0-RC1/install/kafka/install.sh
 ```
 
@@ -107,9 +110,9 @@ nginmesh-0.6.0-RC1/tools/kafka-add-topics.sh nginmesh
 ```
 If successfull, you can watch message by
 ```
-nginmesh-0.6.0/tools/kafka-list-message nginmesh
+### nginmesh-0.6.0/tools/kafka-list-message nginmesh
 
-nginmesh-0.6.0/tools/kafka-list-message nginmesh
+nginmesh-0.6.0/tools/kafka-list-message.sh nginmesh
 ```
 
 ### Deploy a Sample Application
@@ -123,7 +126,8 @@ kubectl label namespace default istio-injection=enabled
 
 2. Deploy the application:
 ```
-kubectl apply -f nginmesh-0.6.0/samples/kubernetes/bookinfo.yaml
+## kubectl apply -f nginmesh-0.6.0/samples/kubernetes/bookinfo.yaml
+kubectl apply -f  nginmesh-0.6.0-RC1/samples/bookinfo/kube/bookinfo.yaml
 ```
 
 3. Confirm that all application services are deployed: productpage, details, reviews, ratings.
