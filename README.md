@@ -82,6 +82,12 @@ Kafka deployment use Helm.
 ```
 https://docs.helm.sh/using_helm/#quickstart
 ```
+If you have RBAC issue, please run following scripts
+```
+ kubectl create serviceaccount --namespace kube-system tiller
+ kubectl create clusterrolebinding tiller-cluster-rule --clusterrole=cluster-admin --serviceaccount=kube-system:tiller
+ kubectl patch deploy --namespace kube-system tiller-deploy -p '{"spec":{"template":{"spec":{"serviceAccount":"tiller"}}}}' 
+ ```
 2. Run following script to setup Kafka. It is installed in 'kafka' namespace.  It is possible to use your existing kafka installation.
 ```
 nginmesh-0.6.0/install/kafka/install.sh
@@ -95,7 +101,6 @@ If successfull, you can watch message by
 ```
 nginmesh-0.6.0/tools/kafka-list-message nginmesh
 ```
-
 
 ### Deploy a Sample Application
 In this section we deploy the Bookinfo application, which is taken from the Istio samples. Please see [Bookinfo](https://istio.io/docs/guides/bookinfo.html)  for more details.
