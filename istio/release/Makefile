@@ -14,6 +14,7 @@ release_tar:    clean_release
 	cp -r samples ${RELEASE_DIR}/${RELEASE_FILE}
 	cp -r install ${RELEASE_DIR}/${RELEASE_FILE}
 	cp -r tools ${RELEASE_DIR}/${RELEASE_FILE}
+	cp -r demo ${RELEASE_DIR}/${RELEASE_FILE}
 	rm -rf ${RELEASE_DIR}/${RELEASE_FILE}/install/kubernetes/.gitignore
 	rm -rf ${RELEASE_DIR}/${RELEASE_FILE}/install/kubernetes/generated
 	rm -rf ${RELEASE_DIR}/${RELEASE_FILE}/install/kubernetes/*.bak
