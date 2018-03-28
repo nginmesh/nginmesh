@@ -153,7 +153,9 @@ nginmesh-0.6.0/tools/kafka-add-topics.sh nginmesh
 ```
 nginmesh-0.6.0/tools/kafka-list-topics.sh nginmesh
 ```
-
+```
+nginmesh
+```
 
 ### Deploy a Sample Application
 In this section we deploy the Bookinfo application, which is taken from the Istio samples. Please see [Bookinfo](https://istio.io/docs/guides/bookinfo.html)  for more details.
