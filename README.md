@@ -105,16 +105,6 @@ tiller-deploy-f44659b6c-p48hf                        1/1       Running   0      
 nginmesh-0.6.0/install/kafka/install.sh
 ```
 
-Note: In GKE environment you may need to grant permission to default serviceaccount for cluster-wide access before install:
-
-```
-kubectl create clusterrolebinding add-on-cluster-admin --clusterrole=cluster-admin --serviceaccount=kube-system:default
-
-kubectl create serviceaccount --namespace kube-system tiller
-kubectl create clusterrolebinding tiller-cluster-rule --clusterrole=cluster-admin --serviceaccount=kube-system:tiller
-kubectl patch deploy --namespace kube-system tiller-deploy -p '{"spec":{"template":{"spec":{"serviceAccount":"tiller"}}}}'
-```
-
 5. Wait for a while and make sure all kafka and zookeeper pods are up and runnning:
 
 ```
@@ -148,7 +138,7 @@ nginmesh-0.6.0/tools/kafka-add-topics.sh nginmesh
 8. View created topic by running below script:
 
 ```
-nginmesh-0.6.0/tools/kafka-list-topics.sh nginmesh
+nginmesh-0.6.0/tools/kafka-list-topics.sh
 ```
 ```
 nginmesh
