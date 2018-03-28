@@ -1,4 +1,4 @@
-# NGINX Service Mesh with Istio compatibility
+# NGINX Streaming Architecture with Istio Service Mesh
 This repository provides an implementation of a NGINX based service mesh (nginMesh).  nginMesh is compatible with Istio.  It leverages NGINX as a sidecar proxy. 
 
 ## What is Service Mesh and Istio?
