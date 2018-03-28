@@ -5,7 +5,7 @@ This repository provides an implementation of a NGINX based service mesh (nginMe
 Please check https://istio.io for a detailed explanation of the service mesh.  
 
 ## Production Status
-The current version of nginMesh is designed to work with Istio release 0.6.0. It should not be used in the production environment.  
+The current version of nginMesh is designed to work with Istio release 0.6.0. It should not be used in production environments.  
 
 ## Architecture
 The diagram below depicts how an NGINX sidecar proxy is implemented. The sidecar uses open source version of NGINX with first-party modules as well as third-party modules for tracing.
