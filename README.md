@@ -138,6 +138,10 @@ testclient             1/1       Running   0          15m
 ```
 helm list
 ```
+```
+NAME    	         REVISION	         UPDATED                       	STATUS  	    CHART      	  NAMESPACE
+my-kafka	           1           Tue Mar 27 18:45:18 2018	          DEPLOYED  	 kafka-0.4.7  	   kafka
+```
 
 7. Set up  topic named "nginmesh" by running below script:
 
