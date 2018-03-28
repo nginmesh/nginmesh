@@ -3,7 +3,7 @@
 # assume istio is installed
 SCRIPTDIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 set -x
-mkdir -p generated
+mkdir -p $SCRIPTDIR/generated
 NGINMESH_IMAGE_HUB=${1:-docker.io}
 KAFKA=${2:-my-kafka}
 KAFKA_TOPIC=${3:-nginmesh}
