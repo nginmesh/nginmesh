@@ -19,7 +19,7 @@ To learn more about the sidecar implementation, see [this document](istio/agent)
 Below are instructions to quickly install and configure nginMesh.  Currently, only Kubernetes environment is supported.
 
 ### Prerequisites
-Make sure you have a Kubernetes cluster with at least 1.9 or greater due to fact only automatic sidecar injection is supported. Please see [Prerequisites](https://istio.io/docs/setup/kubernetes/quick-start.html) for setting up a kubernetes cluster.
+Make sure you have a Kubernetes cluster with at least 1.9 or greater due to fact only automatic sidecar injection is supported and no alpha feature is enabled. Please see [Prerequisites](https://istio.io/docs/setup/kubernetes/quick-start.html) for setting up a kubernetes cluster.
 
 ### Installing Istio and nginMesh
 nginMesh requires installation of Istio first.
@@ -86,31 +86,64 @@ kube-system    Active        1h
 
 ### Kafka deployment using Helm
 
-1. Install Helm.  Please follow [Setup guide](https://docs.helm.sh/using_helm/#quickstart).
+1. Install binary release of the Helm client.  Please follow [Setup guide](https://docs.helm.sh/using_helm/#quickstart) for detailed installation.
 
-2. Run the following script to setup Kafka. It will be installed in 'kafka' namespace.  It is also possible to use existing kafka installation.
+2. Install Helm server(Tiller) in Kubernetes cluster:
+```
+helm init
+```
+3. Make sure Tiller is up and running:
+
+```
+kubectl get pods --namespace kube-system
+```
+
+4. Run the following script to setup Kafka. It will be installed in 'kafka' namespace.  It is also possible to use existing kafka installation.
 
 ```
 nginmesh-0.6.0/install/kafka/install.sh
 ```
 
-Note: In GKE environment you may need to grant permission to default serviceaccount for cluster-wide access:
+Note: In GKE environment you may need to grant permission to default serviceaccount for cluster-wide access before install:
 
 ```
+kubectl create clusterrolebinding add-on-cluster-admin --clusterrole=cluster-admin --serviceaccount=kube-system:default
+
 kubectl create serviceaccount --namespace kube-system tiller
 kubectl create clusterrolebinding tiller-cluster-rule --clusterrole=cluster-admin --serviceaccount=kube-system:tiller
-kubectl patch deploy --namespace kube-system tiller-deploy -p '{"spec":{"template":{"spec":{"serviceAccount":"tiller"}}}}' 
-kubectl create clusterrolebinding add-on-cluster-admin --clusterrole=cluster-admin --serviceaccount=kube-system:default
+kubectl patch deploy --namespace kube-system tiller-deploy -p '{"spec":{"template":{"spec":{"serviceAccount":"tiller"}}}}'
 ```
-3. Set up nginMesh topic by running following script:
+
+5. Wait for a while and make sure all kafka and zookeeper pods are up and runnning:
+
+```
+kubectl get pods -n kafka
+```
+```
+NAME                   READY     STATUS    RESTARTS   AGE
+my-kafka-kafka-0       1/1       Running   1          15m
+my-kafka-kafka-1       1/1       Running   0          13m
+my-kafka-kafka-2       1/1       Running   0          12m
+my-kafka-zookeeper-0   1/1       Running   0          15m
+my-kafka-zookeeper-1   1/1       Running   0          14m
+my-kafka-zookeeper-2   1/1       Running   0          14m
+testclient             1/1       Running   0          15m
+```
+6. Check the deployed release status:
+
+```
+helm list
+```
+
+7. Set up nginmesh topic by running below script:
 
 ```
 nginmesh-0.6.0/tools/kafka-add-topics.sh nginmesh
 ```
-4. View kafka messages with below command:
+8. View kafka topic by running below script:
 
 ```
-nginmesh-0.6.0/tools/kafka-list-message.sh nginmesh
+nginmesh-0.6.0/tools/kafka-list-topics.sh nginmesh
 ```
 
 
@@ -156,10 +189,13 @@ reviews-v3-1813607990-8ch52                 2/2       Running   0          6m
 ```
 
 5. Get the public IP of the Istio Ingress controller. If the cluster is running in an environment that supports external load balancers:
+
 ```
 kubectl get svc -n istio-system | grep -E 'EXTERNAL-IP|istio-ingress'
 ```
+
 OR
+
 ```
 kubectl get ingress -o wide       
 ```
@@ -180,6 +216,7 @@ http://<Public-IP-of-the-Ingress-Controller>/productpage
 1. To uninstall the Istio core components:
 
 a) If mTLS is disabled:
+
 ```
 kubectl delete -f istio-0.6.0/install/kubernetes/istio.yaml
 ```
@@ -187,14 +224,31 @@ kubectl delete -f istio-0.6.0/install/kubernetes/istio.yaml
 OR:
 
 b) If mTLS is enabled:
+
 ```
 kubectl delete -f istio-0.6.0/install/kubernetes/istio-auth.yaml
 ```
 
 2. To uninstall the initializer, run:
+
 ```
 nginmesh-0.6.0/install/kubernetes/delete-sidecar.sh
 ```
+
+3. Uninstall Kafka:
+
+```
+nginmesh-0.6.0/install/kafka/uninstall.sh
+``` 
+
+4. Delete Tiller deployment:
+
+```
+kubectl delete deployment tiller-deploy --namespace kube-system
+```
+
+ 
+
 
 ## Limitations
 nginMesh has the following limitations:
