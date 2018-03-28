@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-
+set -x
 ## An "all-in-once script" to load up a new table and connect all of the relevant parts to allow data to pipe through from KSQL.KafkaTopic->Connect->Elastic->Grafana[DataSource]
 ## Accepts a KSQL TABLE_NAME where the data is to be sourced from.
 
@@ -37,10 +37,15 @@ curl -X "POST" "http://localhost:8083/connectors/" \
     "value.converter": "org.apache.kafka.connect.json.JsonConverter",
     "type.name": "type.name=kafkaconnect",
     "topic.index.map": "'$TABLE_NAME':'$table_name'",
-     "connection.url": "http://$KAFKA:9200",
+     "connection.url": "http://elastic-elasticsearch-client.elastic:9200",
     "transforms": "FilterNulls",
     "transforms.FilterNulls.type": "io.confluent.transforms.NullFilter"
   }
 }'
 
+## Add the Elastic DataSource into Grafana
+curl -X "POST" "http://localhost:3000/api/datasources" \
+	    -H "Content-Type: application/json" \
+	     --user admin:admin \
+	     -d $'{"id":1,"orgId":1,"name":"'$table_name'","type":"elasticsearch","typeLogoUrl":"public/app/plugins/datasource/elasticsearch/img/elasticsearch.svg","access":"proxy","url":"http://elastic-elasticsearch-client.elastic:9200","password":"","user":"","database":"'$table_name'","basicAuth":false,"isDefault":false,"jsonData":{"timeField":"EVENT_TS"}}'
 
