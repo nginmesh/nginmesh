@@ -1,4 +1,4 @@
-VERSION=0.6.0-RC3
+VERSION=0.6.0
 REPO=nginmesh
 USER=nginmesh
 RELEASE_FILE=nginmesh-${VERSION}
