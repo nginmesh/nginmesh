@@ -86,7 +86,7 @@ kube-system    Active        1h
 
 ### Kafka deployment using Helm
 
-1. Install binary release of the Helm client.  Please follow [Setup guide](https://docs.helm.sh/using_helm/#quickstart) for detailed installation.
+1. Install the binary release of the Helm client depending on your OS.  Please follow [Setup guide](https://docs.helm.sh/using_helm/#quickstart) for detailed instructions.
 
 2. Install Helm server(Tiller) in Kubernetes cluster:
 ```
@@ -96,6 +96,10 @@ helm init
 
 ```
 kubectl get pods --namespace kube-system
+```
+```
+NAME                                                 READY     STATUS    RESTARTS   AGE
+tiller-deploy-f44659b6c-p48hf                        1/1       Running   0          51m
 ```
 
 4. Run the following script to setup Kafka. It will be installed in 'kafka' namespace.  It is also possible to use existing kafka installation.
@@ -135,12 +139,12 @@ testclient             1/1       Running   0          15m
 helm list
 ```
 
-7. Set up nginmesh topic by running below script:
+7. Set up  topic named "nginmesh" by running below script:
 
 ```
 nginmesh-0.6.0/tools/kafka-add-topics.sh nginmesh
 ```
-8. View kafka topic by running below script:
+8. View created topic by running below script:
 
 ```
 nginmesh-0.6.0/tools/kafka-list-topics.sh nginmesh
@@ -157,11 +161,13 @@ kubectl label namespace default istio-injection=enabled
 ```
 
 2. Deploy the application:
+
 ```
 kubectl apply -f  nginmesh-0.6.0/samples/bookinfo/kube/bookinfo.yaml
 ```
 
-3. Confirm that all application services are deployed: productpage, details, reviews, ratings.
+3. Confirm that all application services are deployed: productpage, details, reviews, ratings:
+
 ```
 kubectl get services
 ```
@@ -235,13 +241,15 @@ kubectl delete -f istio-0.6.0/install/kubernetes/istio-auth.yaml
 nginmesh-0.6.0/install/kubernetes/delete-sidecar.sh
 ```
 
-3. Uninstall Kafka:
+### Uninstalling Kafka
+
+1. Uninstall Kafka:
 
 ```
 nginmesh-0.6.0/install/kafka/uninstall.sh
 ``` 
 
-4. Delete Tiller deployment:
+2. Delete Tiller deployment:
 
 ```
 kubectl delete deployment tiller-deploy --namespace kube-system
