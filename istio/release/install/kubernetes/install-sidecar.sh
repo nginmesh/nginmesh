@@ -5,7 +5,7 @@ set -x
 IMAGE_HUB=${1:-docker.io}
 KAFKA=${2:-my-kafka}
 KAFKA_TOPIC=${3:-nginmesh}
-mkdir -p generated
+mkdir -p $SCRIPTDIR/generated
 $SCRIPTDIR/istio/webhook-create-signed-cert.sh \
     --service istio-sidecar-injector \
     --namespace istio-system \
