@@ -8,9 +8,8 @@ Please check https://istio.io for a detailed explanation of the service mesh.
 The current version of nginMesh is designed to work with Istio release 0.6.0. It should not be used in production environments.  
 
 ## Architecture
-The diagram below depicts how an NGINX sidecar proxy is implemented. The sidecar uses open source version of NGINX with first-party modules as well as third-party modules for tracing.
-In 0.6.0 release, nginMesh leverages Kafka for delivery of mesh metrics. 
-mTLS authentication between sidecars is planned in upcoming release.
+The diagram below depicts how an NGINX sidecar proxy is implemented. Sidecar uses the open source version of NGINX compiled with modules for tracing and monitoring.
+In 0.6.0 release, nginMesh leverages Kafka for delivery traffic metrics across the Service Mesh. Security features, such as mTLS authentication are planned in upcoming releases.
 
 ![Alt text](/images/nginx_sidecar.png?raw=true "NGINX Sidecar")
 
