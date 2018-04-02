@@ -4,24 +4,32 @@ Make sure you meet below requirements:
 
 ```2.7``` python is installed.
 
-```+0.3.0``` Latest python grequests library installed.
+```0.3.0``` Latest python grequests library is installed.
  
-```+v2.18.4``` Latest python requests library installed.
+```2.18.4``` Latest python requests library is installed.
 
-```+1.9``` Kubernetes cluster with alpha feature disabled is up and running.
+```0.8.0``` Latest python expects library is installed.
+
+```0.1.0``` Latest python args  library is installed.
+Note: You can use ```pip``` package manager to install upper listed libraries:
+
+```
+pip install grequests requests expects args
+```
+```1.9``` Kubernetes cluster with alpha feature disabled is up and running.
 
 ```0.6.0``` Istio is installed.
 
 ```0.6.0``` nginMesh is installed.
 
-Istio Bookinfo Sample application is deployed.
+```1.5.0``` Istio Bookinfo Sample application is deployed.
 
-Mamba behavior-driven test runner is installed. For details, [link](https://github.com/nestorsalceda/mamba).
+```0.9.2``` Mamba behavior-driven test runner is installed. For details, [link](https://github.com/nestorsalceda/mamba).
 
 
-wrk HTTP benchmarking tool is installed. For details, [link](https://github.com/wg/wrk).
+```4.1.0``` wrk HTTP benchmarking tool is installed. For details, [link](https://github.com/wg/wrk).
 
-kubectl Command line interface tool for Kubernetes clusters is installed. For details, [link](https://kubernetes.io/docs/tasks/tools/install-kubectl/).
+```1.10.0``` Kubectl Command line interface tool for Kubernetes clusters is installed. For details, [link](https://kubernetes.io/docs/tasks/tools/install-kubectl/).
 
 
 
