@@ -16,12 +16,12 @@ Make sure you meet below requirements:
 
 Istio Bookinfo Sample application is deployed.
 
-Mamba behavior-driven test runner is installed. For details,[link](https://github.com/nestorsalceda/mamba).
+Mamba behavior-driven test runner is installed. For details, [link](https://github.com/nestorsalceda/mamba).
 
 
-wrk HTTP benchmarking tool is installed. For details,[link](https://github.com/wg/wrk).
+wrk HTTP benchmarking tool is installed. For details, [link](https://github.com/wg/wrk).
 
-kubectl Command line interface tool for Kubernetes clusters is installed. For details,[link](https://kubernetes.io/docs/tasks/tools/install-kubectl/).
+kubectl Command line interface tool for Kubernetes clusters is installed. For details, [link](https://kubernetes.io/docs/tasks/tools/install-kubectl/).
 
 
 
