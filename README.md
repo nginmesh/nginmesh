@@ -210,7 +210,7 @@ kubectl get ingress -o wide
 http://<Public-IP-of-the-Ingress-Controller>/productpage
 ```
 
-Note: For E2E routing rules and performace testing you could refer to [E2E Bookinfo](istio/release/samples/bookinfo/kube/bookinfo_test/README.md)
+Note: For E2E routing rules and performace testing you could refer to [E2E Bookinfo](istio/release/samples/bookinfo/kube/bookinfo_test/README.md).
 
 ### Uninstalling the Application
 1. To uninstall application, run:

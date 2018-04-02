@@ -6,7 +6,7 @@ Make sure you meet below requirements:
 
 ```+0.3.0``` Latest python grequests library installed.
  
-```v2.18.4``` Latest python grequests library installed.
+```+v2.18.4``` Latest python requests library installed.
 
 ```+1.9``` Kubernetes cluster with alpha feature disabled is up and running.
 
