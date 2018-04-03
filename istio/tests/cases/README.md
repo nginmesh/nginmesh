@@ -137,7 +137,7 @@ nginmesh Test 09
 
 25 examples ran in 102.7347 seconds
 ```
-4. To run test cases independently, please input one or multiple selected test case:
+4. To run selectively, please input one or multiple test cases:
 ```
 mamba --format documentation 1_bd_spec.py 2_route_all_v1_spec.py
 
