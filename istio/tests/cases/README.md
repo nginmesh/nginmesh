@@ -137,4 +137,31 @@ nginmesh Test 09
 
 25 examples ran in 102.7347 seconds
 ```
+4. To run test cases independently, please input one or multiple selected test case:
+```
+mamba --format documentation 1_bd_spec.py 2_route_all_v1_spec.py
 
+```
+```
+nginmesh Test 01
+  Starting Test
+ | V1 Hit=3 | V2 Hit=4 | V3 Hit=3 | Total Hit=10 |
+  73 requests in 1.01s, 387.94KB read
+Requests/sec:     71.94
+Transfer/sec:    382.29KB
+    ✓ it Bookinfo Basic Functionality test without rules (1.3446 seconds)
+
+nginmesh Test 02
+  Set environment
+    ✓ it Bookinfo add Routing Rule (5.6114 seconds)
+  Starting Test
+ | V1 Hit=10 | V2 Hit=0 | V3 Hit=0 | Total Hit=10 |
+  60 requests in 1.02s, 268.56KB read
+Requests/sec:     58.96
+Transfer/sec:    263.92KB
+    ✓ it Bookinfo route all requests to V1 (1.3744 seconds)
+  Clean Environment
+    ✓ it Bookinfo delete Routing Rule (0.4852 seconds)
+
+4 examples ran in 10.9609 seconds
+```
