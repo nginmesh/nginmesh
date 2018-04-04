@@ -1,6 +1,4 @@
 import requests
-import subprocess
-import time
 import configuration
 import performance
 from mamba import description, context, it
@@ -17,20 +15,16 @@ with description('nginmesh Test 07'):
     with context('Set environment'):
          with it('Bookinfo add Routing Rule'):
             Rule.add(rule_name)
-            time.sleep(10)
 
     with context('Starting Test'):
         with it('Bookinfo HTTP Redirect'):
+
             while self.total_count < 10:
                 r = requests.get(self.url,allow_redirects=False)
                 r.status_code
                 expect(r.status_code).to(equal(301))
                 self.total_count += 1
-
-            if self.performance=='on':
-                print performance.wrecker(self.GATEWAY_URL)
-            else:
-                pass
+            configuration.generate_request(self,rule_name)
 
     with context('Clean Environment'):
         with it('Bookinfo delete Routing Rule'):

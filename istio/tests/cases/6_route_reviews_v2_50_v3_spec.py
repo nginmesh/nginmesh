@@ -1,4 +1,3 @@
-import time
 import configuration
 import performance
 from mamba import description, context, it
@@ -15,18 +14,13 @@ with description('nginmesh Test 06'):
     with context('Set environment'):
          with it('Bookinfo add Routing Rule'):
             Rule.add(rule_name)
-            time.sleep(5)
 
     with context('Starting Test'):
         with it('Bookinfo route all requests to V2 and V3'):
-            configuration.generate_request(self)
+            configuration.generate_request(self,rule_name)
             expect(self.v1_count).to(equal(0))
             expect(self.v2_count).not_to(equal(0))
             expect(self.v3_count).not_to(equal(0))
-            if self.performance=='on':
-                print performance.wrecker(self.GATEWAY_URL)
-            else:
-                pass
 
     with context('Clean Environment'):
         with it('Bookinfo delete Routing Rule'):

@@ -18,8 +18,5 @@ with description('nginmesh Test 01'):
             expect(self.v1_count).not_to(equal(0))
             expect(self.v2_count).not_to(equal(0))
             expect(self.v3_count).not_to(equal(0))
-            if self.performance=='on':
-                print performance.wrecker(self.GATEWAY_URL)
-            else:
-                pass
+
 

@@ -1,6 +1,4 @@
 import requests
-import subprocess
-import time
 import configuration
 import performance
 from mamba import description, context, it
@@ -17,7 +15,6 @@ with description('nginmesh Test 09'):
     with context('Set environment'):
          with it('Bookinfo add Routing Rule'):
                Rule.add(rule_name)
-               time.sleep(5)
 
     with context('Starting Test'):
         with it('Bookinfo route "jason" User to V2'):
@@ -46,6 +43,7 @@ with description('nginmesh Test 09'):
             expect(self.v1_count).to(equal(0))
             expect(self.v2_count).not_to(equal(0))
             expect(self.v3_count).to(equal(0))
+            configuration.generate_request(self,rule_name)
 
 
     with context('Clean Environment'):

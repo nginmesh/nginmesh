@@ -1,6 +1,9 @@
 import subprocess
 import grequests
+import performance
+import time
 VERSION='0.6.0'
+rule_apply_time=5
 
 def setenv(self):
     self.GATEWAY_URL = str(subprocess.check_output("kubectl get svc -n istio-system | grep -E 'istio-ingress' | awk '{ print $4 }'", universal_newlines=True,shell=True)).rstrip()
@@ -31,33 +34,43 @@ class Bookinfo:
     def clean_bookinfo(self):
              subprocess.call("../../release/samples/bookinfo/kube/cleanup.sh > /dev/null 2>&1 | exit 0",universal_newlines=True,shell=True)
 
-def generate_request(self):
+def generate_request(self, rule_name=None):
     self.v1_count=0
     self.v2_count=0
     self.v3_count=0
     self.total_count = 0
-    urls = [self.url for i in range(10)]
-    rs = (grequests.get(self.url) for url in urls)
-    results = grequests.map(rs)
-    for r in results:
-        if r.status_code==200 and 'color="black"' not in r.text and 'color="red"' not in r.text:
-           self.total_count += 1
-           self.v1_count+=1
-        elif r.status_code==200 and 'color="black"' in r.text:
-           self.total_count += 1
-           self.v2_count+=1
-        elif r.status_code==200 and 'color="red"' in r.text:
-           self.total_count += 1
-           self.v3_count+=1
-        else:
-           self.total_count += 1
-    print(" | V1 Hit="+str(self.v1_count)+" | V2 Hit="+str(self.v2_count)+" | V3 Hit="+str(self.v3_count)+" | Total Hit="+str(self.total_count)+ " |")
+    if rule_name !="route-rule-reviews-test-v2.yaml" and rule_name !="route-rule-http-redirect.yaml" and rule_name !="route-rule-http-retry.yaml" :
+        urls = [self.url for i in range(10)]
+        rs = (grequests.get(self.url,allow_redirects=False) for url in urls)
+        results = grequests.map(rs)
+        for r in results:
+            if r.status_code==200 and 'color="black"' not in r.text and 'color="red"' not in r.text:
+                self.total_count += 1
+                self.v1_count+=1
+            elif r.status_code==200 and 'color="black"' in r.text:
+                self.total_count += 1
+                self.v2_count+=1
+            elif r.status_code==200 and 'color="red"' in r.text:
+                self.total_count += 1
+                self.v3_count+=1
+            else:
+                self.total_count += 1
+        print(" | V1 Hit="+str(self.v1_count)+" | V2 Hit="+str(self.v2_count)+" | V3 Hit="+str(self.v3_count)+" | Total Hit="+str(self.total_count)+ " |")
+    else:
+        pass
+
+    if self.performance=='on':
+        print performance.wrecker(self.GATEWAY_URL)
+    else:
+        pass
+
     return self.GATEWAY_URL,self.v1_count,self.v2_count,self.v3_count,self.total_count,self.VERSION, self.performance
 
 
 class Rule:
      def add(self,rule_name):
          subprocess.call("kubectl create -f ../../release/samples/bookinfo/kube/"+rule_name+" > /dev/null 2>&1 | exit 0",universal_newlines=True,shell=True)
+         time.sleep(rule_apply_time)
 
      def delete(self,rule_name):
          subprocess.call("kubectl delete -f ../../release/samples/bookinfo/kube/"+rule_name+" > /dev/null 2>&1 | exit 0",universal_newlines=True,shell=True)
