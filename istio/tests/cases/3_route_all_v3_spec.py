@@ -15,7 +15,6 @@ with description('nginmesh Test 03'):
          with it('Bookinfo add Routing Rule'):
             Rule.add(rule_name)
 
-
     with context('Starting Test'):
         with it('Bookinfo route all requests to V3'):
             configuration.generate_request(self,rule_name)

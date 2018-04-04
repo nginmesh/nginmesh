@@ -39,7 +39,7 @@ spec:
         app: bookinfo-test
         version: v1
     spec:
-      serviceAccountName: test
+
       containers:
       - name: bookinfo-test
         image: gcr.io/nginsako/bookinfo_testing:latest

@@ -5,14 +5,11 @@ from expects import expect, be_true, have_length, equal, be_a, have_property, be
 
 rule_name="route-rule-all-v1.yaml"
 Rule=configuration.Rule()
-# Istio=configuration.Istio()
-# Bookinfo=configuration.Bookinfo()
 
 with description('nginmesh Test 02'):
     with before.all:
          #Read Config file
          configuration.setenv(self)
-         # Istio.install_istio(self)
 
     with context('Set environment'):
          with it('Bookinfo add Routing Rule'):

@@ -4,6 +4,7 @@ import performance
 import time
 VERSION='0.6.0'
 rule_apply_time=5
+istio_path="../../release/samples/bookinfo/kube/"
 
 def setenv(self):
     self.GATEWAY_URL = str(subprocess.check_output("kubectl get svc -n istio-system | grep -E 'istio-ingress' | awk '{ print $4 }'", universal_newlines=True,shell=True)).rstrip()
@@ -21,18 +22,6 @@ def setenv(self):
     self.v3_count=0
     self.total_count = 0
     return self.performance,self.GATEWAY_URL,self.v1_count,self.v2_count,self.v3_count,self.total_count,self.VERSION
-
-class Istio:
-    def install_istio(self):
-         subprocess.call("kubectl apply -f ../../release/samples/bookinfo/kube/istio.yaml > /dev/null 2>&1 | exit 0",universal_newlines=True,shell=True)
-    def uninstall_istio(self):
-             subprocess.call("kubectl apply -f ../../release/samples/bookinfo/kube/istio.yaml > /dev/null 2>&1 | exit 0",universal_newlines=True,shell=True)
-
-class Bookinfo:
-    def deploy_bookinfo(self):
-         subprocess.call("kubectl apply -f ../../release/samples/bookinfo/kube/bookinfo.yaml > /dev/null 2>&1 | exit 0",universal_newlines=True,shell=True)
-    def clean_bookinfo(self):
-             subprocess.call("../../release/samples/bookinfo/kube/cleanup.sh > /dev/null 2>&1 | exit 0",universal_newlines=True,shell=True)
 
 def generate_request(self, rule_name=None):
     self.v1_count=0
@@ -69,37 +58,14 @@ def generate_request(self, rule_name=None):
 
 class Rule:
      def add(self,rule_name):
-         subprocess.call("kubectl create -f ../../release/samples/bookinfo/kube/"+rule_name+" > /dev/null 2>&1 | exit 0",universal_newlines=True,shell=True)
+         subprocess.call("kubectl create -f "+istio_path+rule_name+" > /dev/null 2>&1 | exit 0",universal_newlines=True,shell=True)
          time.sleep(rule_apply_time)
 
      def delete(self,rule_name):
-         subprocess.call("kubectl delete -f ../../release/samples/bookinfo/kube/"+rule_name+" > /dev/null 2>&1 | exit 0",universal_newlines=True,shell=True)
+         subprocess.call("kubectl delete -f "+istio_path+rule_name+" > /dev/null 2>&1 | exit 0",universal_newlines=True,shell=True)
      def delete_all(self):
               subprocess.call("kubectl delete routerules --all > /dev/null 2>&1 | exit 0",universal_newlines=True,shell=True)
 
 
-
-'''
-# Using Request module in Python
-while self.total_count < 10:
-    r = requests.get(self.url)
-    r.status_code
-    expect(r.status_code).to(equal(200))
-    if 'color="black"' not in r.text and 'color="red"' not in r.text:
-  #      print("V1 'is' here!")
-        self.total_count += 1
-        self.v1_count+=1
-    elif 'color="black"' in r.text:
-  #      print("V2 Black 'is' here!")
-        self.total_count += 1
-        self.v2_count+=1
-    elif 'color="red"' in r.text:
- #       print("V3 Red 'is' here!")
-        self.total_count += 1
-        self.v3_count+=1
-    else:
- #       print("App does not work!")
-         self.total_count += 1
- '''
 
 
