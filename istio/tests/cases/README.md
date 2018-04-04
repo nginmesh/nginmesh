@@ -37,105 +37,108 @@ mamba --format documentation .
 
 nginmesh Test 01
   Starting Test
- | V1 Hit=3 | V2 Hit=4 | V3 Hit=3 | Total Hit=10 |
-  73 requests in 1.01s, 389.22KB read
-Requests/sec:     72.24
-Transfer/sec:    385.14KB
-    ✓ it Bookinfo Basic Functionality test without rules (1.4009 seconds)
+ | V1 Hit=3 | V2 Hit=3 | V3 Hit=4 | Total Hit=10 |
+  58 requests in 1.01s, 308.07KB read
+Requests/sec:     57.28
+Transfer/sec:    304.27KB
+    ✓ it Bookinfo Basic Functionality test without rules (1.4192 seconds)
 
 nginmesh Test 02
   Set environment
-    ✓ it Bookinfo add Routing Rule (5.6201 seconds)
+    ✓ it Bookinfo add Routing Rule (5.5916 seconds)
   Starting Test
  | V1 Hit=10 | V2 Hit=0 | V3 Hit=0 | Total Hit=10 |
-  61 requests in 1.01s, 273.04KB read
-Requests/sec:     60.20
-Transfer/sec:    269.44KB
-    ✓ it Bookinfo route all requests to V1 (1.3265 seconds)
+  63 requests in 1.01s, 281.98KB read
+Requests/sec:     62.17
+Transfer/sec:    278.26KB
+    ✓ it Bookinfo route all requests to V1 (1.3774 seconds)
   Clean Environment
-    ✓ it Bookinfo delete Routing Rule (0.4897 seconds)
+    ✓ it Bookinfo delete Routing Rule (0.4968 seconds)
 
 nginmesh Test 03
   Set environment
-    ✓ it Bookinfo add Routing Rule (5.4418 seconds)
+    ✓ it Bookinfo add Routing Rule (5.4144 seconds)
   Starting Test
  | V1 Hit=0 | V2 Hit=0 | V3 Hit=10 | Total Hit=10 |
-  43 requests in 1.02s, 247.24KB read
-Requests/sec:     42.02
-Transfer/sec:    241.61KB
-    ✓ it Bookinfo route all requests to V3 (1.3857 seconds)
+  53 requests in 1.01s, 304.73KB read
+Requests/sec:     52.30
+Transfer/sec:    300.73KB
+    ✓ it Bookinfo route all requests to V3 (1.3497 seconds)
   Clean Environment
-    ✓ it Bookinfo delete Routing Rule (0.3197 seconds)
+    ✓ it Bookinfo delete Routing Rule (0.3102 seconds)
 
 nginmesh Test 04
   Set environment
-    ✓ it Bookinfo add Routing Rule (5.4277 seconds)
+    ✓ it Bookinfo add Routing Rule (5.4183 seconds)
   Starting Test
- | V1 Hit=4 | V2 Hit=0 | V3 Hit=6 | Total Hit=10 |
-  56 requests in 1.02s, 290.14KB read
-Requests/sec:     55.02
-Transfer/sec:    285.07KB
-    ✓ it Bookinfo route all requests to V1 and V3 (1.3554 seconds)
+ | V1 Hit=5 | V2 Hit=0 | V3 Hit=5 | Total Hit=10 |
+  56 requests in 1.01s, 283.77KB read
+Requests/sec:     55.28
+Transfer/sec:    280.14KB
+    ✓ it Bookinfo route all requests to V1 and V3 (1.3487 seconds)
   Clean Environment
-    ✓ it Bookinfo delete Routing Rule (0.3163 seconds)
+    ✓ it Bookinfo delete Routing Rule (0.3179 seconds)
 
 nginmesh Test 05
   Set environment
-    ✓ it Bookinfo add Routing Rule (10.4325 seconds)
+    ✓ it Bookinfo add Routing Rule (5.4257 seconds)
   Starting Test
- | V1 Hit=6 | V2 Hit=4 | V3 Hit=0 | Total Hit=10 |
-  69 requests in 1.01s, 329.27KB read
-Requests/sec:     68.02
-Transfer/sec:    324.59KB
-    ✓ it Bookinfo destination-weight test, route to V1-75%, V2-25% (1.3306 seconds)
+ | V1 Hit=8 | V2 Hit=2 | V3 Hit=0 | Total Hit=10 |
+  46 requests in 1.01s, 222.51KB read
+Requests/sec:     45.33
+Transfer/sec:    219.28KB
+    ✓ it Bookinfo destination-weight test, route to V1-75%, V2-25% (1.3857 seconds)
   Clean Environment
-    ✓ it Bookinfo delete Routing Rule (0.3108 seconds)
+    ✓ it Bookinfo delete Routing Rule (0.3212 seconds)
 
 nginmesh Test 06
   Set environment
-    ✓ it Bookinfo add Routing Rule (5.4312 seconds)
+    ✓ it Bookinfo add Routing Rule (5.4258 seconds)
   Starting Test
- | V1 Hit=0 | V2 Hit=6 | V3 Hit=4 | Total Hit=10 |
-  50 requests in 1.02s, 287.58KB read
-Requests/sec:     49.24
-Transfer/sec:    283.23KB
-    ✓ it Bookinfo route all requests to V2 and V3 (1.3572 seconds)
+ | V1 Hit=0 | V2 Hit=2 | V3 Hit=8 | Total Hit=10 |
+  44 requests in 1.02s, 253.08KB read
+Requests/sec:     43.27
+Transfer/sec:    248.91KB
+    ✓ it Bookinfo route all requests to V2 and V3 (1.3858 seconds)
   Clean Environment
-    ✓ it Bookinfo delete Routing Rule (0.3078 seconds)
+    ✓ it Bookinfo delete Routing Rule (0.3415 seconds)
 
 nginmesh Test 07
   Set environment
-    ✓ it Bookinfo add Routing Rule (10.4294 seconds)
+    ✓ it Bookinfo add Routing Rule (5.4394 seconds)
   Starting Test
-  171 requests in 1.03s, 24.38KB read
-Requests/sec:    166.80
-Transfer/sec:     23.78KB
-    ✓ it Bookinfo HTTP Redirect (2.1790 seconds)
+  180 requests in 1.01s, 25.49KB read
+Requests/sec:    178.27
+Transfer/sec:     25.24KB
+    ✓ it Bookinfo HTTP Redirect (2.1643 seconds)
   Clean Environment
-    ✓ it Bookinfo delete Routing Rule (0.3294 seconds)
+    ✓ it Bookinfo delete Routing Rule (0.3151 seconds)
 
 nginmesh Test 08
   Set environment
-    ✓ it Bookinfo add Routing Rule (10.4303 seconds)
+    ✓ it Bookinfo add Routing Rule (5.4263 seconds)
   Starting Test
 Total Retry Hit=10
-  59 requests in 1.01s, 339.23KB read
-Requests/sec:     58.23
-Transfer/sec:    334.78KB
-    ✓ it Bookinfo HTTP Retry (15.6707 seconds)
+  67 requests in 1.01s, 385.20KB read
+Requests/sec:     66.16
+Transfer/sec:    380.40KB
+    ✓ it Bookinfo HTTP Retry (16.0472 seconds)
   Clean Environment
-    ✓ it Bookinfo delete Routing Rule (0.3163 seconds)
+    ✓ it Bookinfo delete Routing Rule (0.3148 seconds)
 
 nginmesh Test 09
   Set environment
-    ✓ it Bookinfo add Routing Rule (5.4297 seconds)
+    ✓ it Bookinfo add Routing Rule (5.4206 seconds)
   Starting Test
  | V1 Hit=0 | V2 Hit=10 | V3 Hit=0 | Total Hit=10 |
-    ✓ it Bookinfo route "jason" User to V2 (1.4443 seconds)
+  47 requests in 1.01s, 249.91KB read
+Requests/sec:     46.36
+Transfer/sec:    246.53KB
+    ✓ it Bookinfo route "jason" User to V2 (2.5943 seconds)
   Clean Environment
-    ✓ it Bookinfo delete Routing Rule (0.3238 seconds)
+    ✓ it Bookinfo delete Routing Rule (0.3134 seconds)
 
-25 examples ran in 102.7347 seconds
+25 examples ran in 86.5055 seconds
 ```
 4. To run selectively, please input one or multiple test cases:
 ```
