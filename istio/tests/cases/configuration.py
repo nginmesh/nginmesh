@@ -2,19 +2,13 @@ import subprocess
 import grequests
 import performance
 import time
-VERSION='0.6.0'
 rule_apply_time=5
-# istio_path="../../release/samples/bookinfo/kube/"
-istio_path="nginmesh-0.6.0/samples/bookinfo/kube/"
+nginmesh_rule_path="../../release/samples/bookinfo/kube/"
 
 def setenv(self):
     self.GATEWAY_URL = str(subprocess.check_output("kubectl get svc -n istio-system | grep -E 'istio-ingress' | awk '{ print $4 }'", universal_newlines=True,shell=True)).rstrip()
     self.url = "http://"+self.GATEWAY_URL+"/productpage"
-   # self.zipkin="http://localhost:9412/api/v2/services"
-   # self.prometheus="http://localhost:9090/api/v1/query?query=http_requests_total"
-   # self.servicegraph="http://localhost:8088/graph"
-   # self.grafana="http://localhost:3000/api/dashboards/db/istio-dashboard"
-    self.VERSION='0.6.0'
+
     self.performance='on'
     self.install_istio='on'
     self.deploy_bookinfo_app='on'
@@ -22,7 +16,7 @@ def setenv(self):
     self.v2_count=0
     self.v3_count=0
     self.total_count = 0
-    return self.performance,self.GATEWAY_URL,self.v1_count,self.v2_count,self.v3_count,self.total_count,self.VERSION
+    return self.performance,self.GATEWAY_URL,self.v1_count,self.v2_count,self.v3_count,self.total_count
 
 def generate_request(self, rule_name=None):
     self.v1_count=0
@@ -54,16 +48,16 @@ def generate_request(self, rule_name=None):
     else:
         pass
 
-    return self.GATEWAY_URL,self.v1_count,self.v2_count,self.v3_count,self.total_count,self.VERSION, self.performance
+    return self.GATEWAY_URL,self.v1_count,self.v2_count,self.v3_count,self.total_count, self.performance
 
 
 class Rule:
      def add(self,rule_name):
-         subprocess.call("kubectl create -f "+istio_path+rule_name+" > /dev/null 2>&1 | exit 0",universal_newlines=True,shell=True)
+         subprocess.call("kubectl create -f "+nginmesh_rule_path+rule_name+" > /dev/null 2>&1 | exit 0",universal_newlines=True,shell=True)
          time.sleep(rule_apply_time)
 
      def delete(self,rule_name):
-         subprocess.call("kubectl delete -f "+istio_path+rule_name+" > /dev/null 2>&1 | exit 0",universal_newlines=True,shell=True)
+         subprocess.call("kubectl delete -f "+nginmesh_rule_path+rule_name+" > /dev/null 2>&1 | exit 0",universal_newlines=True,shell=True)
      def delete_all(self):
               subprocess.call("kubectl delete routerules --all > /dev/null 2>&1 | exit 0",universal_newlines=True,shell=True)
 

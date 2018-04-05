@@ -29,7 +29,7 @@ RUN curl -fsSL "$GOLANG_DOWNLOAD_URL" -o golang.tar.gz \
 
 ENV PATH /usr/local/go/bin:$PATH
 
-# Linux and Glibc src dependencies
+# Linux and Glibc build dependencies
 RUN apt-get update && apt-get install -y \
         gawk make python \
         gcc gcc-multilib \

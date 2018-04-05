@@ -25,7 +25,7 @@ cd tests/cases
 3. Run all spec tests for Bookinfo application:
 
 ```
-mamba --format documentation .
+pipenv run mamba --format documentation .
 ```
 ```
                _                           _
@@ -142,7 +142,7 @@ Transfer/sec:    246.53KB
 ```
 4. To run selectively, please input one or multiple test cases:
 ```
-mamba --format documentation 1_bd_spec.py 2_route_all_v1_spec.py
+pipenv run mamba --format documentation 1_bd_spec.py 2_route_all_v1_spec.py
 
 ```
 ```
