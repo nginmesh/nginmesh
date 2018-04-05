@@ -4,7 +4,8 @@ import performance
 import time
 VERSION='0.6.0'
 rule_apply_time=5
-istio_path="../../release/samples/bookinfo/kube/"
+# istio_path="../../release/samples/bookinfo/kube/"
+istio_path="nginmesh-0.6.0/samples/bookinfo/kube/"
 
 def setenv(self):
     self.GATEWAY_URL = str(subprocess.check_output("kubectl get svc -n istio-system | grep -E 'istio-ingress' | awk '{ print $4 }'", universal_newlines=True,shell=True)).rstrip()
