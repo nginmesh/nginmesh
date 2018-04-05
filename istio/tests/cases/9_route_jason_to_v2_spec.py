@@ -18,7 +18,7 @@ with description('nginmesh Test 09'):
 
     with context('Starting Test'):
         with it('Bookinfo route "jason" User to V2'):
-            while self.total_count < 10:
+            while self.total_count < self.request_count:
                 cookie={'user':'jason'}
                 u=self.url
                 r = requests.get('http://'+self.GATEWAY_URL+'/productpage', cookies =cookie )

@@ -1,11 +1,11 @@
 import requests
-import subprocess
 import configuration
 import performance
 from mamba import description, context, it
 from expects import expect, be_true, have_length, equal, be_a, have_property, be_none
 
 rule_name="route-rule-http-retry.yaml"
+nginx_conf_path="/etc/istio/proxy/conf.d/http_0.0.0.0_9080.conf"
 Rule=configuration.Rule()
 
 with description('nginmesh Test 08'):
@@ -19,12 +19,12 @@ with description('nginmesh Test 08'):
 
     with context('Starting Test'):
         with it('Bookinfo HTTP Retry'):
-            while self.total_count < 10:
+            while self.total_count < self.request_count:
                 r = requests.get(self.url,allow_redirects=False)
                 r.status_code
                 expect(r.status_code).to(equal(200))
                 self.total_count += 1
-                output=str(subprocess.check_output("kubectl exec -it $(kubectl get pod | grep productpage | awk '{ print $1 }') -c istio-proxy cat /etc/istio/proxy/conf.d/http_0.0.0.0_9080.conf", universal_newlines=True,shell=True)).rstrip()
+                output=configuration.run_shell("kubectl exec -it $(kubectl get pod | grep productpage | awk '{ print $1 }') -c istio-proxy cat "+nginx_conf_path,"check")
 
             if 'proxy_next_upstream_timeout' in output and 'proxy_next_upstream_tries' in output :
                     print("Total Retry Hit="+str(self.total_count))

@@ -19,7 +19,7 @@ with description('nginmesh Test 07'):
     with context('Starting Test'):
         with it('Bookinfo HTTP Redirect'):
 
-            while self.total_count < 10:
+            while self.total_count < self.request_count:
                 r = requests.get(self.url,allow_redirects=False)
                 r.status_code
                 expect(r.status_code).to(equal(301))

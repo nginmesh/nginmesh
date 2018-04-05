@@ -42,7 +42,7 @@ spec:
 
       containers:
       - name: bookinfo-test
-        image: gcr.io/nginsako/bookinfo_testing:latest
+        image: nginmesh/bookinfo_testing:latest
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 80

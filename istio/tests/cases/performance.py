@@ -1,4 +1,4 @@
-def wrecker(url):
-    import subprocess
-    output = str(subprocess.check_output("wrk -t1 -c10 -d1s http://"+url+"/productpage | grep -E 'Requests|Transfer|requests|responses'", universal_newlines=True,shell=True)).rstrip()
-    return output
+import configuration
+def wrecker(url,thread=1,connection=10,duration="1s"):
+    return configuration.run_shell("wrk -t"+thread+" -c"+connection+" -d"+duration+" http://"+url+"/productpage | grep -E 'Requests|Transfer|requests|responses'","check")
+
