@@ -2,6 +2,7 @@ apiVersion: config.istio.io/v1alpha2
 kind: RouteRule
 metadata:
   name: productpage-default
+  namespace: default
 spec:
   ## Used by services inside the Kubernetes cluster
   destination:
@@ -15,6 +16,7 @@ apiVersion: config.istio.io/v1alpha2
 kind: RouteRule
 metadata:
   name: reviews-default
+  namespace: default
 spec:
   destination:
     name: reviews
@@ -27,6 +29,7 @@ apiVersion: config.istio.io/v1alpha2
 kind: RouteRule
 metadata:
   name: ratings-default
+  namespace: default
 spec:
   destination:
     name: ratings
@@ -39,6 +42,7 @@ apiVersion: config.istio.io/v1alpha2
 kind: RouteRule
 metadata:
   name: details-default
+  namespace: default
 spec:
   destination:
     name: details

@@ -1,7 +1,8 @@
 #!/bin/bash
 
-pip install pipenv
+python -m pip install pipenv
 pipenv install -r requirements.txt
+export PYTHONPATH=.
 
 
 

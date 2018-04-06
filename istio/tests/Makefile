@@ -15,5 +15,3 @@ dev:
 	docker build --build-arg KUBE_VERSION=$(KUBE_VERSION)  --build-arg NGINMESH_VERSION=$(NGINMESH_VERSION)  --build-arg WRK_VERSION=$(WRK_VERSION) -t $(REPO)/$(TEST_IMAGE_NAME):$(TAG) -t $(REPO)/$(TEST_IMAGE_NAME):$(TAG_LATEST) -f src/Dockerfile .
 
 
-
-
