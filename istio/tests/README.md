@@ -65,7 +65,7 @@ export app_namespace=default
 ```
 Note: It will use "default" namespace as default, if not set.
 
-5. Run all spec tests for Bookinfo application:
+6. Run all spec tests for Bookinfo application:
 
 ```
 pipenv run mamba --format documentation .
@@ -183,7 +183,7 @@ Transfer/sec:    401.08KB
 
 25 examples ran in 129.3463 seconds
 ```
-6. To run selectively, please input one or multiple test cases:
+7. To run selectively, please input one or multiple test cases:
 ```
 pipenv run mamba --format documentation 1_bd_spec.py 2_route_all_v1_spec.py
 
