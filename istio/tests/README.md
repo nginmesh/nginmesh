@@ -62,7 +62,6 @@ mamba==0.9.2
 
 ```
 export app_namespace=default
-
 ```
 Note: It will use "default" namespace as default, if not set.
 
