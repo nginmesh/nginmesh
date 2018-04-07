@@ -8,17 +8,17 @@ rule_name="route-rule-http-retry.yaml"
 nginx_conf_path="/etc/istio/proxy/conf.d/http_0.0.0.0_9080.conf"
 Rule=configuration.Rule()
 
-with description('nginmesh Test 08'):
+with description('Testing HTTP Retry'):
     with before.all:
          #Read Config file
          configuration.setenv(self)
 
     with context('Set environment'):
-         with it('Bookinfo add Routing Rule'):
+         with it('Add routing rule'):
             Rule.add(rule_name)
 
-    with context('Starting Test'):
-        with it('Bookinfo HTTP Retry'):
+    with context('Starting test'):
+        with it('Testing HTTP Retry'):
             while self.total_count < self.request_count:
                 r = requests.get(self.url,allow_redirects=False)
                 r.status_code
@@ -31,8 +31,8 @@ with description('nginmesh Test 08'):
                     expect(self.total_count).not_to(equal(0))
             configuration.generate_request(self,rule_name)
 
-    with context('Clean Environment'):
-        with it('Bookinfo delete Routing Rule'):
+    with context('Clean environment'):
+        with it('Delete routing rule'):
             Rule.delete(rule_name)
 
 

@@ -2,6 +2,7 @@ import subprocess
 import grequests
 import performance
 import time
+import os
 
 rule_apply_time=5
 nginmesh_rule_path="../../release/samples/bookinfo/kube/"
@@ -11,6 +12,8 @@ performance_status='on'
 performance_thread='1'
 performance_connection='10'
 performance_duration='1s'
+app_namespace=os.environ.get('app_namespace','default')
+
 
 def run_shell(self,type):
     if type=="check":
@@ -59,9 +62,9 @@ def generate_request(self, rule_name=None):
 
 class Rule:
      def add(self,rule_name):
-         run_shell("kubectl create -f "+nginmesh_rule_path+rule_name,"run")
+         run_shell("kubectl create -f "+nginmesh_rule_path+rule_name+" -n"+app_namespace,"run")
      def delete(self,rule_name):
-         run_shell("kubectl delete -f "+nginmesh_rule_path+rule_name,"run")
+         run_shell("kubectl delete -f "+nginmesh_rule_path+rule_name+" -n"+app_namespace,"run")
 
 
 

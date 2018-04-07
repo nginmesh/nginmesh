@@ -7,17 +7,17 @@ from expects import expect, be_true, have_length, equal, be_a, have_property, be
 rule_name="route-rule-reviews-test-v2.yaml"
 Rule=configuration.Rule()
 
-with description('nginmesh Test 09'):
+with description('Testing route "jason" user to V2'):
     with before.all:
          #Read Config file
          configuration.setenv(self)
 
     with context('Set environment'):
-         with it('Bookinfo add Routing Rule'):
+         with it('Add routing rule'):
                Rule.add(rule_name)
 
-    with context('Starting Test'):
-        with it('Bookinfo route "jason" User to V2'):
+    with context('Starting test'):
+        with it('Testing route "jason" user to V2'):
             while self.total_count < self.request_count:
                 cookie={'user':'jason'}
                 u=self.url
@@ -41,6 +41,6 @@ with description('nginmesh Test 09'):
             expect(self.v3_count).to(equal(0))
             configuration.generate_request(self,rule_name)
 
-    with context('Clean Environment'):
-        with it('Bookinfo delete Routing Rule'):
+    with context('Clean environment'):
+        with it('Delete routing rule'):
               Rule.delete(rule_name)
