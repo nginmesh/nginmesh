@@ -58,7 +58,7 @@ mamba==0.9.2
   - coverage [required: Any, installed: 4.5.1]
 ``` 
 
-5. Set app_namespace environment variable where application deployed in Kubernetes cluster: 
+5. Set app_namespace environment variable where Bookinfo application deployed in Kubernetes cluster: 
 
 ```
 export app_namespace=default
