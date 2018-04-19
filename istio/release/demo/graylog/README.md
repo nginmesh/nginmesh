@@ -4,10 +4,8 @@ Graylog is a powerful log management and analysis tool that has many use cases, 
 
 It has 3 main components:
 
-**Server nodes:** Serves as a worker that receives and processes messages, and communicates with all other non-server components. Its performance is CPU dependent.
-
-**Elasticsearch nodes:** Stores all of the logs/messages. Its performance is RAM and disk I/O dependent.
-
+**Server nodes:** Serves as a worker that receives and processes messages, and communicates with all other non-server components. Its performance is CPU dependent. <br>
+**Elasticsearch nodes:** Stores all of the logs/messages. Its performance is RAM and disk I/O dependent.<br>
 **MongoDB:** Stores metadata and does not experience much load.
 
 ## Architecture
@@ -72,7 +70,7 @@ Note: Check graylog deployment file for username/password passed as environment 
 
 ![Alt text](images/input_conf.png?raw=true "Input Conf")
 
-8. Generate requests towards sample application deployed and check:
+8. Generate requests towards sample application deployed and check messages received:
 
 ![Alt text](images/search.png?raw=true "Search ")
 
