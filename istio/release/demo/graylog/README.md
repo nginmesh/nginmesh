@@ -15,7 +15,10 @@ It has 3 main components:
 Please, check [link](http://docs.graylog.org/en/2.4/) for documentation.
 
 ## Quick Start
-1.Make sure below requirements are met:
+Below are instructions to quickly install and configure Graylog.
+
+###Prerequisites
+Make sure below requirements are met:
   
   | Version | Name | Details |
   | --- | ------ | ------ |
@@ -25,12 +28,12 @@ Please, check [link](http://docs.graylog.org/en/2.4/) for documentation.
   |1.5.0|Bookinfo Application|[link](https://github.com/istio/istio/blob/master/samples/bookinfo/src)|
   |1.1.0|Kafka|[link](https://kafka.apache.org/downloadsc)|
 
-
-2. Install graylog deployment in graylog namespace:
+###Install Graylog
+1. Install graylog deployment in graylog namespace:
 ```
  kubectl create -f nginmesh-0.7.1/demo/graylog/graylog.yaml
 ```
-3. Make sure following pods are up and running:
+2. Make sure following pods are up and running:
 
 ```
 kubectl get pods -n graylog
@@ -41,8 +44,7 @@ elasticsearch-97c476698-7tmpd   1/1       Running   0          1m
 graylog-c4d976795-vfhpf         1/1       Running   0          1m
 mongo-6bb464754d-d6fd8          1/1       Running   0          1m
 ```
-
-4. Make sure following services are up and running: 
+3. Make sure following services are up and running: 
 ```
 kubectl get svc -n graylog
 ```
@@ -54,30 +56,38 @@ mongo           ClusterIP      None           <none>            55555/TCP       
 
 ```
 
-5. Activate port-forwarding for running graylog pod:
+4. Activate port-forwarding for running graylog pod:
 ```
 kubectl port-forward graylog-c4d976795-vfhpf -n graylog 9000:9000
 ```
 
-6. Access to Graylog Dashboard from browser:
+5. Access to Graylog Dashboard from browser:
 
 ```
 http://127.0.0.1:9000/
 ```
 Note: Check graylog deployment file for username/password passed as environment variable. 
 
-7. Add Raw/Plaintext type Kafka input:
+###Configure Kafka
+1. Add Raw/Plaintext type Kafka input:
 
 ![Alt text](images/input_conf.png?raw=true "Input Conf")
 
-8. Generate requests towards sample application deployed and check messages received:
+2. Generate requests towards sample application deployed and check messages received:
 
 ![Alt text](images/search.png?raw=true "Search ")
 
-9. Add JSON type extractor to input:
+3. Add JSON type extractor to input:
 
 ![Alt text](images/extractor_conf.png?raw=true "Extractor Conf")
 
-10. Add to dahboard required metrics:
+4. Add to dahboard required metrics:
 
 ![Alt text](images/dashboard.png?raw=true "Dashboard")
+
+## Uninstalling the Graylog
+1. To uninstall Graylog deployment, run:
+``` 
+kubectl delete -f nginmesh-0.7.1/demo/graylog/graylog.yaml
+```
+
