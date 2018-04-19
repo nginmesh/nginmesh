@@ -17,7 +17,7 @@ Please, check [link](http://docs.graylog.org/en/2.4/) for documentation.
 ## Quick Start
 Below are instructions to quickly install and configure Graylog.
 
-###Prerequisites
+### Prerequisites
 Make sure below requirements are met:
   
   | Version | Name | Details |
@@ -28,7 +28,7 @@ Make sure below requirements are met:
   |1.5.0|Bookinfo Application|[link](https://github.com/istio/istio/blob/master/samples/bookinfo/src)|
   |1.1.0|Kafka|[link](https://kafka.apache.org/downloadsc)|
 
-###Install Graylog
+### Install Graylog
 1. Install graylog deployment in graylog namespace:
 ```
  kubectl create -f nginmesh-0.7.1/demo/graylog/graylog.yaml
@@ -68,7 +68,7 @@ http://127.0.0.1:9000/
 ```
 Note: Check graylog deployment file for username/password passed as environment variable. 
 
-###Configure Kafka
+### Configure Kafka
 1. Add Raw/Plaintext type Kafka input:
 
 ![Alt text](images/input_conf.png?raw=true "Input Conf")
@@ -85,7 +85,7 @@ Note: Check graylog deployment file for username/password passed as environment 
 
 ![Alt text](images/dashboard.png?raw=true "Dashboard")
 
-## Uninstalling the Graylog
+### Uninstalling the Graylog
 1. To uninstall Graylog deployment, run:
 ``` 
 kubectl delete -f nginmesh-0.7.1/demo/graylog/graylog.yaml
