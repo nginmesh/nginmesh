@@ -9,7 +9,7 @@ It has 3 main components:
 **MongoDB:** Stores metadata and does not experience much load.
 
 
-![Alt text](/images/graylog.png?raw=true "Graylog Architecture") 
+![Alt text](images/graylog.png?raw=true "Graylog Architecture") 
 
 Please, check [link](http://docs.graylog.org/en/2.4/) for documentation.
 
@@ -68,13 +68,13 @@ http://127.0.0.1:9000/
 Note: Check graylog deployment file for username/password passed as environment variable. 
 
 7. Add Raw/Plaintext type Kafka input:
-![Alt text](/images/input_conf.png?raw=true "Input Conf")
+![Alt text](images/input_conf.png?raw=true "Input Conf")
 
 8. Generate requests towards sample application deployed and check:
-   ![Alt text](/images/search.png?raw=true "Search ")
+   ![Alt text](images/search.png?raw=true "Search ")
 
 9. Add JSON type extractor to input:
-   ![Alt text](/images/extractor_conf.png?raw=true "Extractor Conf")
+   ![Alt text](images/extractor_conf.png?raw=true "Extractor Conf")
 
 10. Add to dahboard required metrics:
-![Alt text](/images/dashboard.png?raw=true "Dashboard")
+![Alt text](images/dashboard.png?raw=true "Dashboard")
