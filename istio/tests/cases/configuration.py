@@ -4,8 +4,7 @@ import requests
 import performance
 import time
 import os
-import multiprocessing as mp
-from expects import expect, equal
+
 
 rule_apply_time=5
 nginmesh_rule_path="../../release/samples/bookinfo/kube/"
@@ -20,13 +19,10 @@ app_namespace=os.environ.get('app_namespace','default')
 
 # Kafka test dependencies
 kafka_topic="nginmesh"
-kafka_mp_output = mp.Queue()
 kafka_ns="kafka"
 kafka_client_pod_name="testclient"
 kafka_srv_svc="my-kafka-kafka:9092"
 kafka_req_count=40
-kafka_mock_hdr = {'content-type': 'MOCK_CONTENT_TYPE','User-Agent':'MOCK_UserAgent',"x-b3-spanid":"bbbbbbbbbbbbbbbb","x-b3-traceid":"aaaaaaaaaaaaaaaa","x-request-id":"MOCK_REQ_ID"}
-kafka_check_values=('request_id','user_agent','req_path','response_code','response_duration','source_uid','content_type','trace_id','span_id')
 
 def run_shell(self,type):
     if type=="check":
@@ -48,48 +44,6 @@ def setenv(self):
     self.total_count=count_init
     self.request_count=request_count
     return self.performance,self.v1_count,self.v2_count,self.v3_count,self.request_count,self.total_count
-
-def generate_kafka_mock_request():
-    x=count_init
-    while x<kafka_req_count:
-        r = requests.get("http://"+GATEWAY_URL+"/productpage", headers=kafka_mock_hdr )
-        expect(r.status_code).to(equal(200))
-        expect(int(r.elapsed.total_seconds())).to(equal(0))
-        x+=1
-
-def check_kafka_logs(self,out):
-                out=run_shell("kubectl -n "+kafka_ns+" exec "+kafka_client_pod_name+" -- /usr/bin/kafka-console-consumer --topic "+kafka_topic+"  --bootstrap-server "+kafka_srv_svc+" --max-messages 10 ","check")
-                request_id=count_init
-                user_agent=count_init
-                req_path=count_init
-                response_code=count_init
-                response_duration=count_init
-                source_uid=count_init
-                content_type=count_init
-                trace_id=count_init
-                span_id=count_init
-
-                if kafka_mock_hdr.get('x-request-id') in out:
-                    request_id+=1
-                if kafka_mock_hdr.get('User-Agent') in out:
-                    user_agent+=1
-                if kafka_mock_hdr.get('content-type') in out:
-                    content_type+=1
-                if kafka_mock_hdr.get('x-b3-traceid') in out:
-                    trace_id+=1
-                if kafka_mock_hdr.get('x-b3-spanid') in out:
-                    span_id+=1
-                if  'request_path' in out:
-                    req_path+=1
-                if 'response_code' in out:
-                    response_code+=1
-                if 'response_duration' in out:
-                    response_duration+=1
-                if 'source_uid' in out:
-                    source_uid+=1
-             #   print(out)
-                kafka_mp_output.put((request_id,user_agent,req_path,response_code,response_duration,source_uid,content_type,trace_id,span_id))
-
 
 def generate_request(self, rule_name=None):
     if rule_name !="route-rule-reviews-test-v2.yaml" and rule_name !="route-rule-http-redirect.yaml" and rule_name !="route-rule-http-retry.yaml" :
