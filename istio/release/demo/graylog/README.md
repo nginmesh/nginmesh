@@ -80,6 +80,8 @@ Note: Check graylog deployment file for username/password passed as environment 
 
 2. Upload  [nginmesh_kafka_package.json](nginmesh_kafka_package.json) file which contains all configuration related to Kafka input/extractor/dashboard:
 
+![Alt text](images/3_upload_package.png?raw=true "Upload Packs")
+
 3. Apply content:
 ![Alt text](images/4_apply_content.png?raw=true "Apply Content ")
 
