@@ -1,3 +1,4 @@
+
 # Demo nginMesh streaming using Graylog
 
 Graylog is a powerful log management and analysis tool that has many use cases, from monitoring to debugging applications.
@@ -74,6 +75,7 @@ Note: Check graylog deployment file for username/password passed as environment 
 
 
 ### Configure Kafka
+
 1. Select Content Packs tab from System menu:
 
 ![Alt text](images/2_content_packs.png?raw=true "Content Packs")
