@@ -24,8 +24,8 @@ Make sure below requirements are met:
   | Version | Name | Details |
   | --- | ------ | ------ |
   |1.9|Kubernetes cluster|Without alpha feature, [link](https://istio.io/docs/setup/kubernetes/quick-start.html#google-kubernetes-engine)|
-  |0.6.0|Istio|[link](https://istio.io/docs/setup/kubernetes/quick-start.html)|
-  |0.6.0|nginMesh|[link](https://github.com/nginmesh/nginmesh/blob/master/README.md)|
+  |0.7.0|Istio|[link](https://istio.io/docs/setup/kubernetes/quick-start.html)|
+  |0.7.0|nginMesh|[link](https://github.com/nginmesh/nginmesh/blob/master/README.md)|
   |1.5.0|Bookinfo Application|[link](https://github.com/istio/istio/blob/master/samples/bookinfo/src)|
   |1.1.0|Kafka|[link](https://kafka.apache.org/downloadsc)|
 
