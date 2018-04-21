@@ -212,6 +212,9 @@ http://<Public-IP-of-the-Ingress-Controller>/productpage
 
 Note: For E2E routing rules and performace testing you could refer to [E2E Test](istio/tests/README.md).
 
+### Demo nginMesh streaming using Graylog
+[Demo Graylog](istio/release/demo/graylog/README.md) Please, refer for Graylog integration with nginMesh.
+
 ### Uninstalling the Application
 1. To uninstall application, run:
 
