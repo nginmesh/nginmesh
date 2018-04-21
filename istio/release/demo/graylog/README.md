@@ -1,4 +1,4 @@
-# Graylog deployment
+# Demo nginMesh streaming using Graylog
 
 Graylog is a powerful log management and analysis tool that has many use cases, from monitoring to debugging applications.
 
@@ -61,29 +61,35 @@ mongo           ClusterIP      None           <none>            55555/TCP       
 kubectl port-forward graylog-c4d976795-vfhpf -n graylog 9000:9000
 ```
 
-5. Access to Graylog Dashboard from browser:
-
+5. Access to Graylog Dashboard from browser using default credentials:
+ ```
+username: admin
+password: somesaltpassword
+```
 ```
 http://127.0.0.1:9000/
 ```
+![Alt text](images/1_login.png?raw=true "Login")
 Note: Check graylog deployment file for username/password passed as environment variable. 
 
+
 ### Configure Kafka
-1. Add Raw/Plaintext type Kafka input:
+1. Select Content Packs tab from System menu:
 
-![Alt text](images/input_conf.png?raw=true "Input Conf")
+![Alt text](images/2_content_packs.png?raw=true "Content Packs")
 
-2. Generate requests towards sample application deployed and check messages received:
+2. Upload  [nginmesh_kafka_package.json](nginmesh_kafka_package.json) file which contains all configuration related to Kafka input/extractor/dashboard:
 
-![Alt text](images/search.png?raw=true "Search ")
+3. Apply content:
+![Alt text](images/4_apply_content.png?raw=true "Apply Content ")
 
-3. Add JSON type extractor to input:
+4. Make sure nginmesh dashboard added under Dashboards menu:
 
-![Alt text](images/extractor_conf.png?raw=true "Extractor Conf")
+![Alt text](images/5_dashboard.png?raw=true "Dashboard ")
 
-4. Add to dahboard required metrics:
 
-![Alt text](images/dashboard.png?raw=true "Dashboard")
+5. Generate few requests towards sample application deployed and monitor dashboard widgets.
+
 
 ### Uninstalling the Graylog
 1. To uninstall Graylog deployment, run:
