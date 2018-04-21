@@ -83,6 +83,7 @@ Note: Check graylog deployment file for username/password passed as environment 
 ![Alt text](images/3_upload_package.png?raw=true "Upload Packs")
 
 3. Apply content of package:
+
 ![Alt text](images/4_apply_content.png?raw=true "Apply Content ")
 
 4. Generate few requests towards sample application deployed and monitor dashboard widgets in Dashboards menu:
