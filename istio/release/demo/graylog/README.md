@@ -59,7 +59,7 @@ mongo           ClusterIP      None           <none>            55555/TCP       
 
 4. Activate port-forwarding for running graylog pod:
 ```
-kubectl port-forward graylog-c4d976795-vfhpf -n graylog 9000:9000
+kubectl port-forward $(kubectl -n graylog get pod -l service=graylog -o jsonpath='{.items[0].metadata.name}') -n graylog 9000:9000 &
 ```
 
 5. Access to Graylog Dashboard from browser using default credentials:
@@ -91,6 +91,22 @@ Note: Check graylog deployment file for username/password passed as environment 
 4. Generate few requests towards sample application deployed and monitor dashboard widgets in Dashboards menu:
 
 ![Alt text](images/5_dashboard.png?raw=true "Dashboard ")
+
+### Configure Geo-Location
+
+1. Install Map database provided by MaxMind:
+Note: Please, refer for [details](http://docs.graylog.org/en/2.4/pages/geolocation.html).
+```
+./install_map.sh
+```
+
+2. Enable Geo-Location processor and set path accordingly in System/Configurations menu:
+
+![Alt text](images/6_geoloc_proc?raw=true "GeoLoc Processor ")
+
+3. Enable Message processors in below order in System/Configurations menu:
+
+![Alt text](images/7_message_proc.png?raw=true "Message Processor ")
 
 
 ### Uninstalling the Graylog
