@@ -92,17 +92,17 @@ Note: Check graylog deployment file for username/password passed as environment 
 
 ![Alt text](images/5_dashboard.png?raw=true "Dashboard ")
 
-### Configure Geo-Location
+### Configure Geo-Location plugin
 
 1. Install Map database provided by MaxMind:
-Note: Please, refer for [details](http://docs.graylog.org/en/2.4/pages/geolocation.html).
 ```
 ./install_map.sh
 ```
+Note: Please, refer for plugin [details](http://docs.graylog.org/en/2.4/pages/geolocation.html).
 
 2. Enable Geo-Location processor and set path accordingly in System/Configurations menu:
 
-![Alt text](images/6_geoloc_proc?raw=true "GeoLoc Processor ")
+![Alt text](images/6_geoloc_proc.png?raw=true "GeoLoc Processor ")
 
 3. Enable Message processors in below order in System/Configurations menu:
 
