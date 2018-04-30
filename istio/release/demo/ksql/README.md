@@ -2,8 +2,6 @@
 
 This demo focuses on building real-time analytics of users inside nginMesh enabled cluster. Please, refer to this [link](https://github.com/confluentinc/ksql/tree/master/ksql-clickstream-demo) for details of used demo.
 
-![Alt text](images/dashboard.png?raw=true "Grafana Dashboard")
-
 ## Quick Start
 
 ### Prerequisites
@@ -17,6 +15,7 @@ Make sure below requirements are met:
   |0.7.0|nginMesh|[link](https://github.com/nginmesh/nginmesh/blob/master/README.md)|
   |1.5.0|Bookinfo Application|[link](https://github.com/istio/istio/blob/master/samples/bookinfo/src)|
   |1.1.0|Kafka|[link](https://kafka.apache.org/downloadsc)|
+  |2.9.0|Helm|[link](https://docs.helm.sh/using_helm/)|
 
 ### Install 
 
@@ -30,7 +29,7 @@ kubectl create -f ../../install/kafka/connect.yml
 kubectl create -f ../../install/kafka/ksql.yml
 ```
 
-3. Download and install Apache Kafka from this [link](https://www.confluent.io/download/).
+3. Download and install Apache Kafka from this [link](https://www.confluent.io/download/)
 Update OS path to include /bin directory of Kafka.
 
 4. Activate KSQL port-forward so that client can connect to server in cluster:
@@ -47,7 +46,7 @@ ksql run script 'create.sql';
 ./install-elastic.sh
 ```
 
-7.Install Grafana in the namespace 'kafka':
+7. Install Grafana in the namespace 'kafka':
 ```
 ./install-grafana.sh
 ```
@@ -105,11 +104,13 @@ elastic-elasticsearch-master-2                  1/1       Running   0          3
 
 2. Access to Grafana Dashboard in [http://localhost:3000/](http://localhost:3000/) from browser using retrieved credentials.
 
-3. Import nginmesh dashboard configuration using [grafana-dashboard.json](grafana-dashboard.json):
+3. Import nginmesh dashboard configuration file [grafana-dashboard.json](grafana-dashboard.json)in Import menu:
 
 ![Alt text](images/import_dashboard.png?raw=true "Import Dashboard")
 
-4. Generate few requests towards sample application deployed and monitor widgets in Dashboards menu.
+4. Generate few requests towards sample application deployed and make sure all widgets shows data accordingly:
+
+![Alt text](images/dashboard.png?raw=true "Grafana Dashboard")
 
 ### Unistall 
 
