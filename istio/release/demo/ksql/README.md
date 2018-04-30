@@ -29,7 +29,7 @@ kubectl create -f ../../install/kafka/connect.yml
 kubectl create -f ../../install/kafka/ksql.yml
 ```
 
-3. Download and install Apache Kafka from this [link](https://www.confluent.io/download/)
+3. Download and install Apache Kafka from this [link](https://www.confluent.io/download/).
 Update $PATH variable either in .bash_profile or .bashrc to include /bin directory of Kafka.
 
 4. Start KSQL CLI and run sql script to create nginmesh stream and tables:
@@ -97,9 +97,9 @@ elastic-elasticsearch-master-2                  1/1       Running   0          3
 ./grafana-password.sh
 ```
 
-2. Access to Grafana Dashboard in [http://localhost:3000/](http://localhost:3000/) from browser using retrieved credentials.
+2. Access to Grafana Dashboard in [http://localhost:3000](http://localhost:3000/) from browser using retrieved credentials.
 
-3. Import nginmesh dashboard configuration file [grafana-dashboard.json](grafana-dashboard.json)in Import menu:
+3. Import nginmesh dashboard configuration file [grafana-dashboard.json](grafana-dashboard.json) in Import menu:
 
 ![Alt text](images/import_dashboard.png?raw=true "Import Dashboard")
 
