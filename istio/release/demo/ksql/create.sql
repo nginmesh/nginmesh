@@ -17,3 +17,6 @@ CREATE TABLE request_per_min_max_avg  AS SELECT request_path,min(events) AS min,
 DROP TABLE request_activity;
 CREATE TABLE request_activity AS SELECT request_path,request_method, request_size, COUNT(*) AS count FROM mesh_stream WINDOW TUMBLING (size 60 second) GROUP BY request_path,request_method,request_size;
 
+DROP TABLE errors_per_min_alert;
+CREATE TABLE errors_per_min_alert AS SELECT response_code, count(*) AS errors FROM mesh_stream window HOPPING ( size 30 second, advance by 20 second) WHERE response_code > 0 GROUP BY response_code HAVING count(*) > 5 AND count(*) is not NULL;
+
