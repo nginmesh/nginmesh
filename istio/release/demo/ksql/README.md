@@ -30,27 +30,23 @@ kubectl create -f ../../install/kafka/ksql.yml
 ```
 
 3. Download and install Apache Kafka from this [link](https://www.confluent.io/download/)
-Update OS path to include /bin directory of Kafka.
+Update $PATH variable either in .bash_profile or .bashrc to include /bin directory of Kafka.
 
-4. Activate KSQL port-forward so that client can connect to server in cluster:
-```
-../../install/kafka/ksql-portforward.sh
-```
-5. Start KSQL CLI and run sql script to create nginmesh stream and tables:
+4. Start KSQL CLI and run sql script to create nginmesh stream and tables:
 ```
 ksql run script 'create.sql';
 ```
 
-6. Install Elasticsearch  in the namespace 'elastic':
+5. Install Elasticsearch  in the namespace 'elastic':
 ```
 ./install-elastic.sh
 ```
 
-7. Install Grafana in the namespace 'kafka':
+6. Install Grafana in the namespace 'kafka':
 ```
 ./install-grafana.sh
 ```
-8. Make sure all pods and services are up and running:
+7. Make sure all pods and services are up and running:
 ```
 kubectl get pods -n kafka
 ```
@@ -81,18 +77,17 @@ elastic-elasticsearch-master-1                  1/1       Running   1          3
 elastic-elasticsearch-master-2                  1/1       Running   0          3d
 ```
 
-9. Run following script to activate port-forwarding for ksql, connect, elasticsearch and grafana to localhost:
+8. Run following script to activate port-forwarding for ksql, connect, elasticsearch and grafana to localhost:
 
 ```
 ./all-portforward.sh
 ```
 
-10. Run following scripts to send the KSQL tables to Elasticsearch and Grafana:
+9. Run following scripts to send the KSQL tables to Elasticsearch and Grafana:
 ```
 ./ksql-tables-to-grafana.sh request_per_min
 ./ksql-tables-to-grafana.sh errors_per_min_alert
 ./ksql-tables-to-grafana.sh request_activity
-
 ```
 
 ### Visualize metrics in Grafana
@@ -136,5 +131,5 @@ helm del --purge grafana;
 
 5. Deactivate all port-forwardings:
 ```
-killall kubectl
+pkill -f port-forward
 ```
