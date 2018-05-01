@@ -1,65 +1,9 @@
 {
-  "__inputs": [
-    {
-      "name": "DS_REQUEST_PER_MIN",
-      "label": "request_per_min",
-      "description": "",
-      "type": "datasource",
-      "pluginId": "elasticsearch",
-      "pluginName": "Elasticsearch"
-    },
-    {
-      "name": "DS_ERRORS_PER_MIN_ALERT",
-      "label": "errors_per_min_alert",
-      "description": "",
-      "type": "datasource",
-      "pluginId": "elasticsearch",
-      "pluginName": "Elasticsearch"
-    },
-    {
-      "name": "DS_REQUEST_ACTIVITY",
-      "label": "request_activity",
-      "description": "",
-      "type": "datasource",
-      "pluginId": "elasticsearch",
-      "pluginName": "Elasticsearch"
-    }
-  ],
-  "__requires": [
-    {
-      "type": "datasource",
-      "id": "elasticsearch",
-      "name": "Elasticsearch",
-      "version": "5.0.0"
-    },
-    {
-      "type": "grafana",
-      "id": "grafana",
-      "name": "Grafana",
-      "version": "5.0.4"
-    },
-    {
-      "type": "panel",
-      "id": "graph",
-      "name": "Graph",
-      "version": "5.0.0"
-    },
-    {
-      "type": "panel",
-      "id": "singlestat",
-      "name": "Singlestat",
-      "version": "5.0.0"
-    },
-    {
-      "type": "panel",
-      "id": "table",
-      "name": "Table",
-      "version": "5.0.0"
-    }
-  ],
+  "dashboard": {
   "annotations": {
     "list": [
       {
+        "$$hashKey": "object:653",
         "builtIn": 1,
         "datasource": "-- Grafana --",
         "enable": true,
@@ -74,7 +18,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1525192499445,
+  "iteration": 1525208290049,
   "links": [],
   "panels": [
     {
@@ -96,7 +40,7 @@
       "bars": true,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_REQUEST_PER_MIN}",
+      "datasource": "request_per_min",
       "decimals": null,
       "fill": 2,
       "gridPos": {
@@ -219,7 +163,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#1f78c1"
       ],
-      "datasource": "${DS_ERRORS_PER_MIN_ALERT}",
+      "datasource": "errors_per_min_alert",
       "format": "none",
       "gauge": {
         "maxValue": 1000,
@@ -318,7 +262,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
-      "datasource": "${DS_REQUEST_PER_MIN}",
+      "datasource": "request_per_min",
       "format": "none",
       "gauge": {
         "maxValue": 1000,
@@ -417,7 +361,7 @@
         "#7eb26d",
         "#eab839"
       ],
-      "datasource": "${DS_REQUEST_ACTIVITY}",
+      "datasource": "request_activity",
       "format": "none",
       "gauge": {
         "maxValue": 200,
@@ -516,7 +460,7 @@
         "#1f78c1",
         "#629e51"
       ],
-      "datasource": "${DS_REQUEST_ACTIVITY}",
+      "datasource": "request_activity",
       "format": "none",
       "gauge": {
         "maxValue": 1000,
@@ -611,7 +555,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_ERRORS_PER_MIN_ALERT}",
+      "datasource": "errors_per_min_alert",
       "fill": 1,
       "gridPos": {
         "h": 9,
@@ -730,7 +674,7 @@
     },
     {
       "columns": [],
-      "datasource": "${DS_REQUEST_ACTIVITY}",
+      "datasource": "request_activity",
       "fontSize": "100%",
       "gridPos": {
         "h": 9,
@@ -922,7 +866,8 @@
     ]
   },
   "timezone": "",
-  "title": "nginmesh",
-  "uid": "fuQx7IMmk",
-  "version": 40
+  "title": "nginMesh",
+  "version": 1
+},
+"overwrite": true
 }

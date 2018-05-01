@@ -92,9 +92,10 @@ elastic-elasticsearch-master-2                  1/1       Running   0          3
 
 2. Access to Grafana Dashboard in [http://localhost:3000](http://localhost:3000/) from browser using retrieved credentials.
 
-3. Import nginmesh dashboard configuration file [grafana-dashboard.json](grafana-dashboard.json) in Import menu:
-
-![Alt text](images/import_dashboard.png?raw=true "Import Dashboard")
+3. Run below script to import nginMesh dashboard to Grafana:
+```
+./grafana-upload-dashboard.sh
+```
 
 4. Generate requests towards sample application deployed and make sure all widgets show data accordingly. Below script could be used in Istio default Bookinfo application case:
 ```
