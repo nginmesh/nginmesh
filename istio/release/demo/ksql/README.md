@@ -31,21 +31,16 @@ kubectl create -f ../../install/kafka/ksql.yml
 
 3. Download and install KSQL client from this [link](https://www.confluent.io/download/). Update $PATH variable either in .bash_profile or .bashrc by adding /bin directory of KSQL.
 
-4. Start KSQL CLI and run sql script to create nginmesh stream and tables:
-```
-ksql run script 'create.sql';
-```
-
-5. Install Elasticsearch  in the namespace 'elastic':
+4. Install Elasticsearch  in the namespace 'elastic':
 ```
 ./install-elastic.sh
 ```
 
-6. Install Grafana in the namespace 'kafka':
+5. Install Grafana in the namespace 'kafka':
 ```
 ./install-grafana.sh
 ```
-7. Make sure all pods and services are up and running:
+6. Make sure all pods and services are up and running:
 ```
 kubectl get pods -n kafka
 ```
@@ -76,17 +71,15 @@ elastic-elasticsearch-master-1                  1/1       Running   1          3
 elastic-elasticsearch-master-2                  1/1       Running   0          3d
 ```
 
-8. Run following script to activate port-forwarding for ksql, connect, elasticsearch and grafana to localhost:
+7. Run following script to activate port-forwarding for ksql, connect, elasticsearch and grafana to localhost:
 
 ```
 ./all-portforward.sh
 ```
 
-9. Run following scripts to send the KSQL tables to Elasticsearch and Grafana:
+8. Run following scripts to create nginmesh stream and tables which will be pushed to Elasticsearch and Grafana:
 ```
-./ksql-tables-to-grafana.sh request_per_min
-./ksql-tables-to-grafana.sh errors_per_min_alert
-./ksql-tables-to-grafana.sh request_activity
+./install_metrics.sh
 ```
 
 ### Visualize metrics in Grafana
@@ -102,7 +95,10 @@ elastic-elasticsearch-master-2                  1/1       Running   0          3
 
 ![Alt text](images/import_dashboard.png?raw=true "Import Dashboard")
 
-4. Generate few requests towards sample application deployed and make sure all widgets shows data accordingly:
+4. Generate requests towards sample application deployed and make sure all widgets show data accordingly. Below script could be used in Istio default Bookinfo application case:
+```
+./gen_load.sh
+```
 
 ![Alt text](images/dashboard.png?raw=true "Grafana Dashboard")
 

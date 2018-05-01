@@ -11,8 +11,8 @@ DROP TABLE request_per_min;
 CREATE TABLE request_per_min  AS SELECT request_path,count(*) AS events FROM mesh_stream window TUMBLING ( size 60 seconds) GROUP BY request_path;
 
 
-DROP TABLE request_per_min_max_avg;
-CREATE TABLE request_per_min_max_avg  AS SELECT request_path,min(events) AS min, max(events) AS max,  sum(events)/count(events) from request_per_min WINDOW TUMBLING (size 60 second) GROUP BY request_path;
+--DROP TABLE request_per_min_max_avg;
+---CREATE TABLE request_per_min_max_avg  AS SELECT request_path,min(events) AS min, max(events) AS max,  sum(events)/count(events) from request_per_min WINDOW TUMBLING (size 60 second) GROUP BY request_path;
 
 
 DROP TABLE request_activity;
