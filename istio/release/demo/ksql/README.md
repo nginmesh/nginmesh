@@ -29,9 +29,7 @@ kubectl create -f ../../install/kafka/connect.yml
 kubectl create -f ../../install/kafka/ksql.yml
 ```
 
-3. Download and install Apache Kafka from this [link](https://www.confluent.io/download/).
-
-Update $PATH variable either in .bash_profile or .bashrc to include /bin directory of Kafka.
+3. Download and install KSQL client from this [link](https://www.confluent.io/download/). Update $PATH variable either in .bash_profile or .bashrc by adding /bin directory of KSQL.
 
 4. Start KSQL CLI and run sql script to create nginmesh stream and tables:
 ```
