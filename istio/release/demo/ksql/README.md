@@ -16,6 +16,7 @@ Make sure below requirements are met:
   |1.5.0|Bookinfo Application|[link](https://github.com/istio/istio/blob/master/samples/bookinfo/src)|
   |1.1.0|Kafka|[link](https://kafka.apache.org/downloadsc)|
   |2.9.0|Helm|[link](https://docs.helm.sh/using_helm/)|
+  |4.1.0| Wrk|[link](https://github.com/wg/wrk)| 
 
 ### Install 
 
@@ -29,7 +30,7 @@ kubectl create -f ../../install/kafka/connect.yml
 kubectl create -f ../../install/kafka/ksql.yml
 ```
 
-3. Download and install KSQL client from this [link](https://www.confluent.io/download/). Update $PATH variable either in .bash_profile or .bashrc by adding /bin directory of KSQL.
+3. Download and install KSQL client from this [link](https://www.confluent.io/download/). Update $PATH variable either in .bash_profile or .bashrc to include /bin directory of KSQL.
 
 4. Install Elasticsearch  in the namespace 'elastic':
 ```
@@ -77,7 +78,7 @@ elastic-elasticsearch-master-2                  1/1       Running   0          3
 ./all-portforward.sh
 ```
 
-8. Run following scripts to create nginmesh stream and tables which will be pushed to Elasticsearch and Grafana:
+8. Run following script to create nginMesh stream and tables which will be pushed to Elasticsearch and Grafana:
 ```
 ./install_metrics.sh
 ```
