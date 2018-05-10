@@ -26,7 +26,7 @@ nginMesh requires installation of Istio first.
 
 1. Download and install Istio 0.7.1:
 ```
-curl -L https://git.io/getLatestIstio | ISTIO_VERSION=0.7.2 sh -
+curl -L https://git.io/getLatestIstio | ISTIO_VERSION=0.7.1 sh -
 ```
 2. Download nginMesh release 0.7.2:
 ```
