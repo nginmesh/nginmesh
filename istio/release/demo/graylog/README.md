@@ -32,7 +32,7 @@ Make sure below requirements are met:
 ### Install Graylog
 1. Install graylog deployment in graylog namespace:
 ```
- kubectl create -f nginmesh-0.7.1/demo/graylog/graylog.yaml
+ kubectl create -f graylog.yaml
 ```
 2. Make sure following pods are up and running:
 
@@ -112,6 +112,6 @@ Note: Please, refer for plugin [details](http://docs.graylog.org/en/2.4/pages/ge
 ### Uninstalling the Graylog
 1. To uninstall Graylog deployment, run:
 ``` 
-kubectl delete -f nginmesh-0.7.1/demo/graylog/graylog.yaml
+kubectl delete -f graylog.yaml
 ```
 

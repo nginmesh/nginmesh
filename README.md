@@ -24,7 +24,7 @@ Make sure you have a Kubernetes cluster with at least 1.9 or greater due to fact
 ### Installing Istio and nginMesh
 nginMesh requires installation of Istio first.
 
-1. Download and install Istio 0.7.2:
+1. Download and install Istio 0.7.1:
 ```
 curl -L https://git.io/getLatestIstio | ISTIO_VERSION=0.7.2 sh -
 ```
@@ -228,7 +228,7 @@ Note: For E2E routing rules and performace testing you could refer to [E2E Test]
 1. To uninstall the Istio core components:
 
 ```
-kubectl delete -f istio-0.7.2/install/kubernetes/istio.yaml
+kubectl delete -f istio-0.7.1/install/kubernetes/istio.yaml
 ```
 
 
