@@ -46,8 +46,12 @@ with context('Starting test'):
                 expect(d['response_duration']).to(be_below(6000))
                 expect(d['response_code']).to(equal(200))
                 expect(d['response_size']).to(be_below(6000))
-            else:
-                print "Request to productpage did not found among messsages. Please, run test again."
+                message='found'
+        expect(message).to(equal('found'))
+
+
+
+
 
 
 
