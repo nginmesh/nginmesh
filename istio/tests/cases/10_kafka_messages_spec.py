@@ -12,8 +12,6 @@ def generate_kafka_mock_request():
     x=0
     while x<configuration.kafka_req_count:
         r = requests.get("http://"+configuration.GATEWAY_URL+"/productpage", headers=kafka_mock_hdr )
-      #  expect(r.status_code).to(equal(200))
-     #   expect(int(r.elapsed.total_seconds())).to(equal(0))
         x+=1
 
 def check_kafka_logs(self,out):
@@ -37,9 +35,7 @@ with context('Starting test'):
         result=kafka_mp_output.get()
         for i in result.split('\n'):
             d=json.loads(i)
-            print d
             if d['request_path']=="/productpage":
-                print "here we are"
                 expect(d['request_headers']['x-request-id']).to(equal('MOCK_REQ_ID'))
                 expect(d['request_headers']['user-agent']).to(equal('MOCK_UserAgent'))
                 expect(d['request_headers']['content-type']).to(equal('MOCK_CONTENT_TYPE'))
