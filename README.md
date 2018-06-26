@@ -20,7 +20,7 @@ Below are instructions to quickly install and configure nginMesh.  Currently, on
 ### Prerequisites
 Make sure you have a Kubernetes cluster with at least 1.9 or greater due to fact only automatic sidecar injection is supported and no alpha feature is enabled. Please see [Prerequisites](https://istio.io/docs/setup/kubernetes/quick-start.html) for setting up a kubernetes cluster.
 
-### Installing Istio and nginMesh
+### Install Istio and nginMesh
 nginMesh requires installation of Istio first.
 
 1. Download and install Istio 0.7.1:
@@ -33,7 +33,6 @@ curl -L https://github.com/nginmesh/nginmesh/releases/download/0.7.1/nginmesh-0.
 ```
 
 3. Deploy Istio between sidecars:
-
 ```
 kubectl create -f istio-0.7.1/install/kubernetes/istio.yaml
 ```
@@ -80,6 +79,18 @@ istio-system   Active        1h
 kube-public    Active        1h        
 kube-system    Active        1h
 ```
+
+### Install Zipkin
+1. Install Zipkin:
+```
+kubectl apply -f istio-0.7.1/install/kubernetes/addons/zipkin.yaml
+```
+
+2. Activate port-forward for Zipkin dashboard:
+```
+kubectl port-forward -n istio-system $(kubectl get pod -n istio-system -l app=zipkin -o jsonpath='{.items[0].metadata.name}') 9411:9411 &
+```
+
 
 
 ### Deploy a Sample Application
@@ -146,14 +157,14 @@ http://<Public-IP-of-the-Ingress-Controller>/productpage
 Note: For E2E routing rules and performace testing you could refer to [E2E Test](istio/tests/README.md).
 
 
-### Uninstalling the Application
+### Uninstall the Application
 1. To uninstall application, run:
 
 ```
 ./istio-0.7.1/samples/bookinfo/kube/cleanup.sh
 ```
 
-### Uninstalling Istio
+### Uninstall Istio
 1. To uninstall the Istio core components:
 
 ```
@@ -165,6 +176,15 @@ kubectl delete -f istio-0.7.1/install/kubernetes/istio.yaml
 
 ```
 nginmesh-0.7.1/install/kubernetes/delete-sidecar.sh
+```
+### Uninstall Zipkin
+1. Uninstall Zipkin:
+```
+kubectl delete -f istio-0.7.1/install/kubernetes/addons/zipkin.yaml
+```
+2. Deactivate port-forward:
+```
+ps -ef | grep zipkin | grep -v grep | awk '{print $2}' | xargs kill -9 
 ```
 
 ## Limitations
