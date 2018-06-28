@@ -4,7 +4,7 @@ _Ingenious_ is a photo-sharing demo app created by NGINX to show the Microservic
 The _Ingenious_ application is built with microservices and utilizes their inherent benefits to generate a robust, stable, independent, polyglot environment.
 
 
-![Microservice Reference Architecture diagram of services](diagram-microservices-reference-architecture-850x600.png)
+![Microservice Reference Architecture diagram of services](/images/diagram-microservices-reference-architecture-850x600.png)
 
 The _Ingenious_ application employs seven different services in order to create its functionality.
 
