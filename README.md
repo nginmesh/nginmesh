@@ -86,7 +86,7 @@ kube-system    Active        1h
 kubectl apply -f istio-0.7.1/install/kubernetes/addons/zipkin.yaml
 ```
 
-2. Activate port-forward for Zipkin dashboard:
+2. Activate port-forward for Zipkin and open [dashboard](http://localhost:9411):
 ```
 kubectl port-forward -n istio-system $(kubectl get pod -n istio-system -l app=zipkin -o jsonpath='{.items[0].metadata.name}') 9411:9411 &
 ```
@@ -108,8 +108,7 @@ kubectl label namespace default istio-injection=enabled
 kubectl apply -f  istio-0.7.1/samples/bookinfo/kube/bookinfo.yaml
 ```
 
-
-4. Confirm that all application services are deployed: productpage, details, reviews, ratings:
+3. Confirm that all application services are deployed: productpage, details, reviews, ratings:
 
 ```
 kubectl get services
@@ -123,7 +122,7 @@ ratings                    10.0.0.15    <none>        9080/TCP             6m
 reviews                    10.0.0.170   <none>        9080/TCP             6m
 ```
 
-5. Confirm that all application pods are running --details-v1-* , productpage-v1-* , ratings-v1-* , reviews-v1-* , reviews-v2-* and reviews-v3-* :
+4. Confirm that all application pods are running --details-v1-* , productpage-v1-* , ratings-v1-* , reviews-v1-* , reviews-v2-* and reviews-v3-* :
 ```
 kubectl get pods
 ```
@@ -137,7 +136,7 @@ reviews-v2-1343845940-b34q5                 2/2       Running   0          6m
 reviews-v3-1813607990-8ch52                 2/2       Running   0          6m
 ```
 
-6. Get the public IP of the Istio Ingress controller. If the cluster is running in an environment that supports external load balancers:
+5. Get the public IP of the Istio Ingress controller. If the cluster is running in an environment that supports external load balancers:
 
 ```
 kubectl get svc -n istio-system | grep -E 'EXTERNAL-IP|istio-ingress'
@@ -149,12 +148,13 @@ OR
 kubectl get ingress -o wide       
 ```
 
-7. Open the Bookinfo application in a browser using the following link:
+6. Open the Bookinfo application in a browser using the following link:
 ```
 http://<Public-IP-of-the-Ingress-Controller>/productpage
 ```
 
-Note: For E2E routing rules and performace testing you could refer to [E2E Test](istio/tests/README.md).
+Note 1: For E2E routing rules and performace testing you could refer to [E2E Test](istio/tests/README.md).
+Note 2: Alternatively, you could install NGINX MRA Application, refer to [Ingenious](istio/release/samples/ingenious/kube/README.md).
 
 
 ### Uninstall the Application
