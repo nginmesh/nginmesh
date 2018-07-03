@@ -179,6 +179,7 @@ func finishUnmarshallingListeners(listeners Listeners) error {
 					}
 		
 					httpConfig.Filters[i].FilterMixerConfig = mixerConfig.V2
+					// fmt.Println(httpConfig.Filters[i].FilterMixerConfig)
 				} else if httpConfig.Filters[i].Type == "decoder" && httpConfig.Filters[i].Name == "fault" {
 					var faultConfig FilterFaultConfig
 					err = json.Unmarshal(httpConfig.Filters[i].Config, &faultConfig)

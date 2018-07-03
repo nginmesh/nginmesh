@@ -44,15 +44,24 @@ server {
     server_name {{range $name := $server.Names}} {{$name}}{{end}};
 
  {{if $.Mixer}}
-#    collector_destination_ip  {{$.Mixer.DestinationIP}};
-#    collector_destination_uid {{$.Mixer.DestinationUID}};
-    {{if $.Mixer.DestinationService}}
-#    collector_destination_service {{$.Mixer.DestinationService}};
+
+    # This is not as it should be. Added $server.Address to test module send functionality
+    mixer_destination_ip  {{$server.Address}};
+
+    {{if $.Mixer.DestinationUID}}
+    mixer_destination_uid {{$.Mixer.DestinationUID}};
     {{end}}
-#    collector_source_ip {{$.Mixer.SourceIP}};
-#    collector_source_uid {{$.Mixer.SourceUID}};
+    {{if $.Mixer.DestinationService}}
+    mixer_destination_service {{$.Mixer.DestinationService}};
     {{end}}
 
+    # This is not as it should be. Added $server.Address to test module send functionality
+    mixer_source_ip {{$server.Address}};
+
+    {{if $.Mixer.SourceUID}}
+    mixer_source_uid {{$.Mixer.SourceUID}};
+    {{end}}
+    {{end}}
 
     {{range $location := $server.Locations}}
     location {{$location.Path}} {
@@ -62,14 +71,9 @@ server {
 
         {{if $location.Internal}}internal;{{end}}
 
-        {{if $location.MixerReport}}
-        {{if $location.CollectorTopic}}
-        collector_report {{$location.CollectorTopic}};
-        {{end}}
-        {{end}}
+        mixer_report {{if $location.MixerReport}}on{{else}}off{{end}};
+        mixer_check {{if $location.MixerCheck}}on{{else}}off{{end}};
 
-
-       
         {{if $location.Tracing}}
         opentracing_operation_name $host:$server_port;
         opentracing_trace_locations off;
@@ -84,15 +88,14 @@ server {
             {{$expression.Result}};
         }
         {{end}}
-        
+
         {{if $location.Upstream}}
         proxy_set_header Host {{if $location.Host}}{{$location.Host}}{{else}}$host{{end}};
-
         {{if $.Mixer}}
         {{if $.Mixer.SourceIP}}
         proxy_set_header X-ISTIO-SRC-IP {{$.Mixer.SourceIP}};
         {{end}}
-        
+
         {{if $.Mixer.SourceUID}}
         proxy_set_header X-ISTIO-SRC-UID {{$.Mixer.SourceUID}};
         {{end}}
@@ -101,12 +104,12 @@ server {
         # WebSocket and KeepAlives
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection $connection_upgrade;
-        
+
         {{if ne $location.ConnectTimeout 0}}	proxy_connect_timeout {{$location.ConnectTimeout}}ms;{{end}}
 
         {{if $location.ProxyNextUpstream}}
-        proxy_next_upstream {{$location.ProxyNextUpstream.Condition}}; 
-        proxy_next_upstream_timeout {{$location.ProxyNextUpstream.Timeout}}ms; 
+        proxy_next_upstream {{$location.ProxyNextUpstream.Condition}};
+        proxy_next_upstream_timeout {{$location.ProxyNextUpstream.Timeout}}ms;
         proxy_next_upstream_tries {{$location.ProxyNextUpstream.Tries}};
         {{end}}
 
@@ -130,7 +133,9 @@ server {
     }{{end}}
 }{{end}}`
 
-const mainTemplate = `load_module /etc/nginx/modules/ngx_stream_nginmesh_dest_module.so;
+const mainTemplate = `load_module /etc/nginx/modules/ngx_http_istio_mixer_module.so;
+load_module /etc/nginx/modules/ngx_stream_nginmesh_dest_module.so;
+
 
 load_module /etc/nginx/modules/ngx_http_opentracing_module.so;
 load_module /etc/nginx/modules/ngx_http_zipkin_module.so;
@@ -138,7 +143,7 @@ load_module /etc/nginx/modules/ngx_http_zipkin_module.so;
 
 worker_processes  auto;
 
-error_log  /dev/stdout {{.LOGLEVEL}};
+error_log  /dev/stdout debug;
 pid        /etc/istio/proxy/nginx.pid;
 
 
@@ -194,8 +199,11 @@ http {
     server_names_hash_bucket_size 128;
     variables_hash_bucket_size 128;
 
-  #  collector_server {{.CollectorServer}};
-
+    # mixer configuration
+    {{if .Mixer}}
+    mixer_server {{.Mixer.MixerServer}};
+    mixer_port   {{.Mixer.MixerPort}};
+    {{end}}
 
     # Support for Websocket
     map $http_upgrade $connection_upgrade {
@@ -210,17 +218,21 @@ stream {
     log_format basic '$remote_addr [$time_local] '
                      '$protocol $status $bytes_sent $bytes_received '
                      '$session_time $nginmesh_dest $nginmesh_server';
+
     map $nginmesh_dest $nginmesh_server {
         {{range $dm := .DestinationMaps}}
         {{- $dm.Remote}} {{$dm.Local}};
         {{end}}
     }
+
     server {
         listen 15001;
         access_log /dev/stdout basic;
         nginmesh_dest on;
+
         proxy_pass $nginmesh_server;
     }
+
     include /etc/istio/proxy/conf.d/*.stream-conf;
 }`
 

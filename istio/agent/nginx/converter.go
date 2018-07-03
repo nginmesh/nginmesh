@@ -7,6 +7,7 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"github.com/davecgh/go-spew/spew"
 
 	"github.com/nginmesh/nginmesh/istio/agent/pilot"
 	"github.com/golang/glog"
@@ -63,7 +64,7 @@ func (conv *Converter) Convert(proxyConfig pilot.ProxyConfig) Config {
 func buildMixerConfig(proxyConfig pilot.ProxyConfig, httpConfigs []HTTPConfig) *MainMixer {
 	var mixer *MainMixer
 
-	if mixerCluster, exists := proxyConfig.Clusters["mixer_server"]; exists {
+	if mixerCluster, exists := proxyConfig.Clusters["mixer_report_server"]; exists {
 		if len(mixerCluster.Hosts) > 0 {
 			addr, port := parseDestination(mixerCluster.Hosts[0].URL)
 			for _, cfg := range httpConfigs {
@@ -100,6 +101,9 @@ func (conv *Converter) convertHTTPListeners(proxyConfig pilot.ProxyConfig) ([]HT
 		localPort := strconv.Itoa(port)
 
 		cfg := conv.convertHTTPListener(l, proxyConfig, localAddress, localPort)
+		// glog.Infof("processing HTTP Listener config: %+v", cfg)
+		// glog.Infof("processing HTTP Listener config")
+		// spew.Dump(cfg)
 		httpConfigs = append(httpConfigs, cfg)
 
 		destIP, destPort := parseDestination(l.Address)
@@ -138,6 +142,9 @@ func (conv *Converter) convertTCPListeners(proxyConfig pilot.ProxyConfig) ([]TCP
 		localPort := strconv.Itoa(port)
 
 		tcpCfg, dest := conv.convertTCPListener(l, proxyConfig, localAddress, localPort)
+		// glog.Infof("processing HTTP Listener config: %+v", tcpCfg)
+		// glog.Infof("processing TCP Listener config")
+		// spew.Dump(tcpCfg)
 		tcpConfigs = append(tcpConfigs, tcpCfg)
 
 		dm := DestinationMap{
@@ -229,12 +236,18 @@ func (conv *Converter) convertHTTPListener(listener pilot.Listener, proxyConfig 
 		upstreams = append(upstreams, ups...)
 	}
 
+	glog.Info("Looking for filters")
 	var mixer HTTPMixer
 	for _, cf := range f.HTTPFilterConfig.Filters {
 		glog.Info("processing listner: %s",listener.Address)
+		// glog.Infof("config: %+v", cf.Config)
+		glog.Infof("config:")
+		spew.Dump(string(cf.Config))
 		if cf.FilterMixerConfig != nil {
 
 			filterMixerConfig := cf.FilterMixerConfig
+			glog.Infof("MixerConfig: %+v", filterMixerConfig)
+			glog.Infof("DestinationService: %+v", filterMixerConfig)
 
 			var sourceIp string
 			var sourceUid string
@@ -242,14 +255,20 @@ func (conv *Converter) convertHTTPListener(listener pilot.Listener, proxyConfig 
 			var destinationUid string
 			var destinationService string
 
+			if filterMixerConfig.DestinationService != "" {
+				destinationService = filterMixerConfig.DestinationService
+			}
+
 			if filterMixerConfig.ForwardAttributes != nil {
+				glog.Info("has forward attributes")
 				forwardAttributes := cf.FilterMixerConfig.ForwardAttributes.Attributes
+				spew.Dump(forwardAttributes);
 
 				if forwardAttributes.SourceIp != nil {
 					sourceIp = forwardAttributes.SourceIp.BytesValue
 					//glog.Info("detected sourceIp: %s",sourceIp)
 				}
-	
+
 				if forwardAttributes.SourceUid != nil {
 					sourceUid = forwardAttributes.SourceUid.StringValue
 					//glog.Info("detected source Uid: %s",sourceUid)
@@ -257,25 +276,22 @@ func (conv *Converter) convertHTTPListener(listener pilot.Listener, proxyConfig 
 			}
 
 			if filterMixerConfig.MixerAttributes != nil {
-				// glog.Info("has mixer attributes")
+				glog.Info("has mixer attributes")
 				mixerAttributes := cf.FilterMixerConfig.MixerAttributes.Attributes
-				
+				spew.Dump(mixerAttributes);
+
+
 				if mixerAttributes.DestinationIp != nil {
 					sourceIp = mixerAttributes.DestinationIp.BytesValue
 				}
-				
+
 				if mixerAttributes.DestinationUid != nil {
 					destinationUid = mixerAttributes.DestinationUid.StringValue
 				}
-
-				
-				if mixerAttributes.DestinationService != nil {
-					destinationService = mixerAttributes.DestinationService.StringValue
-				}
 			}
-			
 
-			
+
+
 
 			mixer = HTTPMixer{
 				SourceIP:          sourceIp,
@@ -285,6 +301,9 @@ func (conv *Converter) convertHTTPListener(listener pilot.Listener, proxyConfig 
 				DestinationService: destinationService,
 				QuotaName:          cf.FilterMixerConfig.QuotaName,
 			}
+			glog.Info("mixer config")
+			spew.Dump(mixer)
+
 			break
 		}
 	}

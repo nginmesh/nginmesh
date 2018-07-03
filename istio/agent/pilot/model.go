@@ -810,8 +810,6 @@ type StringValue struct {
 }
 
 
-
-
 type Attributes struct {
 	SourceIp 		*BytesValue 	`json:"source.ip,omitempty"`
 	SourceUid 		*StringValue 	`json:"source.uid,omitempty"`
@@ -832,6 +830,7 @@ type FilterMixerV2Config struct {
 }
 
 type FilterMixerConfig struct {
+	DestinationService string `json:"defaultDestinationService"`
 	// MixerAttributes specifies the static list of attributes that are sent with
 	// each request to Mixer.
 	MixerAttributes *AttributeConfig `json:"mixerAttributes"`
