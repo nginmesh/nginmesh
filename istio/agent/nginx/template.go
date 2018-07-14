@@ -45,23 +45,38 @@ server {
 
  {{if $.Mixer}}
 
-    # This is not as it should be. Added $server.Address to test module send functionality
-    mixer_destination_ip  {{$server.Address}};
+    {{if $.Mixer.SourceIP}}
+    mixer_source_ip {{$.Mixer.SourceIP}};
+    {{end}}
+    {{if $.Mixer.SourceUID}}
+    mixer_source_uid {{$.Mixer.SourceUID}};
+    {{end}}
+    {{if $.Mixer.SourceLabels}}
+    mixer_source_labels {
+        {{- range $key, $value := $.Mixer.SourceLabels}}
+        {{$key}} {{$value}};
+        {{- end}}
+    }
+    {{end}}
 
+
+    {{if $.Mixer.DestinationIP}}
+    mixer_destination_ip  {{$.Mixer.DestinationIP}};
+    {{end}}
     {{if $.Mixer.DestinationUID}}
     mixer_destination_uid {{$.Mixer.DestinationUID}};
     {{end}}
     {{if $.Mixer.DestinationService}}
     mixer_destination_service {{$.Mixer.DestinationService}};
     {{end}}
-
-    # This is not as it should be. Added $server.Address to test module send functionality
-    mixer_source_ip {{$server.Address}};
-
-    {{if $.Mixer.SourceUID}}
-    mixer_source_uid {{$.Mixer.SourceUID}};
+    {{if $.Mixer.DestinationLabels}}
+    mixer_destination_labels {
+        {{- range $key, $value := $.Mixer.DestinationLabels}}
+        {{$key}} {{$value}};
+        {{- end}}
+    }
     {{end}}
-    {{end}}
+{{end}}
 
     {{range $location := $server.Locations}}
     location {{$location.Path}} {

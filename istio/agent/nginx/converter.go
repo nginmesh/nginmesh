@@ -7,7 +7,7 @@ import (
 	"sort"
 	"strconv"
 	"strings"
-	"github.com/davecgh/go-spew/spew"
+	"net"
 
 	"github.com/nginmesh/nginmesh/istio/agent/pilot"
 	"github.com/golang/glog"
@@ -101,9 +101,6 @@ func (conv *Converter) convertHTTPListeners(proxyConfig pilot.ProxyConfig) ([]HT
 		localPort := strconv.Itoa(port)
 
 		cfg := conv.convertHTTPListener(l, proxyConfig, localAddress, localPort)
-		// glog.Infof("processing HTTP Listener config: %+v", cfg)
-		// glog.Infof("processing HTTP Listener config")
-		// spew.Dump(cfg)
 		httpConfigs = append(httpConfigs, cfg)
 
 		destIP, destPort := parseDestination(l.Address)
@@ -142,9 +139,6 @@ func (conv *Converter) convertTCPListeners(proxyConfig pilot.ProxyConfig) ([]TCP
 		localPort := strconv.Itoa(port)
 
 		tcpCfg, dest := conv.convertTCPListener(l, proxyConfig, localAddress, localPort)
-		// glog.Infof("processing HTTP Listener config: %+v", tcpCfg)
-		// glog.Infof("processing TCP Listener config")
-		// spew.Dump(tcpCfg)
 		tcpConfigs = append(tcpConfigs, tcpCfg)
 
 		dm := DestinationMap{
@@ -236,73 +230,71 @@ func (conv *Converter) convertHTTPListener(listener pilot.Listener, proxyConfig 
 		upstreams = append(upstreams, ups...)
 	}
 
-	glog.Info("Looking for filters")
 	var mixer HTTPMixer
 	for _, cf := range f.HTTPFilterConfig.Filters {
 		glog.Info("processing listner: %s",listener.Address)
-		// glog.Infof("config: %+v", cf.Config)
-		glog.Infof("config:")
-		spew.Dump(string(cf.Config))
 		if cf.FilterMixerConfig != nil {
 
 			filterMixerConfig := cf.FilterMixerConfig
-			glog.Infof("MixerConfig: %+v", filterMixerConfig)
-			glog.Infof("DestinationService: %+v", filterMixerConfig)
 
 			var sourceIp string
 			var sourceUid string
+			var sourceLabels map[string]string
 			var destinationIp string
 			var destinationUid string
 			var destinationService string
+			var destinationLabels map[string]string
 
 			if filterMixerConfig.DestinationService != "" {
 				destinationService = filterMixerConfig.DestinationService
 			}
 
+			// Get source ip, source labels, and source uid
 			if filterMixerConfig.ForwardAttributes != nil {
 				glog.Info("has forward attributes")
 				forwardAttributes := cf.FilterMixerConfig.ForwardAttributes.Attributes
-				spew.Dump(forwardAttributes);
 
 				if forwardAttributes.SourceIp != nil {
-					sourceIp = forwardAttributes.SourceIp.BytesValue
-					//glog.Info("detected sourceIp: %s",sourceIp)
+					sourceIp = (net.IP(forwardAttributes.SourceIp.BytesValue)).String()
+				}
+
+				if forwardAttributes.SourceLabels != nil {
+					sourceLabels = forwardAttributes.SourceLabels.StringMapValue.Entries
 				}
 
 				if forwardAttributes.SourceUid != nil {
 					sourceUid = forwardAttributes.SourceUid.StringValue
-					//glog.Info("detected source Uid: %s",sourceUid)
 				}
 			}
 
-			if filterMixerConfig.MixerAttributes != nil {
-				glog.Info("has mixer attributes")
-				mixerAttributes := cf.FilterMixerConfig.MixerAttributes.Attributes
-				spew.Dump(mixerAttributes);
+				// Get Destnation labels, destination service
+			if len(filterMixerConfig.ServiceConfig) > 0 {
 
+				destinationAttributes := filterMixerConfig.ServiceConfig[filterMixerConfig.DestinationService].
+					MixerAttributes.Attributes
 
-				if mixerAttributes.DestinationIp != nil {
-					sourceIp = mixerAttributes.DestinationIp.BytesValue
-				}
+					if destinationAttributes.DestinationLabels != nil {
+						destinationLabels = destinationAttributes.DestinationLabels.StringMapValue.Entries
+					}
 
-				if mixerAttributes.DestinationUid != nil {
-					destinationUid = mixerAttributes.DestinationUid.StringValue
-				}
+					if destinationAttributes.DestinationService != nil {
+						destinationService = destinationAttributes.DestinationService.StringValue
+					}
+
 			}
 
 
 
 
 			mixer = HTTPMixer{
-				SourceIP:          sourceIp,
-				SourceUID:         sourceUid,
-				DestinationIP:     destinationIp,
-				DestinationUID:    destinationUid,
+				SourceIP:           sourceIp,
+				SourceUID:          sourceUid,
+				SourceLabels:	    sourceLabels,
+				DestinationIP:      destinationIp,
+				DestinationUID:     destinationUid,
 				DestinationService: destinationService,
-				QuotaName:          cf.FilterMixerConfig.QuotaName,
+				DestinationLabels:	destinationLabels,
 			}
-			glog.Info("mixer config")
-			spew.Dump(mixer)
 
 			break
 		}

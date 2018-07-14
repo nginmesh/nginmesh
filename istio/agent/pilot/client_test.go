@@ -24,7 +24,7 @@ func TestUnmarshal(t *testing.T) {
 		t.Error(err)
 	}
 	fmt.Println(len(listeners))
-	if len(listeners) !=23 {
+	if len(listeners) != 23 {
 		t.Error("there should been 23 listener founded")
 	}
 
@@ -57,7 +57,7 @@ func TestUnmarshal(t *testing.T) {
 			}
 
 			httpFilter := httpFilters[0]
-			fmt.Printf("Filters: %+v\n", httpFilter)
+			// fmt.Printf("Filters: %+v\n", httpFilter)
 			fmt.Printf("config: %+v\n", string(httpFilter.Config))
 			if httpFilter.FilterMixerConfig == nil {
 				t.Error("no mixer config founded")
@@ -66,6 +66,8 @@ func TestUnmarshal(t *testing.T) {
 			mixerConfig := httpFilter.FilterMixerConfig
 			fmt.Printf("mixerConfig: %+v\n", mixerConfig)
 			fmt.Printf("mixerConfig: %+v\n", mixerConfig.DestinationService)
+			fmt.Printf("mixer attributes: %+v\n", mixerConfig.ForwardAttributes.Attributes.SourceLabels.StringMapValue.Entries)
+			fmt.Printf("service configs: %+v\n", mixerConfig.ServiceConfig[mixerConfig.DestinationService])
 
 			if mixerConfig.MixerAttributes == nil {
 				t.Error("no mixer attributes founded")
@@ -80,23 +82,12 @@ func TestUnmarshal(t *testing.T) {
 				t.Error("no attributes for mixer attributes founded")
 			}
 
-			mixerAttributeDetail := mixerAttributres.Attributes
-
-			if mixerAttributeDetail.DestinationIp == nil {
-				t.Error("no destination ip founded")
+			ForwardAttributes := mixerConfig.ForwardAttributes
+			if ForwardAttributes.Attributes == nil {
+				t.Error("no attributes for forward attributes founded")
 			}
 
-			if mixerAttributeDetail.DestinationIp.BytesValue != "AAAAAAAAAAAAAP//CigBEw==" {
-				t.Error("destination ip not same")
-			}
-
-			if mixerAttributeDetail.DestinationUid == nil {
-				t.Error("no destination Uid founded")
-			}
-
-			if mixerAttributeDetail.DestinationUid.StringValue != "kubernetes://productpage-v1-5fb67b856-6r5f2.default" {
-				t.Error("destination uid not same")
-			}
+			fmt.Printf("Source IP: %+v\n", ForwardAttributes.Attributes.SourceIp.BytesValue)
 
 			return
 		}
