@@ -267,6 +267,21 @@ func (conv *Converter) convertHTTPListener(listener pilot.Listener, proxyConfig 
 				}
 			}
 
+			// Get destination information if mixer attributes present
+			if filterMixerConfig.MixerAttributes != nil {
+				glog.Info("has mixer attributes")
+				mixerAttributes := cf.FilterMixerConfig.MixerAttributes.Attributes
+
+
+				if mixerAttributes.DestinationIp != nil {
+					sourceIp = (net.IP(mixerAttributes.DestinationIp.BytesValue)).String()
+				}
+
+				if mixerAttributes.DestinationUid != nil {
+					destinationUid = mixerAttributes.DestinationUid.StringValue
+				}
+			}
+
 				// Get Destnation labels, destination service
 			if len(filterMixerConfig.ServiceConfig) > 0 {
 

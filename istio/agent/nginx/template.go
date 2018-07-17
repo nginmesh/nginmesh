@@ -158,7 +158,7 @@ load_module /etc/nginx/modules/ngx_http_zipkin_module.so;
 
 worker_processes  auto;
 
-error_log  /dev/stdout debug;
+error_log  /dev/stdout {{.LOGLEVEL}};
 pid        /etc/istio/proxy/nginx.pid;
 
 
