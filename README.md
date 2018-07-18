@@ -114,12 +114,6 @@ In this section we deploy the Bookinfo application, which is taken from the Isti
     ```
     kubectl get svc -n istio-system | grep -E 'EXTERNAL-IP|istio-ingress'
     ```
-OR
-
-    ```
-    kubectl get ingress -o wide       
-    ```
-    
 6. Open the Bookinfo application in a browser using the following link:
     ```
     http://<Public-IP-of-the-Ingress-Controller>/productpage
