@@ -1,5 +1,5 @@
-VERSION=0.8.0
-REPO=nginmesh
+VERSION=0.7.1
+REPO=nginxinc
 USER=nginmesh
 RELEASE_FILE=nginmesh-${VERSION}
 RELEASE_DIR=target
