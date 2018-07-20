@@ -5,8 +5,6 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
-	"crypto/tls"
-	"crypto/x509"
 	"strconv"
 	"strings"
 
@@ -40,56 +38,6 @@ func NewClient(endpoint string, httpClient *http.Client, serviceNode string, ser
 	return &Client{endpoint, httpClient, serviceNode, serviceCluster, podIP,collectorAddress,collectorTopic}
 }
 
-// ConfigureAuth sets up appropriate transport config for client
-func ConfigureAuth(authPolicy string) *http.Client {
-
-	switch authPolicy{
-		// Configures TLS when MTLS is enabled
-		case "MUTUAL_TLS":
-			mTLSConfig, err := tls.LoadX509KeyPair("/etc/certs/cert-chain.pem", "/etc/certs/key.pem")
-			if err != nil {
-				glog.Fatalf("Couldn't get mtls key and cert: %v", err)
-			}
-
-			rootCAFile, err := ioutil.ReadFile("/etc/certs/root-cert.pem")
-			if err != nil {
-				glog.Fatalf("Couldn't read root CA: %v", err)
-			}
-
-			rootCA := x509.NewCertPool()
-			ok := rootCA.AppendCertsFromPEM(rootCAFile)
-			if !ok {
-				glog.Fatalf("Couldn't add root CA to pool")
-			}
-
-			tr := &http.Transport {
-				TLSClientConfig: &tls.Config {
-					Certificates: []tls.Certificate{mTLSConfig},
-					RootCAs: rootCA,
-				},
-			}
-			return &http.Client{Transport: tr}
-		case "NONE":
-			return &http.Client{}
-		default:
-			panic(fmt.Sprintf("Unknown auth policy: %v\n", authPolicy))
-	}
-}
-
-// GetEndpoint configures protocol and endpoint based on ControlPlaneAuthPolicy
-func GetEndpoint(endpoint, authPolicy string) string {
-	var url string
-	if authPolicy == "MUTUAL_TLS" {
-		url = "https"
-		// Endpoint must have .svc appended to it because certificate is not valid for standard endpoint
-		endpointParts := strings.Split(endpoint, ":")
-		endpoint = fmt.Sprintf("%v.svc:%v", endpointParts[0], endpointParts[1])
-	} else {
-		url = "http"
-	}
-	return fmt.Sprintf("%v://%v", url,  endpoint)
-}
-
 func (c *Client) getListeners() (Listeners, error) {
 	url := fmt.Sprintf("%v/v1/listeners/%v/%v", c.endpoint, c.serviceCluster, c.serviceNode)
 	glog.Infof("listener url: %v", url)
@@ -105,7 +53,6 @@ func (c *Client) getListeners() (Listeners, error) {
 	if glog.V(3) {
 		glog.Infof("Response from %v: %v", url, string(body))
 	}
-	//glog.Infof("Response from %v: %v", url, string(body))
 
 	return unMarshalListeners(body)
 }
@@ -265,7 +212,7 @@ func finishUnmarshallingListeners(listeners Listeners) error {
 }
 
 // GetConfig returns configuration for a sidecar proxy from Pilot.
-func (c *Client) GetConfig() ProxyConfig {
+func (c *Client) GetConfig() (ProxyConfig, error) {
 	cfg := ProxyConfig{
 		HTTPListeners:    make(map[string]Listener),
 		TCPListeners:     make(map[string]Listener),
@@ -276,8 +223,7 @@ func (c *Client) GetConfig() ProxyConfig {
 
 	listeners, err := c.getListeners()
 	if err != nil {
-		glog.Infof("Error getting listeners: %v", err)
-		return cfg
+		return cfg, fmt.Errorf("Error getting listeners: %v", err)
 	}
 
 	for _, l := range listeners {
@@ -312,7 +258,7 @@ func (c *Client) GetConfig() ProxyConfig {
 
 	clusters, err := c.getClusters()
 	if err != nil {
-		glog.Infof("Couldn't get clusters from Pilot: %v", err)
+		return cfg, fmt.Errorf("Couldn't get clusters from Pilot: %v", err)
 	}
 
 	podServiceSet := make(map[string]bool)
@@ -337,7 +283,7 @@ func (c *Client) GetConfig() ProxyConfig {
 		}
 		hosts, err := c.getHostsForService(cluster.ServiceName)
 		if err != nil {
-			glog.Infof("Couldn't get hosts of service %v from Pilot: %v", cluster.ServiceName, err)
+			return cfg, fmt.Errorf("Couldn't get hosts of service %v from Pilot: %v", cluster.ServiceName, err)
 		}
 		cfg.Services[cluster.Name] = hosts
 		for _, h := range hosts.Hosts {
@@ -356,7 +302,7 @@ func (c *Client) GetConfig() ProxyConfig {
 
 	cfg.TargetService = strings.Join(podServices, ",")
 
-	return cfg
+	return cfg, nil
 }
 
 func parseDestination(dest string) (string, string) {
