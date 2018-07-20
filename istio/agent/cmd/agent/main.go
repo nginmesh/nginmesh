@@ -4,7 +4,6 @@ import (
 	"context"
 	"flag"
 	"fmt"
-	"net/http"
 	"os"
 	"os/signal"
 	"syscall"
@@ -29,7 +28,7 @@ func main() {
 	proxySidecarCmd.String("connectTimeout", "", "Binary path")
 	proxySidecarCmd.String("statsdUdpAddress", "", "Binary path")
 	proxySidecarCmd.String("proxyAdminPort", "", "Binary path")
-	proxySidecarCmd.String("controlPlaneAuthPolicy", "", "Binary path")
+	authPolicy := proxySidecarCmd.String("controlPlaneAuthPolicy", "", "Binary path")
 	collectorAddress := proxySidecarCmd.String("collectorAddress","","Collector address")
 	collectorTopic := proxySidecarCmd.String("collectorTopic","","Collector topic")
 	logLevel := proxySidecarCmd.String("ngxLogLevel","","NGINX Log Level")
@@ -69,7 +68,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	
+
 
 	podIP := os.Getenv("INSTANCE_IP")
 	if podIP == "" {
@@ -105,7 +104,7 @@ func main() {
 		configVars.DisableTracing = true
 	}
 
-	glog.V(2).Info("NGINX level is set to %v",logLevel)
+	glog.V(2).Infof("NGINX level is set to %v", *logLevel)
 
 	converter := nginx.NewConverter(&configVars)
 
@@ -121,7 +120,8 @@ func main() {
 
 	ctx, cancel := context.WithCancel(context.Background())
 
-	client := pilot.NewClient(*discoveryAddress, &http.Client{}, *serviceCluster, serviceNode, podIP,*collectorAddress,*collectorTopic)
+	httpClient := pilot.ConfigureAuth(*authPolicy)
+	client := pilot.NewClient(pilot.GetEndpoint(*discoveryAddress, *authPolicy), httpClient, *serviceCluster, serviceNode, podIP, *collectorAddress, *collectorTopic)
 	pilotWatcher := pilot.NewWatcher(client, 5*time.Second)
 	go pilotWatcher.Run(ctx)
 
